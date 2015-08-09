@@ -94,10 +94,18 @@ def ajouter(uid):
 	l = ldap.initialize('ldap://ldap.maisel.enst-bretagne.fr')
     l.simple_bind_s(ldap_admin_dn, ldap_admin_passwd)
     l.modify_s('uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr'.format(uid), mod_attrs)
+    l.unbind()
 
-
-
-
+def update_campus(machine):
+	mod_attrs = [
+		( ldap.MOD_DELETE, 'zone', 'Brest' ),
+		( ldap.MOD_ADD, 'zone', 'Rennes' )
+	]
+	
+	l = ldap.initialize('ldap://ldap.maisel.enst-bretagne.fr')
+    l.simple_bind_s(ldap_admin_dn, ldap_admin_passwd)
+    l.modify_s(machine[0], mod_attrs)
+    l.unbind()
 
 
 
