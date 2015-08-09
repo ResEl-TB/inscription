@@ -73,14 +73,14 @@ def Ajout(request):
 		messages.error(request, "Vous n'avez pas payé votre cotisation, vous n'avez donc pas l'autorisation de vous inscrire.<br />Veuillez contacter un administrateur ResEl par mail à l'adresse <a href='mailto:inscription@resel.fr'>inscription@resel.fr</a> en précisant votre uid : <strong>{}</strong>".format(uid))
 
 	if inactive(request, mac):
-		return HttpResponseRedirect(reverse('fr:reactivation')
+		return HttpResponseRedirect(reverse('fr:reactivation'))
 
 	if 'genericPerson' not in statuts:
 		messages.error(request, "LDAP : il manque l'attribut 'genericPerson' pour l'uid {}".format(uid))
 		mail_admins("[Inscription Brest] {} inconnu".format(uid), "Pour votre information, la personne d'uid {}, a tenté de s'inscrire. Elle ne possède pas d'attribut 'genericPerson'.\n\nIP : {} - MAC : {}\nNavigateur : {}\n\n-- \n".format(uid, clientIP, mac, request.META['HTTP_USER_AGENT']), fail_silently=False, connection=None, html_message=None)
 
 	if ('enstbPerson' not in statuts) and ('guestPerson' not in statuts):
-		
+		print "test"
 
 	if messages.get_messages(request):
 		return HttpResponseRedirect(reverse('fr:erreur'))
