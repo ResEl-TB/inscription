@@ -86,14 +86,33 @@ def Ajout(request):
 		mail_admins("[Inscription Brest] {} inconnu".format(uid), "Pour votre information, la personne d'uid {}, a tenté de s'inscrire. Elle n'est ni 'enstbPerson' ni 'guestPerson'.\n\nIP : {} - MAC : {}\nNavigateur : {}\n\n-- \n".format(uid, clientIP, mac, request.META['HTTP_USER_AGENT']), fail_silently=False, connection=None, html_message=None)
 
 	inscrit_resel = False
+	context = {}
 	if 'reselPerson' in statuts:
 		inscrit_resel = True
-		machines = search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(uidProprio=uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr)".format(uid))[0]
+		machines = search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(uidProprio=uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr)".format(uid))
+		context['machines'] = machines
+
+		if type(mac) is int:
+			messages.error(request, "Problème lors de la récupération de l'adresse MAC.")
+
+		if mac is '00:00:00:00:00:00':
+			messages.error(request, "Votre adresse MAC vaut '00:00:00:00:00:00', veuillez contacter un administrateur ResEl.")
+
+		if re.search(r'^00:00:6c', mac):
+			messages.error(request, "Votre ordinateur utilise une adresse MAC commençant par 00:00:6c, ce qui est un bug avec certains systèmes d'exploitation, constaté notamment sous Ubuntu. Contactez le ResEl pour plus d'informations.")
+			mail_admins("[Inscription Brest] Mac {} par {}".format(uid), "Pour votre information, la personne d'uid {} a une adresse MAC bugguée.\n\nIP : {} - MAC : {}\nNavigateur : {}\n\n-- \n".format(mac, uid, uid, clientIP, mac, request.META['HTTP_USER_AGENT']), fail_silently=False, connection=None, html_message=None)
+
+		machine_user = search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAdress={})".format(mac))[0]
+		bad_campus = False
+		if 'Rennes' in machine_user[1]['zone']:
+			bad_campus = True
+			update_campus(machine_user)
+			messages.error(request, "Votre machine provient du campus de Rennes. Nous avons automatiquement modifié sa localisation dans notre LDAP. Veuillez renouveler votre adresse IP via DHCP (déconnectez vous du réseau puis reconnectez vous).")
 
 	if messages.get_messages(request):
 		return HttpResponseRedirect(reverse('fr:erreur'))
 
-	return render(request, 'fr/ajout.html')
+	return render(request, 'fr/ajout.html', context)
 
 @login_required(login_url='/fr/login')
 def Reactivation(request):
