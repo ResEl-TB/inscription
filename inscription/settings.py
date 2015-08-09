@@ -1,7 +1,7 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
 
-import constants
+from constants import ldap_admin_dn, ldap_admin_passwd
 
 """
 Django settings for inscription project.
