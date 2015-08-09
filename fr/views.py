@@ -12,8 +12,10 @@ from django.core.mail import mail_admins
 
 import re
 
-from network import get_mac_from_ip
-from ldap_func import *
+from .network import get_mac_from_ip
+from .ldap_func import *
+from .forms import AdhesionForm
+from .models import Profil
 
 def Verification(request):
 	clientIP = request.META['REMOTE_ADDR']
@@ -80,7 +82,13 @@ def Ajout(request):
 		mail_admins("[Inscription Brest] {} inconnu".format(uid), "Pour votre information, la personne d'uid {}, a tenté de s'inscrire. Elle ne possède pas d'attribut 'genericPerson'.\n\nIP : {} - MAC : {}\nNavigateur : {}\n\n-- \n".format(uid, clientIP, mac, request.META['HTTP_USER_AGENT']), fail_silently=False, connection=None, html_message=None)
 
 	if ('enstbPerson' not in statuts) and ('guestPerson' not in statuts):
-		print "test"
+		messages.error(request, "Vous n'êtes pas une personne enregistrée à Télécom Bretagne. Pour pouvoir vous inscrire veuillez contacter <a href=\"mailto:inscription@resel.fr\">inscription@resel.fr</a>.")
+		mail_admins("[Inscription Brest] {} inconnu".format(uid), "Pour votre information, la personne d'uid {}, a tenté de s'inscrire. Elle n'est ni 'enstbPerson' ni 'guestPerson'.\n\nIP : {} - MAC : {}\nNavigateur : {}\n\n-- \n".format(uid, clientIP, mac, request.META['HTTP_USER_AGENT']), fail_silently=False, connection=None, html_message=None)
+
+	inscrit_resel = False
+	if 'reselPerson' in statuts:
+		inscrit_resel = True
+		machines = search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(uidProprio=uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr)".format(uid))[0]
 
 	if messages.get_messages(request):
 		return HttpResponseRedirect(reverse('fr:erreur'))
@@ -90,3 +98,35 @@ def Ajout(request):
 @login_required(login_url='/fr/login')
 def Reactivation(request):
 	return render(request, 'fr/reactivation.html')
+
+@login_required(login_url='/fr/login')
+def Devenir_membre(request):
+	if request.method == 'POST':
+		form = AdhesionForm(request.POST)
+
+		if form.is_valid():
+			accepted = form.cleaned_data['accepted']
+
+			if accepted:
+				uid = str(request.user.username)
+				ajouter(uid)
+
+	return render(request, 'fr/devenir_membre.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

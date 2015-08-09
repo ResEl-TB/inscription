@@ -4,6 +4,7 @@ from constants import ldap_admin_dn, ldap_admin_passwd
 
 import ldap
 from datetime import datetime
+import time
 
 from django_auth_ldap.config import LDAPSearch
 from django.shortcuts import render
@@ -83,6 +84,16 @@ def get_status(request, uid):
 	else:
 		messages.error(request, "L'uid fourni dans la fonction 'get_status' vaut 'None'.")
 		return None
+
+def ajouter(uid):
+	mod_attrs = [
+		( ldap.MOD_ADD, 'dateinscr', "{}Z".format(time.strftime('%Y%m%d%H%M%S')) ),
+		( ldap.MOD_ADD, 'objectClass', 'reselPerson' )
+	]
+	
+	l = ldap.initialize('ldap://ldap.maisel.enst-bretagne.fr')
+    l.simple_bind_s(ldap_admin_dn, ldap_admin_passwd)
+    l.modify_s('uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr'.format(uid), mod_attrs)
 
 
 

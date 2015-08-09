@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<h1>Bienvenue sur la page de test !</h1>
-	<p>T'as r&eacute;ussi a te logger si t'es ici...</p>
+	{% if inscrit_resel %}
+		<p><strong>Vous êtes inscrit au ResEl</strong>.</p>
+	{% else %}
+		<p>Vous n'êtes pas encore inscrit au ResEl. Pour vous inscrire, cliquez sur le lien suivant : <a href="{% url 'fr:devenir_membre' %}">Devenir membre du ResEl</a></p>
+	{% endif %}
 {% endblock %}
