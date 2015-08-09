@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Bienvenue au ResEl !</h1>
+
+    <p><a href="{% url 'fr:index' %}">Ce site web en Français.</a></p>
+    <p><a href="">This website in English.</a></p>
+
+    {% if machineInactive %}
+        <h2>Machine inactive</h2>
+        <p>Votre machine a &eacute;t&eacute; d&eacute;sactiv&eacute;e car elle n'a pas &eacute;t&eacute; vue sur le r&eacute;seau pendant trop de temps. Vous pouvez la <a href=\"{% url 'fr:reactivation' %}">r&eacute;activer</a></p>
+    {% endif %}
+
+    <h2>Pr&eacute;liminaires</h2>
+
+    <p>Vous venez apparemment d'arriver sur le <acronym title=\"R&eacute;seau des Élèves\">ResEl</acronym>, et votre machine n'est pas encore enregistr&eacute;e. Vous n'avez donc pas accès à Internet.</p>
+
+    <p>Si vous voulez vous inscrire, vous devrez payer une cotisation de <strong>25 euros</strong> (conform&eacute;ment au <a href="">règlement int&eacute;rieur</a> et aux <a href="">statuts</a>). Le paiement de cette cotisation se fait en g&eacute;n&eacute;ral au mois d'octobre, vous serez alors pr&eacute;venu des modalit&eacute;s de paiement.</p>
+
+    <p>Vous ne pouvez vous inscrire que si vous êtes membre du ResEl, donc après avoir accept&eacute; le <a href="">règlement int&eacute;rieur</a>.</p>
+
+    <h2>Comment acc&eacute;der à Internet ?</h2>
+
+    <p>Pour avoir accès à Internet, il suffit d'aller sur <a href="{% url 'fr:login' %}">le site s&eacute;curis&eacute; d'inscription</a>. Une authentification va vous être demand&eacute;e, il y a alors deux cas :</p>
+
+    <ul>
+    	<li>Si vous êtes <strong>&eacute;lève</strong> ou si vous avez un compte informatique à l'&eacute;cole, vous pouvez vous identifier avec votre login &eacute;cole (typiquement première lettre du pr&eacute;nom + nom, le tout tronqu&eacute; à 8 caractères) et votre mot de passe ResEl. Suivez ensuite les instructions.</li>
+
+    	<li>Si vous êtes <strong>stagiaire</strong> log&eacute; à la MaisEl, et que vous n'avez pas de compte à T&eacute;l&eacute;com Bretagne, il faut alors <a href="">nous contacter</a>.</li>
+    </ul>
+
+    <h2>Une fois inscrit...</h2>
+
+    <p>Les liens propos&eacute;s ci-après ne seront fonctionnels qu'une fois votre inscription effectu&eacute;e. Vous pourrez revenir sur cette page en vous rendant sur <a href="{% url 'fr:index'}">http://inscription/</a>.</p>
+
+    <p>Une fois inscrit, vous aurez alors accès à Internet, mais &eacute;galement à tout un ensemble de services propos&eacute;s par le <a href="http://resel.fr/">ResEl</a>. De nombreuses pages d'explications et de configurations sont disponibles sur le site du ResEl.</p>
+
+    <p>Pour toutes vos questions, vous pourrez regardez la <a href=\"http://resel.fr/configuration/faq/\"><acronym title=\"Frequently Asked Questions\">FAQ</acronym> ResEl</a>, et en cas de problème, <a href="">nous contacter</a>.</p>
+
+    <p><strong>Important</strong> : après l'inscription n'oubliez pas d'aller sur la <a href=\"http://resel.fr/configuration/inscription\">page de configuration post-inscription</a></p>
+
+    <p>À bientôt sur le r&eacute;seau !<p>
+{% endblock %}
