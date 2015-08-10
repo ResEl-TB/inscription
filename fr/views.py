@@ -133,7 +133,7 @@ def Index_secure(request):
 				else:
 					machineIP = '172.22.' + machine_user[1]['ipHostNumber'][0]
 
-					if clientIP =! machineIP:
+					if clientIP != machineIP:
 						if 'Rennes' in machine_user[1]['zone']:
 							update_campus(machine_user)
 							messages.error(request, "Votre machine provient du campus de Rennes. Nous avons automatiquement modifié sa localisation dans notre LDAP. Veuillez renouveler votre adresse IP via DHCP (déconnectez vous du réseau puis reconnectez vous) afin d'obtenir un accès internet.")
