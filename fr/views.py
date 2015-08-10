@@ -217,18 +217,45 @@ def Ajout_2(request):
 
 @login_required(login_url='/fr/login')
 def Ajout_3(request):
-	ipHostNumber = get_free_ip(200, 223)
-	lastdate = time.strftime('%Y%m%d%H%M%S')
+	ip = get_free_ip(200, 223)
+	lastdate = time.strftime('%Y%m%d%H%M%S') + 'Z'
 
+	if len(request.META['alias_choisis']) == 0:
+		hostname = request.META['alias_auto']
+		aliases = ['0' + hostname]
+	elif len(request.META['alias_choisis']) == 1:
+		hostname = request.META['alias_choisis'][0]
+		aliases = [request.META['alias_auto']]
+	else:
+		hostname = request.META['alias_choisis'][0]
+		aliases = [request.META['alias_auto'], request.META['alias_choisis'][1]]
+
+	add_record = [
+		('objectClass', ['reselMachine']),
+		('host', [hostname]),
+		('uidproprio', ['uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr'.format(request.META['uid_client'])]),
+		('iphostnumber', [str(ip)]),
+		('macaddress', [request.META['mac_client']]),
+		('zone', ['Brest', 'User']),
+		('hostalias', aliases),
+		('lastdate', [lastdate])
+	]
+
+	add_entry("host={},ou=machines,dc=resel,dc=enst-bretagne,dc=fr".format(hostname), add_record)
+
+	# Modification du champ publiable si c'est la premiere machine
 	if request.META['nb_machines'] == 0:
 		publiable = request.META['publiable']
 
-	aliases = [request.META['alias_auto']]
-	if len(request.META['alias_choisis']) != 0:
-		for item in request.META['alias_choisis']:
-			aliases.append(item)
+		personne = search("ou=people,dc=maisel,dc=enst-bretagne,dc=fr","(uid={})".format(request.META['uid_client']))[0]
+		if 'maiselPerson' in personne[1]['objectClass']:
+			mod_attrs = [
+				( ldap.MOD_REPLACE, 'publiable', publiable )
+			]
+			mod("uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr".format(request.META['uid_client']), mod_attrs)
 
-	
+	update_dhcp_dns_firewall()
+
 	return render(request, 'fr/ajout_3.html')
 
 
