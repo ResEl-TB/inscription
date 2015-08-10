@@ -27,121 +27,120 @@ def blacklist(request, uid):
     """ 
     Vérifie si un utilisateur est blacklisté 
     """
-	if uid:
-		result = search('ou=people,dc=maisel,dc=enst-bretagne,dc=fr', "(uid={})".format(uid))
-		if len(result) != 0:
-			year = datetime.now().year
-			month = datetime.now().month
+    if uid:
+        result = search('ou=people,dc=maisel,dc=enst-bretagne,dc=fr', "(uid={})".format(uid))
+        if len(result) != 0:
+            year = datetime.now().year
+            month = datetime.now().month
 
-			if month < 9:
-				year -= 1
+            if month < 9:
+                year -= 1
 
-			return ('BLACKLIST{}'.format(year) in result[0][1]['cotiz'])
-		else:
-			messages.error(request, "L'user {} n'est pas présent dans l'annuaire LDAP".format(uid))
-			return False
-	else:
-		messages.error(request, "L'uid fourni a la fonction 'blacklist' vaut 'None'.")
-		return False
+            return ('BLACKLIST{}'.format(year) in result[0][1]['cotiz'])
+        else:
+            messages.error(request, "L'user {} n'est pas présent dans l'annuaire LDAP".format(uid))
+            return False
+    else:
+        messages.error(request, "L'uid fourni a la fonction 'blacklist' vaut 'None'.")
+        return False
 
 def check_uid_mac(request, uid, mac):
-	"""
-	Vérifie que la mac fournie est bien associée à l'uid fourni.
-	Renvoi False en cas d'erreur, et le tuple (proprio, alias) correspondant 
-	à l'uid propriétaire de la machine ainsi que l'alias de la dite machine
-	"""
-	if uid and mac:
-		result = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )
-		if result:
-			proprio = result[0][1]['uidproprio'][0].split('=')[1].split(',')[0]
-			alias = result[0][1]['host'][0]
-			return (proprio, alias)
-		else:
-			messages.error(request, "La MAC {} n'est pas connue dans notre annuaire LDAP.".format(mac))
-			return False	
-	else:
-		messages.error(request, "Un des paramètres fourni a la fonction 'check_uid_mac' vaut 'None'.")
-		return False
+    """
+    Vérifie que la mac fournie est bien associée à l'uid fourni.
+    Renvoi False en cas d'erreur, et le tuple (proprio, alias) correspondant 
+    à l'uid propriétaire de la machine ainsi que l'alias de la dite machine
+    """
+    if uid and mac:
+        result = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )
+        if result:
+            proprio = result[0][1]['uidproprio'][0].split('=')[1].split(',')[0]
+            alias = result[0][1]['host'][0]
+            return (proprio, alias)
+        else:
+            messages.error(request, "La MAC {} n'est pas connue dans notre annuaire LDAP.".format(mac))
+            return False
+    else:
+        messages.error(request, "Un des paramètres fourni a la fonction 'check_uid_mac' vaut 'None'.")
+        return False
 
 def get_status(request, uid):
-	"""
-	Retourne une liste des objectClass de l'uid fourni, et None en cas d'erreur
-	"""
-	if uid:
-		result = search( "ou=people,dc=maisel,dc=enst-bretagne,dc=fr" , "(uid={})".format(uid) )
-		if result:
-			status = result[0][1]['objectClass']
-			return status
-		else:
-			messages.error(request, "L'user {} n'existe pas dans le LDAP.".format(uid))
-			return None
-	else:
-		messages.error(request, "L'uid fourni dans la fonction 'get_status' vaut 'None'.")
-		return None
+    """
+    Retourne une liste des objectClass de l'uid fourni, et None en cas d'erreur
+    """
+    if uid:
+        result = search( "ou=people,dc=maisel,dc=enst-bretagne,dc=fr" , "(uid={})".format(uid) )
+        if result:
+            status = result[0][1]['objectClass']
+            return status
+        else:
+            messages.error(request, "L'user {} n'existe pas dans le LDAP.".format(uid))
+            return None
+    else:
+        messages.error(request, "L'uid fourni dans la fonction 'get_status' vaut 'None'.")
+        return None
 
 def inscrire_user(uid):
-	"""
-	Ajoute l'objectClass 'reselPerson' ainsi que la date d'inscription à la fiche ldap de l'uid
-	"""
-	mod_attrs = [
-		( ldap.MOD_ADD, 'dateinscr', "{}Z".format(time.strftime('%Y%m%d%H%M%S')) ),
-		( ldap.MOD_ADD, 'objectClass', 'reselPerson' )
-	]
-	
-	l = ldap.initialize('ldap://ldap.maisel.enst-bretagne.fr')
+    """
+    Ajoute l'objectClass 'reselPerson' ainsi que la date d'inscription à la fiche ldap de l'uid
+    """
+    mod_attrs = [
+        ( ldap.MOD_ADD, 'dateinscr', "{}Z".format(time.strftime('%Y%m%d%H%M%S')) ),
+        ( ldap.MOD_ADD, 'objectClass', 'reselPerson' )
+    ]
+
+    l = ldap.initialize('ldap://ldap.maisel.enst-bretagne.fr')
     l.simple_bind_s(ldap_admin_dn, ldap_admin_passwd)
     l.modify_s('uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr'.format(uid), mod_attrs)
     l.unbind()
 
 def update_campus(machine):
-	"""
-	Met a jour le campus d'une machine
-	"""
-	mod_attrs = [
-		( ldap.MOD_DELETE, 'zone', 'Rennes' ),
-		( ldap.MOD_ADD, 'zone', 'Brest' )
-	]
-	
-	l = ldap.initialize('ldap://ldap.maisel.enst-bretagne.fr')
+    """
+    Met a jour le campus d'une machine
+    """
+    mod_attrs = [
+        ( ldap.MOD_DELETE, 'zone', 'Rennes' ),
+        ( ldap.MOD_ADD, 'zone', 'Brest' )
+    ]
+
+    l = ldap.initialize('ldap://ldap.maisel.enst-bretagne.fr')
     l.simple_bind_s(ldap_admin_dn, ldap_admin_passwd)
     l.modify_s(machine[0], mod_attrs)
     l.unbind()
 
 def add_entry(dn, attrs):
-	"""
-	Ajoute une entrée dans le LDAP
-	"""
-	l = ldap.initialize('ldap://ldap.maisel.enst-bretagne.fr')
+    """
+    Ajoute une entrée dans le LDAP
+    """
+    l = ldap.initialize('ldap://ldap.maisel.enst-bretagne.fr')
     l.simple_bind_s(ldap_admin_dn, ldap_admin_passwd)
     l.add_s(dn, attrs)
     l.unbind()
 
 def mod(dn, attrs):
-	"""
-	Modifie la fiche LDAP correspondant au DN fourni, en fonction des attributs attrs
-	"""
-	l = ldap.initialize('ldap://ldap.maisel.enst-bretagne.fr')
+    """
+    Modifie la fiche LDAP correspondant au DN fourni, en fonction des attributs attrs
+    """
+    l = ldap.initialize('ldap://ldap.maisel.enst-bretagne.fr')
     l.simple_bind_s(ldap_admin_dn, ldap_admin_passwd)
     l.modify_s(dn, attrs)
     l.unbind()
 
 def get_free_alias(request, uid):
-	"""
-	Récupère un alias automatiquement pour l'ajout d'une nouvelle machine
-	"""
-	test = 'pc{}'.format(uid)
-	result = search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(test))
+    """
+    Récupère un alias automatiquement pour l'ajout d'une nouvelle machine
+    """
+    test = 'pc{}'.format(uid)
+    result = search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(test))
 
-	if len(result) != 0:
-		continuer = True
-		i = 2
-		while continuer:
-			test = 'pc{}{}'.format(uid, i)
-			i += 1
-			if len(search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(test))) = 0:
-				continuer = False
-		
-	return test
+    if len(result) != 0:
+        continuer = True
+        i = 2
+        while continuer:
+            test = 'pc{}{}'.format(uid, i)
+            i += 1
+            if len(search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(test))) = 0:
+                continuer = False	
+    return test
 
 
 
