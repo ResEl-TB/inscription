@@ -52,6 +52,10 @@ def get_free_ip(low, high):
 
     return "{}.{}".format(rang, item)
 
+def update_dhcp_dns_firewall():
+    Popen(['ssh -t reloader@dynasty.adm.maisel.enst-bretagne.fr 2>&1'], stdout=PIPE, shell=True)
+    Popen(['ssh -t updatefirewall@loli -p 2222 2>&1'], stdout=PIPE, shell=True)
+
 
 
 
