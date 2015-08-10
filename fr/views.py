@@ -195,8 +195,8 @@ def Devenir_membre(request):
 
 @login_required(login_url='/fr/login')
 def Ajout_1(request):
-    global infos
     mac = infos['mac_client']
+    print infos
     uid = infos['uid_client']
     infos['alias_choisis'] =[]
 
