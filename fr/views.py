@@ -156,6 +156,17 @@ def Index_secure(request):
 
 @login_required(login_url='/fr/login')
 def Reactivation(request):
+	mac = request.META['mac_client']
+	machine = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )[0]
+
+	mod_attrs = [
+		( ldap.MOD_DELETE, 'zone', 'Inactive' ),
+		( ldap.MOD_ADD, 'zone', 'Brest' )
+	]
+
+	mod(machine[0], mod_attrs)
+	update_dhcp_dns_firewall()
+
 	return render(request, 'fr/reactivation.html')
 
 @login_required(login_url='/fr/login')
