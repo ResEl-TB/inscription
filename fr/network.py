@@ -9,6 +9,8 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 
+from ldap_func import search
+
 def get_mac_from_ip(request, ip, local_net):
     """ Récupère l'adresse MAC associee a l'IP fournie
     
@@ -31,3 +33,29 @@ def get_mac_from_ip(request, ip, local_net):
     except NameError:
         messages.error(request, "Aucune adresse IP fournie.")
         return None
+
+def get_free_ip(low, high):
+    """
+    Récupère une IP libre pour une nouvelle machine à partir du LDAP
+    """
+    rang = low - 1
+    again = True
+
+    while ((rang < high) and again):
+        rang += 1
+        item = 2
+
+        while ((item < 254) and again):
+            item +=1
+            if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(ipHostNumber={}.{})".format(rang, item)):
+                again = False
+
+    return "{}.{}".format(rang, item)
+
+
+
+
+
+
+
+

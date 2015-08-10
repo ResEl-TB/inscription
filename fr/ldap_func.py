@@ -11,39 +11,24 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 
-def inactive(request, mac):
-    """
-    Search in the LDAP if user's machine is active or not
-    """
-    try:
-	if mac is not None:
-		result = search('ou=machines,dc=resel,dc=enst-bretagne,dc=fr', "(macAddress={})".format(mac))
-		if result:
-	    		return ('Inactive' in result[0][1]['zone'])
-		else:
-			messages.error(request, "La MAC {} n'est pas connue dans notre annuaire LDAP.".format(mac))
-	    		return False
-	else:
-		messages.error(request, "get_mac_from_ip a fourni le paramètre 'None'.")
-		return False
-    except NameError:
-	messages.error(request, "Aucune MAC fournie en paramètre pour la fonction 'inactive'.")
-	return False
-
 def search(base_dn, filters):
     """
-    Performs a search in the LDAP with the given parameters
+    Cherche dans le ldap avec les paramètres fournis
     """
     l = ldap.initialize('ldap://ldap.maisel.enst-bretagne.fr')
     l.simple_bind_s(ldap_admin_dn, ldap_admin_passwd)
     results = l.search_s(base_dn, ldap.SCOPE_SUBTREE, filters)
+    if len(results) == 0:
+    	return None
     return results
 
 def blacklist(request, uid):
-    	""" Check if a user is blacklisted """
+    """ 
+    Vérifie si un utilisateur est blacklisté 
+    """
 	if uid:
 		result = search('ou=people,dc=maisel,dc=enst-bretagne,dc=fr', "(uid={})".format(uid))
-		if result:
+		if len(result) != 0:
 			year = datetime.now().year
 			month = datetime.now().month
 
@@ -59,10 +44,15 @@ def blacklist(request, uid):
 		return False
 
 def check_uid_mac(request, uid, mac):
+	"""
+	Vérifie que la mac fournie est bien associée à l'uid fourni.
+	Renvoi False en cas d'erreur, et le tuple (proprio, alias) correspondant 
+	à l'uid propriétaire de la machine ainsi que l'alias de la dite machine
+	"""
 	if uid and mac:
 		result = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )
 		if result:
-			proprio = result[0][1]['uidproprio'][0].split('=')[1]
+			proprio = result[0][1]['uidproprio'][0].split('=')[1].split(',')[0]
 			alias = result[0][1]['host'][0]
 			return (proprio, alias)
 		else:
@@ -73,6 +63,9 @@ def check_uid_mac(request, uid, mac):
 		return False
 
 def get_status(request, uid):
+	"""
+	Retourne une liste des objectClass de l'uid fourni, et None en cas d'erreur
+	"""
 	if uid:
 		result = search( "ou=people,dc=maisel,dc=enst-bretagne,dc=fr" , "(uid={})".format(uid) )
 		if result:
@@ -85,7 +78,10 @@ def get_status(request, uid):
 		messages.error(request, "L'uid fourni dans la fonction 'get_status' vaut 'None'.")
 		return None
 
-def ajouter(uid):
+def inscrire_user(uid):
+	"""
+	Ajoute l'objectClass 'reselPerson' ainsi que la date d'inscription à la fiche ldap de l'uid
+	"""
 	mod_attrs = [
 		( ldap.MOD_ADD, 'dateinscr', "{}Z".format(time.strftime('%Y%m%d%H%M%S')) ),
 		( ldap.MOD_ADD, 'objectClass', 'reselPerson' )
@@ -97,6 +93,9 @@ def ajouter(uid):
     l.unbind()
 
 def update_campus(machine):
+	"""
+	Met a jour le campus d'une machine
+	"""
 	mod_attrs = [
 		( ldap.MOD_DELETE, 'zone', 'Brest' ),
 		( ldap.MOD_ADD, 'zone', 'Rennes' )
@@ -106,6 +105,24 @@ def update_campus(machine):
     l.simple_bind_s(ldap_admin_dn, ldap_admin_passwd)
     l.modify_s(machine[0], mod_attrs)
     l.unbind()
+
+def get_free_alias(request, uid):
+	"""
+	Récupère un alias automatiquement pour l'ajout d'une nouvelle machine
+	"""
+	test = 'pc{}'.format(uid)
+	result = search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(test))
+
+	if len(result) != 0:
+		continuer = True
+		i = 2
+		while continuer:
+			test = 'pc{}{}'.format(uid, i)
+			i += 1
+			if len(search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(test))) = 0:
+				continuer = False
+		
+	return test
 
 
 

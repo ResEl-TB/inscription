@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1>Étape 1/3</h1>
+	<h2>Choix d'un nom d'hôte</h2>
+	<p>Votre machine sera identifiée sur notre réseau avec le nom {{ request.META.alias_auto }}.</p>
+	<p>Vous pouvez, si vous le souhaitez, lui attribuer jusqu'à deux noms supplémentaires.</p>
+	<p>Si vous ne voulez pas, vous pouvez directement cliquer sur suivant.</p>
+	<form action="{% url "fr:ajout_1" %}" method="post">
+    	{% csrf_token %}
+    	{{ form.alias_1 }}
+    	{{ form.alias_2 }}
+    	{% if request.META.nb_machines == 0 %}
+    		{{ form.publiable }}<p>J'autorise la publication de mon téléphone, de ma chambre, et de mon E-Mail dans l'annuaire externe du ResEl.</p>
+    	{% endif %}
+    	<input type="submit" value="Suivant" />
+	</form>
+{% endblock %}

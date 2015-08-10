@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1>Étape 2/3</h1>`
+
+	<h2>Actions possibles :</h2>
+
+	<h3>Modification des noms</h3>
+	<p>Vous pouvez, si vous le souhaitez, <a href="{% url 'fr:ajout_1' %}">changer les noms</a>.</p>
+
+	<h3>Étape suivante</h3>
+	<p>Si les noms suivants vous suffisent, vous pouvez passer à la dernière étape.</p>
+	<table>
+		<tr><td>{{ request.META.alias_auto }}</td></tr>
+		{% if request.META.alias_choisis|length != 0 %}
+			{% for alias in request.META.alias_choisis %}
+			<tr><td>{{ alias }}</td></tr>
+			{% endfor %}
+		{% endif %}
+	</table>
+	<p><a href="{% url 'fr:ajout_3' %}">Terminer l'inscription</a></p>
+{% endblock %}
