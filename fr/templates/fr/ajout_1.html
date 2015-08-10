@@ -10,7 +10,7 @@
     	{% csrf_token %}
     	{{ form.alias_1 }}
     	{{ form.alias_2 }}
-    	{% if infos.nb_machines == 0 %}
+    	{% if request.session.nb_machines == 0 %}
     		{{ form.publiable }}<p>J'autorise la publication de mon téléphone, de ma chambre, et de mon E-Mail dans l'annuaire externe du ResEl.</p>
     	{% endif %}
     	<input type="submit" value="Suivant" />

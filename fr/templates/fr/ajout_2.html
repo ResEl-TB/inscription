@@ -12,7 +12,7 @@
 	<p>Si les noms suivants vous suffisent, vous pouvez passer à la dernière étape.</p>
 	<table>
 		<tr><td>{{ request.META.alias_auto }}</td></tr>
-		{% if infos.alias_choisis|length != 0 %}
+		{% if request.session.alias_choisis|length != 0 %}
 			{% for alias in infos.alias_choisis %}
 			<tr><td>{{ alias }}</td></tr>
 			{% endfor %}

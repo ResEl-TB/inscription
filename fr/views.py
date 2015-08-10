@@ -18,9 +18,6 @@ from .ldap_func import *
 from .forms import AdhesionForm, AliasForm
 from .models import Profil
 
-global infos
-infos = {}
-
 def Verification(request):
     clientIP = request.META['REMOTE_ADDR']
 
@@ -79,9 +76,8 @@ def Index_secure(request):
     if messages.get_messages(request):
         return HttpResponseRedirect(reverse('fr:erreur'))
 
-    global infos
-    infos['uid_client'] = uid
-    infos['mac_client'] = mac
+    request.session['uid_client'] = uid
+    request.session['mac_client'] = mac
 
     if blacklist(request, uid):
         messages.error(request, "Vous n'avez pas payé votre cotisation, vous n'avez donc pas l'autorisation de vous inscrire.<br />Veuillez contacter un administrateur ResEl par mail à l'adresse <a href='mailto:inscription@resel.fr'>inscription@resel.fr</a> en précisant votre uid : <strong>{}</strong>".format(uid))
@@ -103,13 +99,13 @@ def Index_secure(request):
     context = {}
     context['inscrit_resel'] = False
     if 'reselPerson' in statuts:
-        infos['nb_machines'] = 0
+        request.session['nb_machines'] = 0
         context['inscrit_resel'] = True
         machines = search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(uidProprio=uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr)".format(uid))
 
         if machines:
             context['machines'] = machines
-            infos['nb_machines'] = len(machines)
+            request.session['nb_machines'] = len(machines)
 
             if type(mac) is int:
                 messages.error(request, "Problème lors de la récupération de l'adresse MAC.")
@@ -160,8 +156,7 @@ def Index_secure(request):
 
 @login_required(login_url='/fr/login')
 def Reactivation(request):
-    global infos
-    mac = infos['mac_client']
+    mac = request.session['mac_client']
     machine = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )[0]
 
     mod_attrs = [
@@ -195,10 +190,9 @@ def Devenir_membre(request):
 
 @login_required(login_url='/fr/login')
 def Ajout_1(request):
-    print infos
-    mac = infos['mac_client']
-    uid = infos['uid_client']
-    infos['alias_choisis'] =[]
+    mac = request.session['mac_client']
+    uid = request.session['uid_client']
+    request.session['alias_choisis'] =[]
 
     if request.POST:
         form = AliasForm(request.POST)
@@ -206,10 +200,10 @@ def Ajout_1(request):
         if form.is_valid:
             for key, value in form.cleaned_data:
                 if key == 'publiable':
-                    infos['publiable'] = value
+                    request.session['publiable'] = value
                 else:
                     if value != '':
-                        infos['alias_choisis'].append(value)
+                        request.session['alias_choisis'].append(value)
             return HttpResponseRedirect(reverse('fr:ajout_2'))
 
     else:
@@ -219,24 +213,19 @@ def Ajout_1(request):
             return HttpResponseRedirect(reverse('fr:erreur'))
 
         alias = get_free_alias(uid)
-        infos['alias_auto'] = [alias]
+        request.session['alias_auto'] = [alias]
 
         if messages.get_messages(request):
             return HttpResponseRedirect(reverse('fr:erreur'))
 
     context = {
         'form': form,
-        'infos': infos
     }
 
     return render(request, 'fr/ajout_1.html', context)
 
 @login_required(login_url='/fr/login')
 def Ajout_2(request):
-    global infos
-    context = {
-        'infos': infos
-    }
     return render(request, 'fr/ajout_2.html', context)
 
 @login_required(login_url='/fr/login')
@@ -244,22 +233,22 @@ def Ajout_3(request):
     ip = get_free_ip(200, 223)
     lastdate = time.strftime('%Y%m%d%H%M%S') + 'Z'
 
-    if len(infos['alias_choisis']) == 0:
-        hostname = infos['alias_auto']
+    if len(request.session['alias_choisis']) == 0:
+        hostname = request.session['alias_auto']
         aliases = ['0' + hostname]
-    elif len(infos['alias_choisis']) == 1:
-        hostname = infos['alias_choisis'][0]
-        aliases = [infos['alias_auto']]
+    elif len(request.session['alias_choisis']) == 1:
+        hostname = request.session['alias_choisis'][0]
+        aliases = [request.session['alias_auto']]
     else:
-        hostname = infos['alias_choisis'][0]
-        aliases = [infos['alias_auto'], infos['alias_choisis'][1]]
+        hostname = request.session['alias_choisis'][0]
+        aliases = [request.session['alias_auto'], request.session['alias_choisis'][1]]
 
     add_record = [
         ('objectClass', ['reselMachine']),
         ('host', [hostname]),
-        ('uidproprio', ['uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr'.format(infos['uid_client'])]),
+        ('uidproprio', ['uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr'.format(request.session['uid_client'])]),
         ('iphostnumber', [str(ip)]),
-        ('macaddress', [infos['mac_client']]),
+        ('macaddress', [request.session['mac_client']]),
         ('zone', ['Brest', 'User']),
         ('hostalias', aliases),
         ('lastdate', [lastdate])
@@ -268,15 +257,15 @@ def Ajout_3(request):
     add_entry("host={},ou=machines,dc=resel,dc=enst-bretagne,dc=fr".format(hostname), add_record)
 
     # Modification du champ publiable si c'est la premiere machine
-    if infos['nb_machines'] == 0:
-        publiable = infos['publiable']
+    if request.session['nb_machines'] == 0:
+        publiable = request.session['publiable']
 
-        personne = search("ou=people,dc=maisel,dc=enst-bretagne,dc=fr","(uid={})".format(infos['uid_client']))[0]
+        personne = search("ou=people,dc=maisel,dc=enst-bretagne,dc=fr","(uid={})".format(request.session['uid_client']))[0]
         if 'maiselPerson' in personne[1]['objectClass']:
             mod_attrs = [
                 ( ldap.MOD_REPLACE, 'publiable', publiable )
             ]
-            mod("uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr".format(infos['uid_client']), mod_attrs)
+            mod("uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr".format(request.session['uid_client']), mod_attrs)
 
     update_dhcp_dns_firewall()
 
