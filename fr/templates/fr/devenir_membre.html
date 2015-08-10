@@ -26,7 +26,7 @@
 	<ul>
 	<li>au local du ResEl présent à l'ENST Bretagne, durant les heures de permanence indiquées sur la porte&nbsp;;</li>
 	<li>sur IRC : serveur <kbd>irc.maisel.enst-bretagne.fr</kbd> (ou <kbd>irc.rezosup.org</kbd> depuis l'extérieur), canal <i>#ResEl</i>, sur lequel sont présents les administrateurs lorsqu'ils sont disponibles&nbsp;;</li>
-	<li>par courrier électronique à l'adresse <a href="mailto:gestion@resel.fr">gestion@resel.fr</a>. Ce courrier doit contenir une description précise du problème et doit être envoyé après avoir vérifié que la solution ne se trouve pas sur <a href="http://resel.fr">http://resel.fr</a>.</li>
+	<li>par courrier électronique à l'adresse <a href="mailto:support@resel.fr">support@resel.fr</a>. Ce courrier doit contenir une description précise du problème et doit être envoyé après avoir vérifié que la solution ne se trouve pas sur <a href="http://resel.fr">http://resel.fr</a>.</li>
 	</ul>
 
 	<p class="RI"><span class="numeroarticle">2</span>Il est explicitement demandé aux utilisateurs de ne pas téléphoner directement aux administrateurs ni de venir leur rendre visite s'ils sont en mesure d'utiliser les moyens décrits dans le premier paragraphe de cet article.</p>
@@ -111,7 +111,7 @@
 	<li>à aider à la gestion de l'Association et du réseau.</li>
 	</ul></p>
 
-	<p class="RI"><span class="numeroarticle">2</span> Les informations concernant l'utilisateur contenues dans ces bases peuvent être modifiées pour une partie d'entre elles dans <a href="https://resel.fr/MyResEl/">https://resel.fr/MyResEl/</a>, pour l'autre en envoyant un courrier électronique à <a href="mailto:gestion@resel.fr">gestion@resel.fr</a></p>
+	<p class="RI"><span class="numeroarticle">2</span> Les informations concernant l'utilisateur contenues dans ces bases peuvent être modifiées pour une partie d'entre elles dans <a href="https://resel.fr/MyResEl/">https://resel.fr/MyResEl/</a>, pour l'autre en envoyant un courrier électronique à <a href="mailto:support@resel.fr">support@resel.fr</a></p>
 
 	<h3>Article huit : sanctions prévues</h3>
 
@@ -181,7 +181,7 @@
 
 	{% if accepted %}
 		<p>Félicitations ! Vous êtes désormais un membre du ResEl.</p>
-		<p>Retour vers la page <a href="{% url 'fr:ajout' %}">d'inscription</a> pour gérer vos machines.</p>
+		<p>Retour vers la page <a href="{% url 'fr:index_secure' %}">d'inscription</a> pour gérer vos machines.</p>
 	{% endif %}
 
 	<form action="{% url "fr:devenir_membre" %}" method="post">
