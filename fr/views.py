@@ -18,6 +18,7 @@ from .ldap_func import *
 from .forms import AdhesionForm, AliasForm
 from .models import Profil
 
+global infos
 infos = {}
 
 def Verification(request):
@@ -78,6 +79,7 @@ def Index_secure(request):
     if messages.get_messages(request):
         return HttpResponseRedirect(reverse('fr:erreur'))
 
+    global infos
     infos['uid_client'] = uid
     infos['mac_client'] = mac
 
@@ -158,6 +160,7 @@ def Index_secure(request):
 
 @login_required(login_url='/fr/login')
 def Reactivation(request):
+    global infos
     mac = infos['mac_client']
     machine = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )[0]
 
@@ -192,6 +195,7 @@ def Devenir_membre(request):
 
 @login_required(login_url='/fr/login')
 def Ajout_1(request):
+    global infos
     mac = infos['mac_client']
     uid = infos['uid_client']
     infos['alias_choisis'] =[]
@@ -229,6 +233,7 @@ def Ajout_1(request):
 
 @login_required(login_url='/fr/login')
 def Ajout_2(request):
+    global infos
     context = {
         'infos': infos
     }
