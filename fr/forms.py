@@ -36,7 +36,7 @@ class AliasForm(forms.Form):
         else:
             if re.search(r'enst-bretagne', alias):
                 raise forms.ValidationError("L'alias ne doit pas contenir le nom de l'école.")
-            if re.search(r'resel', alias)
+            if re.search(r'resel', alias):
                 raise forms.ValidationError("L'alias ne doit pas contenir le nom resel.")
             if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={}".format(alias)) is None:
                 raise forms.ValidationError("L'alias choisi est déjà utilisé pour une machine de notre réseau.")
