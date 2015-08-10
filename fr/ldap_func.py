@@ -106,6 +106,24 @@ def update_campus(machine):
     l.modify_s(machine[0], mod_attrs)
     l.unbind()
 
+def add_entry(dn, attrs):
+	"""
+	Ajoute une entrée dans le LDAP
+	"""
+	l = ldap.initialize('ldap://ldap.maisel.enst-bretagne.fr')
+    l.simple_bind_s(ldap_admin_dn, ldap_admin_passwd)
+    l.add_s(dn, attrs)
+    l.unbind()
+
+def mod(dn, attrs):
+	"""
+	Modifie la fiche LDAP correspondant au DN fourni, en fonction des attributs attrs
+	"""
+	l = ldap.initialize('ldap://ldap.maisel.enst-bretagne.fr')
+    l.simple_bind_s(ldap_admin_dn, ldap_admin_passwd)
+    l.modify_s(dn, attrs)
+    l.unbind()
+
 def get_free_alias(request, uid):
 	"""
 	Récupère un alias automatiquement pour l'ajout d'une nouvelle machine
