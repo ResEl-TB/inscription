@@ -97,8 +97,8 @@ def update_campus(machine):
 	Met a jour le campus d'une machine
 	"""
 	mod_attrs = [
-		( ldap.MOD_DELETE, 'zone', 'Brest' ),
-		( ldap.MOD_ADD, 'zone', 'Rennes' )
+		( ldap.MOD_DELETE, 'zone', 'Rennes' ),
+		( ldap.MOD_ADD, 'zone', 'Brest' )
 	]
 	
 	l = ldap.initialize('ldap://ldap.maisel.enst-bretagne.fr')
