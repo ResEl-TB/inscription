@@ -38,7 +38,7 @@ def Index(request):
 	if clientIP.split('.')[1] == '23': # On bascule vers inscription.rennes si l'user se connecte de Rennes
 		return redirect('http://inscription.rennes.resel.fr')
 
-	if clientIP != "172.22.42.4" and inactive(request, get_mac_from_ip(request, clientIP, '22')): # Vérification que la machine est active
+	if clientIP != "172.22.42.4" and inactive(get_mac_from_ip(request, clientIP, '22')): # Vérification que la machine est active
 		machineInactive = True
 
 	if messages.get_messages(request):
