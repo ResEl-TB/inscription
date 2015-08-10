@@ -12,6 +12,19 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 
+def inactive(mac):
+    """
+    Regarde si la machine est active ou non
+    """
+    if mac:
+        machine = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )
+        if machine:
+            return ('Inactive' in machine[0][1]['zone'])
+        else:
+            return False
+    else:
+        return False
+
 def search(base_dn, filters):
     """
     Cherche dans le ldap avec les paramètres fournis
@@ -29,7 +42,7 @@ def blacklist(request, uid):
     """
     if uid:
         result = search('ou=people,dc=maisel,dc=enst-bretagne,dc=fr', "(uid={})".format(uid))
-        if len(result) != 0:
+        if result:
             year = datetime.now().year
             month = datetime.now().month
 

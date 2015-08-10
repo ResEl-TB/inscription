@@ -20,7 +20,7 @@ def get_mac_from_ip(request, ip, local_net):
     try:
         if re.search('172.'+ local_net + '.(20{1,3}|21{1,3}|220|221|222|223|224|225)', ip) is None:
             messages.error(request, "Votre IP ne fait pas partie du subnet ResEl Utilisateurs.")
-	    return None
+            return None
 
         mac = Popen(["ip neigh show | grep '{}'".format(ip)], stdout=PIPE, shell=True).communicate()[0].split(' ')[4].lower()
 
@@ -29,9 +29,8 @@ def get_mac_from_ip(request, ip, local_net):
             return None
 
         return mac
-
-    except NameError:
-        messages.error(request, "Aucune adresse IP fournie.")
+    except:
+        messages.error(request, "Erreur dans la récupération de votre adresse MAC. Veuillez réinitialiser votre connexion et réessayer. Si le problème persiste, contactez un administrateur ResEl.")
         return None
 
 def get_free_ip(low, high):
