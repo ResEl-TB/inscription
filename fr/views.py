@@ -20,6 +20,7 @@ from .models import Profil
 
 def Verification(request):
     clientIP = request.META['REMOTE_ADDR']
+    request.session['mac_client'] = None
 
     if re.search('172.22.(20{1,3}|21{1,3}|220|221|222|223|224|225)', clientIP):
         return HttpResponseRedirect(reverse('fr:index'))
