@@ -66,16 +66,19 @@
         <div class="container">
             {% block content %}{% endblock %}
 
-            <hr>
 
-            <!-- Footer -->
-            <footer>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <p>Copyright &copy; ResEl 2015</p>
+            {% block footer %}
+                <hr>
+
+                <!-- Footer -->
+                <footer>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>Copyright &copy; ResEl 2015</p>
+                        </div>
                     </div>
-                </div>
-            </footer>
+                </footer>
+            {% endblock %}
         </div>
         <!-- /.container -->
 
