@@ -3,4 +3,5 @@ Nouveau site inscription.resel.fr, l'ancien étant assez chaotique dans sa confi
 Refonte également du design prévue.
 
 # TODO
-Le CSS, via bootstrap (à venir...)
+Reste le CSS à finir...
+Mais bon, ça ce sera fait une fois présent sur le campus Brestois pour pouvoir avoir accès à toutes les pages comme il faut.
