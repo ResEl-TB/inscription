@@ -156,7 +156,11 @@ def Index_secure(request):
 
 @login_required(login_url='/fr/login')
 def Reactivation(request):
-    mac = request.session['mac_client']
+    if request.session['mac_client']:
+        mac = request.session['mac_client']
+    else:
+        messages.error(request, "Une erreur est survenue dans la récupération de votre adresse MAC. Veuillez réessayer.")
+        return HttpResponseRedirect(reverse('fr:erreur'))
     machine = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )[0]
 
     mod_attrs = [
