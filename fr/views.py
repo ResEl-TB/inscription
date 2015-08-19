@@ -57,7 +57,8 @@ def Contact(request):
     """ Affiche un formulaire de contact """
 
     if request.method == 'POST':
-        form = ContactForm(request, data=request.POST)
+        form = ContactForm(request.POST)
+
         if form.is_valid():
             nom = form.cleaned_data['nom']
             prenom = form.cleaned_data['prenom']
@@ -71,7 +72,7 @@ def Contact(request):
 
             return HttpResponseRedirect(reverse('fr:contact_sent'))
     else:
-        form = ContactForm(request)
+        form = ContactForm()
 
     context = {'form': form}
     return render(request, 'fr/contact.html', context)
