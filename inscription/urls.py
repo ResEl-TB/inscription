@@ -24,5 +24,4 @@ urlpatterns = [
     url(r'^$', 'fr.views.Verification'),
     url(r'^fr/', include('fr.urls', namespace='fr')),
     url(r'^en/', include('en.urls', namespace='en')),
-    url(r'^irc/', include('gnotty.urls')),
 ]
