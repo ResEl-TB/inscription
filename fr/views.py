@@ -15,7 +15,7 @@ import time
 
 from .network import *
 from .ldap_func import *
-from .forms import AdhesionForm, AliasForm
+from .forms import AdhesionForm, AliasForm, ContactForm
 from .models import Profil
 
 def Verification(request):
@@ -52,6 +52,34 @@ def Index(request):
         return HttpResponseRedirect(reverse('fr:erreur'))
 
     return render(request, 'fr/index.html', {'machineInactive': machineInactive})
+
+def Contact(request):
+    """ Affiche un formulaire de contact """
+
+    if request.method == 'POST':
+        form = ContactForm(request, data=request.POST)
+        if form.is_valid():
+            nom = form.cleaned_data['nom']
+            prenom = form.cleaned_data['prenom']
+            mail = form.cleaned_data['mail']
+            batiment = form.cleaned_data['batiment']
+            chambre = form.cleaned_data['chambre']
+            sujet = form.cleaned_data['sujet']
+            description = form.cleaned_data['description']
+
+            mail_admins("[Inscription Brest] {}".format(sujet), "L'user {} {} habitant au {} {} rencontre des problèmes sur inscription.resel.fr\nSujet : {}\nDescription :\n{}\n\nIl faut le recontacter à l'adresse {}".format(nom, prenom, batiment, chambre, sujet, description, mail), fail_silently=False, connection=None, html_message=None)
+
+            return HttpResponseRedirect(reverse('fr:contact_sent'))
+    else:
+        form = ContactForm(request)
+
+    context = {'form', form}
+    return render(request, 'fr/contact.html', context)
+
+def Contact_sent(request):
+    """ Affiche un message de confirmation lorsque le mail a été envoyé aux admins """
+
+    return render(request, 'fr/contact_success.html')
 
 def Login(request):
     """ Affiche le formulaire de login et redirige vers la bonne page """
