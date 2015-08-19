@@ -40,7 +40,7 @@
 	</h1>
 	<hr class="featurette-divider">
 	<div class="row">
-		<div class="col-sm-6">
+		<div class="col-sm-5">
 			<div class="form-horizontal">
 				<form action="{% url "fr:contact" %}" method="post">
 					{% csrf_token %}
@@ -86,16 +86,15 @@
 			        </div>
 
 			        <div class="row control-group">
-			            <div class="form-group col-xs-12 floating-label-form-group controls">
-			                <label>Chambre</label>
+			            <label class="col-sm-3 control-label">Chambre</label>
+			            <div class="col-sm-9">
 			                <input type="number" class="form-control" placeholder="N° de chambre" max="400" min="0" name="chambre" required data-validation-required-message="Merci d'entrer votre numéro de chambre">
-			                <p class="help-block text-danger"></p>
 			            </div>
 			        </div>
 
-			        <div class="row control-group">
-			            <div class="form-group col-xs-12">
-			                <label>Sujet</label>
+			        <div class="form-group">
+		                <label class="col-sm-3 control-label">Sujet</label>
+		                <div class="col-sm-9">
 			                <select name="sujet" class="form-control">
 			                	<option value="Problème de connexion au réseau">Problème de connexion au réseau</option>
 								<option value="Problème d&#39;inscription">Problème d&#39;inscription</option>
@@ -106,12 +105,9 @@
 						</div>
 					</div>
 
-					<div class="row control-group">
-			            <div class="form-group col-xs-12 floating-label-form-group controls">
-			                <label>Description</label>
-			                <textarea rows="5" class="form-control" placeholder="Description de votre demande" name="description" required data-validation-required-message="Veuillez décrire votre problème."></textarea>
-			                <p class="help-block text-danger"></p>
-			            </div>
+					<div class="form-group">
+		                <label class="col-sm-3 control-label">Description</label>
+		                <textarea rows="5" class="form-control" placeholder="Description de votre demande" name="description" required data-validation-required-message="Veuillez décrire votre problème."></textarea>
 			        </div>
 
 					<br>
