@@ -19,9 +19,13 @@ import ldap
 from django_auth_ldap.config import LDAPSearch, PosixGroupType
 
 # Config pour l'envoi de mails
-SERVER_EMAIL = 'inscription@resel.fr'
+SERVER_EMAIL = 'django-inscription@resel.fr'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'pegase.adm.maisel.enst-bretagne.fr'
+
+ADMINS = [
+    ('Inscription.resel.fr', 'inscription@resel.fr'),
+]
 
 # Config pour Django-auth-ldap
 
