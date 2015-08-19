@@ -73,7 +73,7 @@ def Contact(request):
     else:
         form = ContactForm(request)
 
-    context = {'form', form}
+    context = {'form': form}
     return render(request, 'fr/contact.html', context)
 
 def Contact_sent(request):
