@@ -89,6 +89,7 @@ def Login(request):
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
+            request.session['uid_client'] = str(request.user.username)
 
             return HttpResponseRedirect(reverse('fr:index_secure'))
     else:
@@ -257,8 +258,18 @@ def Ajout_1(request):
         On récupère ici les éventuels alias perso choisis par l'user, et si il souhaite que ses infos persos soit publiables dans l'annuaire ResEl ou non
         On bascule ensuite vers Ajout_2
     """
-    mac = request.session['mac_client']
-    uid = request.session['uid_client']
+    if request.session['mac_client']:
+        mac = request.session['mac_client']
+    else:
+        messages.error(request, "Une erreur est survenue dans la récupération de votre adresse MAC. Veuillez réessayer.")
+        return HttpResponseRedirect(reverse('fr:erreur'))
+
+    if request.session['uid_client']:
+        uid = request.session['uid_client']
+    else:
+        messages.error(request, "Une erreur est survenue dans la récupération de votre uid. Veuillez réessayer.")
+        return HttpResponseRedirect(reverse('fr:erreur'))
+
     request.session['alias_choisis'] =[]
 
     if request.POST:
