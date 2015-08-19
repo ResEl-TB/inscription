@@ -70,7 +70,7 @@ class ContactForm(forms.Form):
     prenom = forms.CharField(max_length=30)
     mail = forms.EmailField(max_length=50)
     batiment = forms.ChoiceField(choices=batiments)
-    chambre = forms.IntegerField(min_value=0, max_value=400, max_length=4)
+    chambre = forms.IntegerField(min_value=0, max_value=400)
     sujet = forms.ChoiceField(choices=sujets)
     description = forms.TextField()
 
