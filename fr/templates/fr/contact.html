@@ -46,9 +46,10 @@
 					<form action="{% url "fr:contact" %}" method="post">
 						{% csrf_token %}
 			            <div class="form-group">
-			                <label>Nom</label>
-			                <input type="text" class="col-sm-3 control-label" placeholder="Nom" maxlength="30" required data-validation-required-message="Merci d'entrer votre nom">
-			                <p class="help-block text-danger"></p>
+			                <label class="col-sm-3 control-label">Nom</label>
+			                <div class="col-sm-9">
+			                	<input type="text" class="form-control" placeholder="Nom" maxlength="30" required data-validation-required-message="Merci d'entrer votre nom">
+			                </div>
 			            </div>
 
 				        <div class="row control-group">
