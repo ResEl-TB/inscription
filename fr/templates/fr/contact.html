@@ -41,88 +41,90 @@
 	<hr class="featurette-divider">
 	<div class="row">
 		<div class="col-sm-6 col-sm-offset-3">
-			<form action="{% url "fr:contact" %}" method="post">
-				{% csrf_token %}
-				<div class="row control-group">
-		            <div class="form-group col-xs-12 floating-label-form-group controls">
-		                <label>Nom</label>
-		                <input type="text" class="form-control" placeholder="Nom" maxlength="30" required data-validation-required-message="Merci d'entrer votre nom">
-		                <p class="help-block text-danger"></p>
-		            </div>
-		        </div>
+			<div class="panel panel-default">
+				<div class="panel-body form-horizontal">
+					<form action="{% url "fr:contact" %}" method="post">
+						{% csrf_token %}
+			            <div class="form-group">
+			                <label>Nom</label>
+			                <input type="text" class="col-sm-3 control-label" placeholder="Nom" maxlength="30" required data-validation-required-message="Merci d'entrer votre nom">
+			                <p class="help-block text-danger"></p>
+			            </div>
 
-		        <div class="row control-group">
-		            <div class="form-group col-xs-12 floating-label-form-group controls">
-		                <label>Pr&eacute;nom</label>
-		                <input type="text" class="form-control" placeholder="Prénom" maxlength="30" required data-validation-required-message="Merci d'entrer votre prénom">
-		                <p class="help-block text-danger"></p>
-		            </div>
-		        </div>
+				        <div class="row control-group">
+				            <div class="form-group col-xs-12 floating-label-form-group controls">
+				                <label>Pr&eacute;nom</label>
+				                <input type="text" class="form-control" placeholder="Prénom" maxlength="30" required data-validation-required-message="Merci d'entrer votre prénom">
+				                <p class="help-block text-danger"></p>
+				            </div>
+				        </div>
 
-		        <div class="row control-group">
-		            <div class="form-group col-xs-12 floating-label-form-group controls">
-		                <label>Mail</label>
-		                <input type="email" class="form-control" placeholder="Adresse mail" maxlength="50" required data-validation-required-message="Merci d'entrer votre adresse e-mail">
-		                <p class="help-block text-danger"></p>
-		            </div>
-		        </div>
+				        <div class="row control-group">
+				            <div class="form-group col-xs-12 floating-label-form-group controls">
+				                <label>Mail</label>
+				                <input type="email" class="form-control" placeholder="Adresse mail" maxlength="50" required data-validation-required-message="Merci d'entrer votre adresse e-mail">
+				                <p class="help-block text-danger"></p>
+				            </div>
+				        </div>
 
-		        <div class="row control-group">
-		            <div class="form-group col-xs-12 floating-label-form-group controls">
-		                <label>B&acirc;timent</label>
-		                <select name="batiment" class="form-control">
-		                	<option value="I1">I1</option>
-							<option value="I2">I2</option>
-							<option value="I3">I3</option>
-							<option value="I4">I4</option>
-							<option value="I5">I5</option>
-							<option value="I6">I6</option>
-							<option value="I7">I7</option>
-							<option value="I8">I8</option>
-							<option value="I9">I9</option>
-							<option value="I10">I10</option>
-							<option value="I11">I11</option>
-							<option value="I12">I12</option>
-						</select>
-		            </div>
-		        </div>
+				        <div class="row control-group">
+				            <div class="form-group col-xs-12 floating-label-form-group controls">
+				                <label>B&acirc;timent</label>
+				                <select name="batiment" class="form-control">
+				                	<option value="I1">I1</option>
+									<option value="I2">I2</option>
+									<option value="I3">I3</option>
+									<option value="I4">I4</option>
+									<option value="I5">I5</option>
+									<option value="I6">I6</option>
+									<option value="I7">I7</option>
+									<option value="I8">I8</option>
+									<option value="I9">I9</option>
+									<option value="I10">I10</option>
+									<option value="I11">I11</option>
+									<option value="I12">I12</option>
+								</select>
+				            </div>
+				        </div>
 
-		        <div class="row control-group">
-		            <div class="form-group col-xs-12 floating-label-form-group controls">
-		                <label>Chambre</label>
-		                <input type="number" class="form-control" placeholder="N° de chambre" max="400" min="0" name="chambre" required data-validation-required-message="Merci d'entrer votre numéro de chambre">
-		                <p class="help-block text-danger"></p>
-		            </div>
-		        </div>
+				        <div class="row control-group">
+				            <div class="form-group col-xs-12 floating-label-form-group controls">
+				                <label>Chambre</label>
+				                <input type="number" class="form-control" placeholder="N° de chambre" max="400" min="0" name="chambre" required data-validation-required-message="Merci d'entrer votre numéro de chambre">
+				                <p class="help-block text-danger"></p>
+				            </div>
+				        </div>
 
-		        <div class="row control-group">
-		            <div class="form-group col-xs-12">
-		                <label>Sujet</label>
-		                <select name="sujet" class="form-control">
-		                	<option value="Problème de connexion au réseau">Problème de connexion au réseau</option>
-							<option value="Problème d&#39;inscription">Problème d&#39;inscription</option>
-							<option value="Demande d&#39;inscription">Demande d&#39;inscription</option>
-							<option value="Perte du mot de passe ResEl">Perte du mot de passe ResEl</option>
-							<option value="Autre ...">Autre ...</option>
-						</select>
-					</div>
+				        <div class="row control-group">
+				            <div class="form-group col-xs-12">
+				                <label>Sujet</label>
+				                <select name="sujet" class="form-control">
+				                	<option value="Problème de connexion au réseau">Problème de connexion au réseau</option>
+									<option value="Problème d&#39;inscription">Problème d&#39;inscription</option>
+									<option value="Demande d&#39;inscription">Demande d&#39;inscription</option>
+									<option value="Perte du mot de passe ResEl">Perte du mot de passe ResEl</option>
+									<option value="Autre ...">Autre ...</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="row control-group">
+				            <div class="form-group col-xs-12 floating-label-form-group controls">
+				                <label>Description</label>
+				                <textarea rows="5" class="form-control" placeholder="Description de votre demande" name="description" required data-validation-required-message="Veuillez décrire votre problème."></textarea>
+				                <p class="help-block text-danger"></p>
+				            </div>
+				        </div>
+
+						<br>
+				        <div class="row">
+				            <div class="form-group col-xs-12">
+				                <button type="submit" class="btn btn-default">Envoyer</button>
+				            </div>
+				        </div>
+					</form>
 				</div>
-
-				<div class="row control-group">
-		            <div class="form-group col-xs-12 floating-label-form-group controls">
-		                <label>Description</label>
-		                <textarea rows="5" class="form-control" placeholder="Description de votre demande" name="description" required data-validation-required-message="Veuillez décrire votre problème."></textarea>
-		                <p class="help-block text-danger"></p>
-		            </div>
-		        </div>
-
-				<br>
-		        <div class="row">
-		            <div class="form-group col-xs-12">
-		                <button type="submit" class="btn btn-default">Envoyer</button>
-		            </div>
-		        </div>
-			</form>
+			</div>
 		</div>
 	</div>
 {% endblock %}
