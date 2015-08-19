@@ -19,6 +19,8 @@ from .forms import AdhesionForm, AliasForm
 from .models import Profil
 
 def Verification(request):
+    """ Vérif que le client est dans le bon subnet """
+
     clientIP = request.META['REMOTE_ADDR']
     request.session['mac_client'] = None
 
@@ -30,9 +32,13 @@ def Verification(request):
         return HttpResponseRedirect(reverse('fr:erreur'))
 
 def Erreur(request):
+    """ Template générique servant à afficher une éventuelle erreur en cours de process """
+
     return render(request, 'fr/erreur.html')
 
 def Index(request):
+    """ Index lorsque le client n'est pas loggé """
+
     clientIP = request.META['REMOTE_ADDR']
     machineInactive = False
 
@@ -48,9 +54,8 @@ def Index(request):
     return render(request, 'fr/index.html', {'machineInactive': machineInactive})
 
 def Login(request):
-    """
-    Displays the login form and handles the login action.
-    """
+    """ Affiche le formulaire de login et redirige vers la bonne page """
+
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -68,6 +73,21 @@ def Login(request):
 
 @login_required(login_url='/fr/login')
 def Index_secure(request):
+    """ Index juste après un login réussi. 
+        Effectue toutes les vérifs nécessaires :
+        - l'user est-il blacklisté ?
+        - l'user est-il genericPerson, enstbPerson, guestPerson ?
+        - si l'user n'est pas reselPerson, on le redirige vers la vue Devenir_membre pour qu'il le devienne
+        - s'il l'est, on regarde si la machine de l'user est présente dans le ldap :
+            ° si oui :  
+                1) on vérifie que l'user est le proprio enregistré. Si ce n'est pas le cas, les admins sont prévenus 
+                2) ensuite on vérifie que l'ip de l'user correspond à l'ip enregistrée dans le ldap.
+                   Si c'est non, on check si il vient d'un campus différent, auquel cas on update automatiquement sa fiche ldap et on lui dit de reset sa connexion
+                   Si il ne vient pas d'un campus différent, on lui dit de passer par un DHCP
+                3) enfin, si toutes les vérifs sont faites, l'user est juste en visite sur le site, du coup on display la page index_secure
+            ° si non, on le bascule vers la vue Ajout_1
+    """
+
     clientIP = request.META['REMOTE_ADDR']
     mac = get_mac_from_ip(request, clientIP, '22')
     uid = str(request.user.username)
@@ -153,10 +173,15 @@ def Index_secure(request):
 
         return HttpResponseRedirect(reverse('fr:ajout_1'))
 
+    else:
+        return HttpResponseRedirect(reverse('fr:devenir_membre'))
+
     return render(request, 'fr/index_secure.html', context)
 
 @login_required(login_url='/fr/login')
 def Reactivation(request):
+    """ Vue pour réactiver la machine """
+
     if request.session['mac_client']:
         mac = request.session['mac_client']
     else:
@@ -176,6 +201,9 @@ def Reactivation(request):
 
 @login_required(login_url='/fr/login')
 def Devenir_membre(request):
+    """ Vue appelée pour que l'user devienne reselPerson 
+        On lui affiche le réglement intérieur, et la checkbox pour dire "oui oui, j'ai rien lu file moi ma co !"
+    """
     if request.method == 'POST':
         form = AdhesionForm(request.POST)
 
@@ -195,6 +223,11 @@ def Devenir_membre(request):
 
 @login_required(login_url='/fr/login')
 def Ajout_1(request):
+    """ 
+        Vue pour ajouter une machine au DN de l'user
+        On récupère ici les éventuels alias perso choisis par l'user, et si il souhaite que ses infos persos soit publiables dans l'annuaire ResEl ou non
+        On bascule ensuite vers Ajout_2
+    """
     mac = request.session['mac_client']
     uid = request.session['uid_client']
     request.session['alias_choisis'] =[]
@@ -231,14 +264,22 @@ def Ajout_1(request):
 
 @login_required(login_url='/fr/login')
 def Ajout_2(request):
+    """
+        Rien de bien folichon ici, on affiche les alias de la machine, et on demande à l'user de continuer vers la vue Ajout_3
+    """
     return render(request, 'fr/ajout_2.html', context)
 
 @login_required(login_url='/fr/login')
 def Ajout_3(request):
+    """
+        Ici on crée la fiche LDAP de la machine, on l'ajoute au DN de l'user, et on reboot DHCP, DNS et FW
+    """
     ip = get_free_ip(200, 223)
     lastdate = time.strftime('%Y%m%d%H%M%S') + 'Z'
 
-    if len(request.session['alias_choisis']) == 0:
+    # Ici on gère les alias : si aucun choisi, on met un 0 devant l'alias auto en guise de hostAlias, pour pas faire planter le DNS au reboot
+    # C'est caca, faut corriger dans le script DNS mais en attendant... :D
+    if len(request.session['alias_choisis']) == 0: 
         hostname = request.session['alias_auto']
         aliases = ['0' + hostname]
     elif len(request.session['alias_choisis']) == 1:
