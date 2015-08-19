@@ -40,7 +40,7 @@
 	</h1>
 	<hr class="featurette-divider">
 	<div class="row">
-		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+		<div class="col-sm-6 col-sm-offset-3">
 			<form action="{% url "fr:contact" %}" method="post">
 				{% csrf_token %}
 				<div class="row control-group">
@@ -70,7 +70,7 @@
 		        <div class="row control-group">
 		            <div class="form-group col-xs-12 floating-label-form-group controls">
 		                <label>B&acirc;timent</label>
-		                <select name="batiment" class="selectpicker" multiple="" style="display: none;">
+		                <select name="batiment" class="form-control">
 		                	<option value="I1">I1</option>
 							<option value="I2">I2</option>
 							<option value="I3">I3</option>
