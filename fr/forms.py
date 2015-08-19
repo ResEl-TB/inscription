@@ -72,7 +72,7 @@ class ContactForm(forms.Form):
     batiment = forms.ChoiceField(choices=batiments)
     chambre = forms.IntegerField(min_value=0, max_value=400)
     sujet = forms.ChoiceField(choices=sujets)
-    description = forms.TextField()
+    description = forms.CharField(widget=forms.Textarea)
 
 
 
