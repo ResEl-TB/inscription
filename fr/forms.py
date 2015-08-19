@@ -59,8 +59,8 @@ class ContactForm(forms.Form):
     ]
 
     sujets = [
-        ('Problème de connexion au réseau', 'Problème de connexion au réseau'),
-        ("Problème d'inscription", "Problème d'inscription"),
+        ('Probleme de connexion au reseau', 'Probleme de connexion au reseau'),
+        ("Probleme d'inscription", "Probleme d'inscription"),
         ("Demande d'inscription", "Demande d'inscription"),
         ("Perte du mot de passe ResEl", "Perte du mot de passe ResEl"),
         ("Autre ...", "Autre ...")
