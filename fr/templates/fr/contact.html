@@ -1,4 +1,10 @@
+{% load staticfiles %}
+
 {% extends "base.html" %}
+
+{% block css %}
+	<link href="{% static 'inscription/css/contact.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
 	<div class="row">
