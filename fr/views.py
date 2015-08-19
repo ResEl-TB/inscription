@@ -68,19 +68,19 @@ def Contact(request):
             sujet = form.cleaned_data['sujet']
             description = form.cleaned_data['description']
 
-            mail_admins("[Inscription Brest] {}".format(sujet), "L'user {} {} habitant au {} {} rencontre des problèmes sur inscription.resel.fr\nSujet : {}\nDescription :\n{}\n\nIl faut le recontacter à l'adresse {}".format(nom, prenom, batiment, chambre, sujet, description, mail), fail_silently=False, connection=None, html_message=None)
+            mail_admins("[Inscription Brest] {}".format(sujet), "L'user {0} {1} habitant au {2} {3} rencontre des problèmes sur inscription.resel.fr \n Sujet : {4} \n Description :\n {5} \n\n Il faut le recontacter à l'adresse {6}".format(nom, prenom, batiment, chambre, sujet, description, mail), fail_silently=False, connection=None, html_message=None)
 
-            return HttpResponseRedirect(reverse('fr:contact_sent'))
+            mail_envoye = True
     else:
+        mail_envoye = False
         form = ContactForm()
 
-    context = {'form': form}
+    context = {
+        'form': form,
+        'mail_envoye': mail_envoye
+    }
+
     return render(request, 'fr/contact.html', context)
-
-def Contact_sent(request):
-    """ Affiche un message de confirmation lorsque le mail a été envoyé aux admins """
-
-    return render(request, 'fr/contact_success.html')
 
 def Login(request):
     """ Affiche le formulaire de login et redirige vers la bonne page """

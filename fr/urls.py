@@ -10,7 +10,6 @@ urlpatterns = [
 	url(r'^index$', views.Index, name='index'), # Vue appelée lorsque tout est en règle
 	url(r'^erreur$', views.Erreur, name='erreur'), # Vue appelée lorsque qu'une erreur est soulevée
 	url(r'^contact$', views.Contact, name="contact"), # Vue pour afficher un formulaire d'envoi de mail pour nous contacter
-	url(r'^contact/success$', views.Contact_sent, name="contact_sent"), # Affiche une confirmation de l'envoi d'un amil aux admins
 	url(r'^login$', views.Login,  name='login'), # Vue appelée pour se logger
 	url(r'^index_secure$', views.Index_secure, name='index_secure'), # Vue de l'index APRES login
 	url(r'^ajout/1$', views.Ajout_1, name='ajout_1'), # Vue pour ajouter une machine au LDAP, étape 1

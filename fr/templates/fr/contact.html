@@ -23,16 +23,16 @@
 		<strong>En passant par IRC</strong>
 	</h1>
 	<hr class="featurette-divider">
-	<p>IRC est un protocole de messagerie instantanée, très utilisé par les administrateurs ResEl. Si un administrateur est présent en ce moment, c'est de cette façon que vous aurez une réponse le plus rapidement.</p>
+	<p>IRC est un protocole de messagerie instantan&eacute;e, tr&egrave;s utilis&eacute; par les administrateurs ResEl. Si un administrateur est pr&eacute;sent en ce moment, c'est de cette façon que vous aurez une r&eacute;ponse le plus rapidement.</p>
 	<br>
 
 	<h1 class="intro-text">
 		<strong>En envoyant un mail</strong>
 	</h1>
 	<hr class="featurette-divider">
-	<p>Si aucun administrateur n'est disponible en ce moment, vous pouvez utiliser ce formulaire pour envoyer un mail. Nous en tiendrons compte un peu plus tard. Donnez une brève description de votre problème ou requête dans le corps du texte, et remplissez tous les champs.</p>
-	<p>Le mail sera envoyé immédiatement à <a href="mailto:inscription@resel.fr">inscription@resel.fr</a>.</p>
-	<p>Pour les gens logeant à la MaisEl mais n'ayant pas de compte informatique à l'école, lorsque vous vous inscrivez (en le demandant par ce formulaire par exemple), vous entrez dans nos bases de données et un mot de passe temporaire vous est alors communiqué (une fois que votre demande d'inscription a été acceptée). Il vous servira pour inscrire votre machine sur <a href="{% url 'fr:verification' %}">le site d'inscription</a>.</p>
+	<p>Si aucun administrateur n'est disponible en ce moment, vous pouvez utiliser ce formulaire pour envoyer un mail. Nous en tiendrons compte un peu plus tard. Donnez une br&egrave;ve description de votre probl&egrave;me ou requête dans le corps du texte, et remplissez tous les champs.</p>
+	<p>Le mail sera envoy&eacute; imm&eacute;diatement &agrave; <a href="mailto:inscription@resel.fr">inscription@resel.fr</a>.</p>
+	<p>Pour les gens logeant &agrave; la MaisEl mais n'ayant pas de compte informatique &agrave; l'&eacute;cole, lorsque vous vous inscrivez (en le demandant par ce formulaire par exemple), vous entrez dans nos bases de donn&eacute;es et un mot de passe temporaire vous est alors communiqu&eacute; (une fois que votre demande d'inscription a &eacute;t&eacute; accept&eacute;e). Il vous servira pour inscrire votre machine sur <a href="{% url 'fr:verification' %}">le site d'inscription</a>.</p>
 	<br>
 
 	<h1 class="intro-text">
@@ -54,7 +54,7 @@
 		            <div class="form-group">
 		                <label class="col-sm-3 control-label">Pr&eacute;nom</label>
 		                <div class="col-sm-9">
-		                	<input name="prenom" type="text" class="form-control" placeholder="Prénom" maxlength="30" required data-validation-required-message="Merci d'entrer votre prénom">
+		                	<input name="prenom" type="text" class="form-control" placeholder="Pr&eacute;nom" maxlength="30" required data-validation-required-message="Merci d'entrer votre pr&eacute;nom">
 		                </div>
 		            </div>
 
@@ -88,7 +88,7 @@
 			        <div class="form-group">
 			            <label class="col-sm-3 control-label">Chambre</label>
 			            <div class="col-sm-9">
-			                <input type="number" class="form-control" placeholder="N° de chambre" max="400" min="0" name="chambre" required data-validation-required-message="Merci d'entrer votre numéro de chambre">
+			                <input type="number" class="form-control" placeholder="N° de chambre" max="400" min="0" name="chambre" required data-validation-required-message="Merci d'entrer votre num&eacute;ro de chambre">
 			            </div>
 			        </div>
 
@@ -96,8 +96,8 @@
 		                <label class="col-sm-3 control-label">Sujet</label>
 		                <div class="col-sm-9">
 			                <select name="sujet" class="form-control">
-			                	<option value="Problème de connexion au réseau">Problème de connexion au réseau</option>
-								<option value="Problème d&#39;inscription">Problème d&#39;inscription</option>
+			                	<option value="Probl&egrave;me de connexion au r&eacute;seau">Probl&egrave;me de connexion au r&eacute;seau</option>
+								<option value="Probl&egrave;me d&#39;inscription">Probl&egrave;me d&#39;inscription</option>
 								<option value="Demande d&#39;inscription">Demande d&#39;inscription</option>
 								<option value="Perte du mot de passe ResEl">Perte du mot de passe ResEl</option>
 								<option value="Autre ...">Autre ...</option>
@@ -108,7 +108,7 @@
 					<div class="form-group">
 		                <label class="col-sm-3 control-label">Description</label>
 		                <div class="col-sm-9">
-		                	<textarea style="resize: none;" rows="5" class="form-control" placeholder="Description de votre demande" name="description" required data-validation-required-message="Veuillez décrire votre problème."></textarea>
+		                	<textarea style="resize: none;" rows="5" class="form-control" placeholder="Description de votre demande" name="description" required data-validation-required-message="Veuillez d&eacute;crire votre probl&egrave;me."></textarea>
 		                </div>
 			        </div>
 
@@ -121,6 +121,14 @@
 				</form>
 			</div>
 		</div>
+
+		{% if mail_envoye %}
+			<div class="col-sm-6">
+				<div class="alert alert-success">
+					<p>Votre mail a &eacute;t&eacute; envoy&eacute; aux admins. Vous recevrez une r&eacute;ponse prochainement.</p>
+				</div>
+			</div>
+		{% endif %}
 	</div>
 {% endblock %}
 
