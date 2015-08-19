@@ -58,6 +58,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Config pour le client IRC Gnotty
+GNOTTY_IRC_HOST = 'irc.resel.fr'
+GNOTTY_IRC_PORT = 6767
+GNOTTY_IRC_CHANNEL = '#resel'
 
 # Application definition
 
@@ -70,6 +74,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'fr',
     'en',
+    'gnotty',
 )
 
 MIDDLEWARE_CLASSES = (
