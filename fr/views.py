@@ -219,6 +219,10 @@ def Reactivation(request):
         return HttpResponseRedirect(reverse('fr:erreur'))
     machine = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )[0]
 
+    if 'Brest' in machine[1]['zone'] :
+        messages.error(request, "Votre machine n'est pas inactive.")
+        return HttpResponseRedirect(reverse('fr:erreur'))
+
     mod_attrs = [
         ( ldap.MOD_DELETE, 'zone', 'Inactive' ),
         ( ldap.MOD_ADD, 'zone', 'Brest' )
