@@ -22,7 +22,6 @@ from django_auth_ldap.config import LDAPSearch, PosixGroupType
 SERVER_EMAIL = 'inscription@resel.fr'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'pegase.adm.maisel.enst-bretagne.fr'
-EMAIL_SUBJECT_PREFIX = '[Inscription] '
 
 # Config pour Django-auth-ldap
 
