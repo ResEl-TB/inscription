@@ -213,10 +213,10 @@ def Index_secure(request):
 def Reactivation(request):
     """ Vue pour réactiver la machine """
 
-    if request.session['mac_client']:
-        mac = request.session['mac_client']
-    else:
-        messages.error(request, "Une erreur est survenue dans la récupération de votre adresse MAC. Veuillez réessayer.")
+    clientIP = request.META['REMOTE_ADDR']
+    mac = get_mac_from_ip(request, clientIP, '22')
+
+    if messages.get_messages(request):
         return HttpResponseRedirect(reverse('fr:erreur'))
 
     machine = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )
