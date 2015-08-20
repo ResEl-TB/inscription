@@ -54,9 +54,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'vz1ntr)*e*t88#v4cp89()a4a)euiad37ipf3hkqueo3vlmw2j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['inscription.resel.fr']
 
 # Application definition
 
