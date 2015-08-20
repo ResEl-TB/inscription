@@ -286,10 +286,10 @@ def Ajout_1(request):
             alias_2 = form.cleaned_data['alias_2']
             request.session['publiable'] = form.cleaned_data['publiable']
 
-            if alias_1:
+            if alias_1 != '':
                 request.session['alias_choisis'].append(alias_1)
 
-            if alias_2:
+            if alias_2 != '':
                 request.session['alias_choisis'].append(alias_2)
 
             return HttpResponseRedirect(reverse('fr:ajout_2'))
