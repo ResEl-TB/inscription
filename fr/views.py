@@ -301,7 +301,7 @@ def Ajout_1(request):
             return HttpResponseRedirect(reverse('fr:erreur'))
 
         alias = get_free_alias(uid)
-        request.session['alias_auto'] = [alias]
+        request.session['alias_auto'] = alias
 
         if messages.get_messages(request):
             return HttpResponseRedirect(reverse('fr:erreur'))
