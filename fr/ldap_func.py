@@ -143,6 +143,7 @@ def get_free_alias(uid):
     Récupère un alias automatiquement pour l'ajout d'une nouvelle machine
     """
     test = 'pc{}'.format(uid)
+    print test
     result = search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(test))
 
     if len(result) != 0:
