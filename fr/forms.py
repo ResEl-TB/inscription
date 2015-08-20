@@ -9,6 +9,7 @@ class AdhesionForm(forms.Form):
     accepted = forms.BooleanField()
 
 class AliasForm(forms.Form):
+    alias_03 = forms.CharField(default='test')
     alias_1 = forms.CharField(required=False, max_length=25)
     alias_2 = forms.CharField(required=False, max_length=25)
     publiable = forms.BooleanField(required=False)
