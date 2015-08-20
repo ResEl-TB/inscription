@@ -9,9 +9,9 @@ class AdhesionForm(forms.Form):
     accepted = forms.BooleanField()
 
 class AliasForm(forms.Form):
-    alias_1 = forms.CharField(initial=False, max_length=8)
-    alias_2 = forms.CharField(initial=False, max_length=8)
-    publiable = forms.BooleanField(initial=False)
+    alias_1 = forms.CharField(initial='', max_length=8, required=False)
+    alias_2 = forms.CharField(initial='', max_length=8, required=False)
+    publiable = forms.BooleanField(initial=False, required=False)
 
     # Test si les alias fourni sont valides
     def clean_alias_1(self):
