@@ -171,9 +171,10 @@ def Index_secure(request):
                 mail_admins("[Inscription Brest] Mac {} par {}".format(uid), "Pour votre information, la personne d'uid {} a une adresse MAC bugguée.\n\nIP : {} - MAC : {}\nNavigateur : {}\n\n-- \n".format(mac, uid, uid, clientIP, mac, request.META['HTTP_USER_AGENT']), fail_silently=False, connection=None, html_message=None)
                 return HttpResponseRedirect(reverse('fr:erreur'))
 
-            machine_user = search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAdress={})".format(mac))[0]
+            machine_user = search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAdress={})".format(mac))
 
             if machine_user:
+                machine_user = machine_user[0]
                 proprio = machine_user[1]['uidProprio'].split('=')[1].split(',')[0]
 
                 if uid != proprio:
