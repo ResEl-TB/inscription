@@ -218,21 +218,28 @@ def Reactivation(request):
     else:
         messages.error(request, "Une erreur est survenue dans la récupération de votre adresse MAC. Veuillez réessayer.")
         return HttpResponseRedirect(reverse('fr:erreur'))
-    machine = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )[0]
 
-    if 'Brest' in machine[1]['zone'] :
-        messages.error(request, "Votre machine n'est pas inactive.")
+    machine = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )
+
+    if machine:
+        machine = machine[0]
+        if 'Brest' in machine[1]['zone'] :
+            messages.error(request, "Votre machine n'est pas inactive.")
+            return HttpResponseRedirect(reverse('fr:erreur'))
+
+        mod_attrs = [
+            ( ldap.MOD_DELETE, 'zone', 'Inactive' ),
+            ( ldap.MOD_ADD, 'zone', 'Brest' )
+        ]
+
+        mod(machine[0], mod_attrs)
+        update_dhcp_dns_firewall()
+
+        return render(request, 'fr/reactivation.html')
+
+    else:
+        messages.error(request, "Votre machine n'est pas encore connue sur notre réseau.")
         return HttpResponseRedirect(reverse('fr:erreur'))
-
-    mod_attrs = [
-        ( ldap.MOD_DELETE, 'zone', 'Inactive' ),
-        ( ldap.MOD_ADD, 'zone', 'Brest' )
-    ]
-
-    mod(machine[0], mod_attrs)
-    update_dhcp_dns_firewall()
-
-    return render(request, 'fr/reactivation.html')
 
 @login_required(login_url='/fr/login')
 def Devenir_membre(request):
@@ -267,6 +274,11 @@ def Ajout_1(request):
         mac = request.session['mac_client']
     else:
         messages.error(request, "Une erreur est survenue dans la récupération de votre adresse MAC. Veuillez réessayer.")
+        return HttpResponseRedirect(reverse('fr:erreur'))
+
+    machine = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )
+    if machine:
+        messages.error(request, "Votre machine est déjà enregistrée sur notre réseau.")
         return HttpResponseRedirect(reverse('fr:erreur'))
 
     if request.session['uid_client']:
