@@ -138,7 +138,7 @@ def mod(dn, attrs):
     l.modify_s(dn, attrs)
     l.unbind()
 
-def get_free_alias(request, uid):
+def get_free_alias(uid):
     """
     Récupère un alias automatiquement pour l'ajout d'une nouvelle machine
     """
