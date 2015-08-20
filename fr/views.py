@@ -229,10 +229,9 @@ def Reactivation(request):
 
         mod_attrs = [
             ( ldap.MOD_DELETE, 'zone', 'Inactive' ),
-            ( ldap.MOD_ADD, 'zone', 'Brest' )
+            ( ldap.MOD_ADD, 'zone', 'User' )
         ]
-
-        print machine[0]
+        
         mod(machine[0], mod_attrs)
         update_dhcp_dns_firewall()
 
