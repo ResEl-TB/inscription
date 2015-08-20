@@ -232,6 +232,7 @@ def Reactivation(request):
             ( ldap.MOD_ADD, 'zone', 'Brest' )
         ]
 
+        print machine[0]
         mod(machine[0], mod_attrs)
         update_dhcp_dns_firewall()
 
