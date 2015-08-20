@@ -151,7 +151,7 @@ def get_free_alias(uid):
         while continuer:
             test = 'pc{}{}'.format(uid, i)
             i += 1
-            if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(test))) is None:
+            if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(test))) == None:
                 print 'On est la, la recherche est :' + search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(test))
                 continuer = False	
     return test
