@@ -1,0 +1,37 @@
+{% extends "base_en.html" %}
+
+{% block content %}
+	<div class="row">
+		<div class="box">
+			<div class="col-lg-12">
+				<hr>
+				<h1 class="intro-text text-center">Step 
+					<strong>2/3</strong>
+				</h1>
+				<hr>
+			</div>
+		</div>
+	</div>
+
+	<h1 class="intro-text">
+		<strong>Allowed actions</strong>
+	</h1>
+	<hr class="featurette-divider">
+	<p>You can if you want <a href="{% url 'en:add_1' %}">change the aliases</a>.</p>
+	<p>If the above aliases suit you, you can proceed :</p>
+	<table>
+		<tr><td>{{ request.session.alias_auto }}</td></tr>
+		{% if request.session.alias_choisis|length != 0 %}
+			{% for alias in request.session.alias_choisis %}
+			<tr><td>{{ alias }}</td></tr>
+			{% endfor %}
+		{% endif %}
+	</table>
+	<br />
+	
+	<div class="row">
+		<div class="col-sm-2 col-sm-offset-5">
+        	<a class="btn btn-default" href="{% url 'en:add_3' %}">Proceed</a>
+        </div>
+    </div>
+{% endblock %}

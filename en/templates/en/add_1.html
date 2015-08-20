@@ -1,0 +1,55 @@
+{% extends "base_en.html" %}
+
+{% block content %}
+	<div class="row">
+		<div class="box">
+			<div class="col-lg-12">
+				<hr>
+				<h1 class="intro-text text-center">Step 
+					<strong>1/3</strong>
+				</h1>
+				<hr>
+			</div>
+		</div>
+	</div>
+
+	<h1 class="intro-text">
+		<strong>Choosing aliases</strong>
+	</h1>
+	<hr class="featurette-divider">
+	<p>Your device will be identified on our network under the name {{ request.session.alias_auto }}.</p>
+	<p>In addition to that, you can add two more aliases.</p>
+	<p>If you don't want to, just click on Proceed</p>
+	<br />
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="form-horizontal">
+				<form action="{% url "en:add_1" %}" method="post">
+			    	{% csrf_token %}
+			    	<div class="form-group">
+		                <label class="col-sm-2 control-label">Alias #1</label>
+		                <div class="col-sm-2">
+		                	<input name="alias_1" type="text" class="form-control" maxlength="8">
+		                </div>
+		            </div>
+
+		            <div class="form-group">
+		                <label class="col-sm-2 control-label">Alias #2</label>
+		                <div class="col-sm-2">
+		                	<input name="alias_2" type="text" class="form-control" maxlength="8">
+		                </div>
+		            </div>
+			    	{% if request.session.nb_machines == 0 %}
+			    		{{ form.publiable }}<p>I allow the ResEl to publish my phone number, my room and my email adress in the ResEl directory.</p>
+			    	{% endif %}
+
+			    	<div class="form-group">
+		            	<div class="col-sm-2 col-sm-offset-5">
+		                	<button type="submit" class="btn btn-default">Proceed</button>
+		                </div>
+		            </div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

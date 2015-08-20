@@ -1,0 +1,65 @@
+{% extends "base_en.html" %}
+
+{% load staticfiles %}
+
+{% block css %}
+	<link href="{% static 'inscription/css/contact.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="box">
+			<div class="col-lg-12">
+				<hr>
+				<h1 class="intro-text text-center">Becoming a 
+					<strong>ResEl member</strong>
+				</h1>
+				<hr>
+			</div>
+		</div>
+	</div>
+
+	<h1 class="intro-text">
+		<strong>Introduction</strong>
+	</h1>
+	<hr class="featurette-divider">
+	<p>In order to be a ResEl member, you have to accept the above document. Be aware that this document contains vital information, please read it.</p>
+	<br>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<iframe src="{% static 'inscription/docs/reglementinterieur.pdf' %}" width="100%" height="800"></iframe>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="form-horizontal">
+				<form action="{% url "en:devenir_membre" %}" method="post">
+			    	{% csrf_token %}
+			    	<div class="form-group">
+		                <label class="col-sm-10 control-label">I agree to this document</label>
+		                <div class="col-sm-2">
+		                	<input name="accepted" type="checkbox" class="form-control" required data-validation-required-message="You must accept those rules">
+		                </div>
+		            </div>
+
+		            <div class="form-group">
+		            	<div class="col-sm-2 col-sm-offset-4">
+		                	<button type="submit" class="btn btn-default">Register</button>
+		                </div>
+		            </div>
+				</form>
+			</div>
+		</div>
+
+		{% if accepted %}
+			<div class="col-sm-6">
+				<div class="alert alert-success">
+					<p>Congrats ! You are now a ResEl member.</p>
+					<p>Go back on the <a href="{% url 'en:index_secure' %}">inscription web page</a> to manage your devices.</p>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base_en.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+    <div class="row">
+        <div class="box">
+            <div class="col-lg-12">
+                <hr>
+                <h1 class="intro-text text-center">Welcome to the
+                    <strong>ResEl</strong>
+                    !
+                </h1>
+                <hr>
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <p class="intro-text text-center">
+                <a href="{% url 'fr:verification' %}">Ce site en français</a>
+            </p>
+        </div>
+    </div>
+
+    {% if machineInactive %}
+        <!-- Machine détectée comme étant inactive -->
+        <h1 class="intro-text">
+            <strong>Your device is inactive</strong>
+        </h1>
+        <hr class="featurette-divider">
+        <p>Due to a long-term absence on our network, your device have been disabled. You can re-activate it <a href="{% url 'en:reactivation' %}">here</a>.
+        <br>
+    {% endif %}
+
+    <!-- Préliminaires -->
+    <h1 class="intro-text">
+        <strong>Preliminaries</strong>
+    </h1>
+    <hr class="featurette-divider">
+    <p>You just come to the ResEl and your device is not yet registered. Therefore you can not access to the Internet.</p>
+    <p>If you want to register, you have to pay a <strong>25 &euro;</strong> fee (settled in the <a href="{% static 'inscription/docs/reglementinterieur.pdf' %}">ResEl policy</a> and the <a href="{% static 'inscription/docs/statuts.pdf' %}">status</a>). Usually this fee is paid in October. You will receive further instructions in order to do that.</p>
+    <p>The only way to register your device is to be a ResEl member, as dexcribed in the <a href="{% static 'inscription/docs/reglementinterieur.pdf' %}">ResEl policy</a>.</p>
+    <br>
+
+    <!-- Accès au Net -->
+    <h1 class="intro-text">
+        <strong>How do I get my Internet access ?</strong>
+    </h1>
+    <hr class="featurette-divider">
+    <p>Just go <a href="{% url 'fr:login' %}">here</a>. You will be asked to log in. Two options :</p>
+    <ul>
+        <li>If you are a <strong>student</strong> or if you have a Télécom Bretagne account, you can log in with your school account, and your <strong>ResEl password</strong>. Then just follow the instructions.</li>
+
+        <li>If you are a <strong>trainee</strong> living in the MaisEl and you do not have a Télécom Bretagne account, please <a href="{% url 'en:contact' %}">contact us</a>.</li>
+    </ul>
+    <br>
+
+    <!-- Une fois inscrit -->
+    <h1 class="intro-text">
+        <strong>Once your device is registered...</strong>
+    </h1>
+    <hr class="featurette-divider">
+    <p>The above links will work only if you are registered.</p>
+    <p>Once registered, you will have your Internet access, but also some services offered by the <a href="http://resel.fr/">ResEl</a>. Many tutorials exist there, check them if you want.</p>
+    <p>If you have any questions, take a look at our <a href="http://resel.fr/configuration/faq/">ResEl FAQ</a>. If you have any problem, please <a href="{% url 'fr:contact' %}">contact us</a>.</p>
+    <p>Warning</strong> : once registered, please visit the <a href="http://resel.fr/configuration/inscription">post-inscription configuration page</a>.</p>
+    <br>
+
+    <!-- Goodbye -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="intro-text text-center">See you soon on our network !</h1>
+        </div>
+    </div>
+{% endblock %}

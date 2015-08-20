@@ -17,7 +17,7 @@
 
         <div class="col-lg-12">
             <p class="intro-text text-center">
-                <a href="">This website in English</a>
+                <a href="{% url 'en:verification' %}">This website in English</a>
             </p>
         </div>
     </div>
@@ -51,7 +51,7 @@
     <ul>
         <li>Si vous &ecirc;tes <strong>&eacute;l&egrave;ve</strong> ou si vous avez un compte informatique &agrave; l'&eacute;cole, vous pouvez vous identifier avec votre login &eacute;cole (typiquement premi&egrave;re lettre du pr&eacute;nom + nom, le tout tronqu&eacute; &agrave; 8 caract&egrave;res) et votre mot de passe ResEl. Suivez ensuite les instructions.</li>
 
-        <li>Si vous &ecirc;tes <strong>stagiaire</strong> log&eacute; &agrave; la MaisEl, et que vous n'avez pas de compte &agrave; T&eacute;l&eacute;com Bretagne, il faut alors <a href="mailto:inscription@resel.fr">nous contacter</a>.</li>
+        <li>Si vous &ecirc;tes <strong>stagiaire</strong> log&eacute; &agrave; la MaisEl, et que vous n'avez pas de compte &agrave; T&eacute;l&eacute;com Bretagne, il faut alors <a href="{% url 'fr:contact' %}">nous contacter</a>.</li>
     </ul>
     <br>
 
@@ -60,7 +60,7 @@
         <strong>Une fois inscrit...</strong>
     </h1>
     <hr class="featurette-divider">
-    <p>Les liens propos&eacute;s ci-apr&egrave;s ne seront fonctionnels qu'une fois votre inscription effectu&eacute;e. Vous pourrez revenir sur cette page en vous rendant sur <a href="{% url 'fr:index'}">http://inscription/</a>.</p>
+    <p>Les liens propos&eacute;s ci-apr&egrave;s ne seront fonctionnels qu'une fois votre inscription effectu&eacute;e.</p>
     <p>Une fois inscrit, vous aurez alors acc&egrave;s &agrave; Internet, mais &eacute;galement &agrave; tout un ensemble de services propos&eacute;s par le <a href="http://resel.fr/">ResEl</a>. De nombreuses pages d'explications et de configurations sont disponibles sur le site du ResEl.</p>
     <p>Pour toutes vos questions, vous pourrez regardez la <a href="http://resel.fr/configuration/faq/">FAQ ResEl</a>, et en cas de probl&egrave;me, <a href="{% url 'fr:contact' %}">nous contacter</a>.</p>
     <p>Important</strong> : apr&egrave;s l'inscription n'oubliez pas d'aller sur la <a href="http://resel.fr/configuration/inscription">page de configuration post-inscription</a></p>

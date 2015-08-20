@@ -1,0 +1,147 @@
+{% extends "base_en.html" %}
+
+{% load staticfiles %}
+
+{% block css %}
+	<link href="{% static 'inscription/css/contact.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="box">
+			<div class="col-lg-12">
+				<hr>
+				<h1 class="intro-text text-center">Contact a
+					<strong>ResEl administrator</strong>
+				</h1>
+				<hr>
+			</div>
+		</div>
+	</div>
+
+	<h1 class="intro-text">
+		<strong>By using an IRC client</strong>
+	</h1>
+	<hr class="featurette-divider">
+	<p>IRC is an instant chat protocol used by the ResEl administrators. This is the most effective way to contact an administrator.</p>
+	<br>
+
+	<h1 class="intro-text">
+		<strong>By sending an email</strong>
+	</h1>
+	<hr class="featurette-divider">
+	<p>If you don't want to use IRC, you can send us an email by using this form. You will get an answer as soon as an administrator see your email. Please complete all the fields.</p>
+	<p>This mail will be sent to <a href="mailto:inscription@resel.fr">inscription@resel.fr</a>.</p>
+	<p>If you live in the MaisEl and you don't have an account on Télécom Bretagne, you can ask us to create your account on the ResEl database. You will need one in order to register your device on our <a href="{% url 'en:verification' %}">inscription website</a> and have an Internet access.</p>
+	<br>
+
+	<h1 class="intro-text">
+		<strong>Sending the email</strong>
+	</h1>
+	<hr class="featurette-divider">
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="form-horizontal">
+				<form action="{% url "en:contact" %}" method="post">
+					{% csrf_token %}
+		            <div class="form-group">
+		                <label class="col-sm-3 control-label">Name</label>
+		                <div class="col-sm-9">
+		                	<input name="nom" type="text" class="form-control" placeholder="Name" maxlength="30" required data-validation-required-message="Please enter your name">
+		                </div>
+		            </div>
+
+		            <div class="form-group">
+		                <label class="col-sm-3 control-label">First name</label>
+		                <div class="col-sm-9">
+		                	<input name="prenom" type="text" class="form-control" placeholder="First name" maxlength="30" required data-validation-required-message="Please enter your first name">
+		                </div>
+		            </div>
+
+			        <div class="form-group">
+		                <label class="col-sm-3 control-label">Email</label>
+		                <div class="col-sm-9">
+		                	<input name="mail" type="email" class="form-control" placeholder="Email adress" maxlength="50" required data-validation-required-message="Please enter your email adress">
+			            </div>
+			        </div>
+
+			        <div class="form-group">
+		                <label class="col-sm-3 control-label">Building</label>
+		                <div class="col-sm-9">
+			                <select name="batiment" class="form-control controls">
+			                	<option value="I1">I1</option>
+								<option value="I2">I2</option>
+								<option value="I3">I3</option>
+								<option value="I4">I4</option>
+								<option value="I5">I5</option>
+								<option value="I6">I6</option>
+								<option value="I7">I7</option>
+								<option value="I8">I8</option>
+								<option value="I9">I9</option>
+								<option value="I10">I10</option>
+								<option value="I11">I11</option>
+								<option value="I12">I12</option>
+							</select>
+		            	</div>
+			        </div>
+
+			        <div class="form-group">
+			            <label class="col-sm-3 control-label">Room</label>
+			            <div class="col-sm-9">
+			                <input type="number" class="form-control" placeholder="Your room number" max="400" min="0" name="chambre" required data-validation-required-message="Please enter your room number">
+			            </div>
+			        </div>
+
+			        <div class="form-group">
+		                <label class="col-sm-3 control-label">Subject</label>
+		                <div class="col-sm-9">
+			                <select name="sujet" class="form-control">
+			                	<option value="Probleme de connexion au reseau">Connection problem</option>
+								<option value="Probleme d'inscription">Inscription problem</option>
+								<option value="Demande d'inscription">Creating an account</option>
+								<option value="Perte du mot de passe ResEl">ResEl password lost</option>
+								<option value="Autre ...">Anything else...</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+		                <label class="col-sm-3 control-label">Description</label>
+		                <div class="col-sm-9">
+		                	<textarea style="resize: none;" rows="5" class="form-control" placeholder="Description of your problem" name="description" required data-validation-required-message="Please describe us your problem"></textarea>
+		                </div>
+			        </div>
+
+					
+		            <div class="form-group">
+		            	<div class="col-sm-2 col-sm-offset-5">
+		                	<button type="submit" class="btn btn-default">Send</button>
+		                </div>
+		            </div>
+				</form>
+			</div>
+		</div>
+
+		{% if mail_envoye %}
+			<div class="col-sm-6">
+				<div class="alert alert-success">
+					<p>Your email has been sent to the ResEl administrators. You will soon have an answer.</p>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
