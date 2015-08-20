@@ -330,14 +330,14 @@ def Ajout_3(request):
     # Ici on gère les alias : si aucun choisi, on met un 0 devant l'alias auto en guise de hostAlias, pour pas faire planter le DNS au reboot
     # C'est caca, faut corriger dans le script DNS mais en attendant... :D
     if len(request.session['alias_choisis']) == 0: 
-        hostname = request.session['alias_auto']
+        hostname = str(request.session['alias_auto'])
         aliases = ['0' + hostname]
     elif len(request.session['alias_choisis']) == 1:
-        hostname = request.session['alias_choisis'][0]
-        aliases = [request.session['alias_auto']]
+        hostname = str(request.session['alias_choisis'][0])
+        aliases = [str(request.session['alias_auto'])]
     else:
-        hostname = request.session['alias_choisis'][0]
-        aliases = [request.session['alias_auto'], request.session['alias_choisis'][1]]
+        hostname = str(request.session['alias_choisis'][0])
+        aliases = [str(request.session['alias_auto']), str(request.session['alias_choisis'][1])]
 
     add_record = [
         ('objectClass', ['reselMachine']),
