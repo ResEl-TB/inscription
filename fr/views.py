@@ -317,7 +317,7 @@ def Ajout_2(request):
     """
         Rien de bien folichon ici, on affiche les alias de la machine, et on demande à l'user de continuer vers la vue Ajout_3
     """
-    return render(request, 'fr/ajout_2.html', context)
+    return render(request, 'fr/ajout_2.html')
 
 @login_required(login_url='/fr/login')
 def Ajout_3(request):
