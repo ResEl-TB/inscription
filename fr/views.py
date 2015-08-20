@@ -344,7 +344,7 @@ def Ajout_3(request):
         ('host', [hostname]),
         ('uidproprio', ['uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr'.format(request.session['uid_client'])]),
         ('iphostnumber', [str(ip)]),
-        ('macaddress', [request.session['mac_client']]),
+        ('macaddress', [str(request.session['mac_client'])]),
         ('zone', ['Brest', 'User']),
         ('hostalias', aliases),
         ('lastdate', [lastdate])
