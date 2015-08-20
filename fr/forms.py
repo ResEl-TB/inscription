@@ -16,6 +16,7 @@ class AliasForm(forms.Form):
     # Test si les alias fourni sont valides
     def clean_alias_1(self):
         alias = self.cleaned_data['alias_1']
+        print alias
         
         if alias:
             if re.search(r'^[a-z][a-z0-9-]{0,23}[a-z0-9]', alias) is None:
@@ -43,7 +44,7 @@ class AliasForm(forms.Form):
                     raise forms.ValidationError("L'alias ne doit pas contenir le nom resel.")
                 if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={}".format(alias)) is None:
                     raise forms.ValidationError("L'alias choisi est déjà utilisé pour une machine de notre réseau.")
-                    
+
         return alias
 
 class ContactForm(forms.Form):
