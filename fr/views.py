@@ -281,13 +281,16 @@ def Ajout_1(request):
         form = AliasForm(request.POST)
 
         if form.is_valid:
-            if form.cleaned_data:
-                for key, value in form.cleaned_data:
-                    if key == 'publiable':
-                        request.session['publiable'] = value
-                    else:
-                        if value != '':
-                            request.session['alias_choisis'].append(value)
+            alias_1 = form.cleaned_data['alias_1']
+            alias_2 = form.cleaned_data['alias_2']
+            request.session['publiable'] = form.cleaned_data['publiable']
+
+            if alias_1:
+                request.session['alias_choisis'].append(alias_1)
+
+            if alias_2:
+                request.session['alias_choisis'].append(alias_2)
+
             return HttpResponseRedirect(reverse('fr:ajout_2'))
 
     else:
