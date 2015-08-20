@@ -16,7 +16,6 @@ class AliasForm(forms.Form):
     # Test si les alias fourni sont valides
     def clean_alias_1(self):
         alias = self.cleaned_data['alias_1']
-        print alias
         
         if alias:
             if re.search(r'^[a-z][a-z0-9-]{0,23}[a-z0-9]', alias) is None:
