@@ -17,18 +17,18 @@ def get_mac_from_ip(request, ip, local_net):
     >>> get_mac_from_ip('172.22.201.1', '22') # '22' pour Brest, '23' pour Rennes
 
     """
-        if re.search('172.'+ local_net + '.(20{1,3}|21{1,3}|220|221|222|223|224|225)', ip) is None:
-            messages.error(request, "Votre IP ne fait pas partie du subnet ResEl Utilisateurs.")
-            return None
+    if re.search('172.'+ local_net + '.(20{1,3}|21{1,3}|220|221|222|223|224|225)', ip) is None:
+        messages.error(request, "Votre IP ne fait pas partie du subnet ResEl Utilisateurs.")
+        return None
 
-        mac = Popen(["arping -c 1 -I eth2".format(ip)], stdout=PIPE, shell=True).communicate()[0].split('from')[1].split(' ')[0].lower()
-        print mac
+    mac = Popen(["arping -c 1 -I eth2".format(ip)], stdout=PIPE, shell=True).communicate()[0].split('from')[1].split(' ')[0].lower()
+    print mac
 
-        if not mac:
-            messages.error(request, "Aucun resultat avec l'hote {}".format(ip))
-            return None
+    if not mac:
+        messages.error(request, "Aucun resultat avec l'hote {}".format(ip))
+        return None
 
-        return mac
+    return mac
 
 def get_free_ip(low, high):
     """
