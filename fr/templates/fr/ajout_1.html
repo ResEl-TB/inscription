@@ -1,18 +1,54 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<h1>Étape 1/3</h1>
-	<h2>Choix d'un nom d'hôte</h2>
+	<div class="row">
+		<div class="box">
+			<div class="col-lg-12">
+				<hr>
+				<h1 class="intro-text text-center">Étape 
+					<strong>1/3</strong>
+				</h1>
+				<hr>
+			</div>
+		</div>
+	</div>
+
+	<h1 class="intro-text">
+		<strong>Choix d'un nom d'hôte</strong>
+	</h1>
+	<hr class="featurette-divider">
 	<p>Votre machine sera identifiée sur notre réseau avec le nom {{ request.META.alias_auto }}.</p>
 	<p>Vous pouvez, si vous le souhaitez, lui attribuer jusqu'à deux noms supplémentaires.</p>
 	<p>Si vous ne voulez pas, vous pouvez directement cliquer sur suivant.</p>
-	<form action="{% url "fr:ajout_1" %}" method="post">
-    	{% csrf_token %}
-    	{{ form.alias_1 }}
-    	{{ form.alias_2 }}
-    	{% if request.session.nb_machines == 0 %}
-    		{{ form.publiable }}<p>J'autorise la publication de mon téléphone, de ma chambre, et de mon E-Mail dans l'annuaire externe du ResEl.</p>
-    	{% endif %}
-    	<input type="submit" value="Suivant" />
-	</form>
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="form-horizontal">
+				<form action="{% url "fr:ajout_1" %}" method="post">
+			    	{% csrf_token %}
+			    	<div class="form-group">
+		                <label class="col-sm-3 control-label">Alias n° 1</label>
+		                <div class="col-sm-9">
+		                	<input name="alias_1" type="text" class="form-control" maxlength="8">
+		                </div>
+		            </div>
+
+		            <div class="form-group">
+		                <label class="col-sm-3 control-label">Alias n° 2</label>
+		                <div class="col-sm-9">
+		                	<input name="alias_2" type="text" class="form-control" maxlength="8">
+		                </div>
+		            </div>
+			    	{% if request.session.nb_machines == 0 %}
+			    		{{ form.publiable }}<p>J'autorise la publication de mon téléphone, de ma chambre, et de mon E-Mail dans l'annuaire externe du ResEl.</p>
+			    	{% endif %}
+
+			    	<div class="form-group">
+		            	<div class="col-sm-2 col-sm-offset-5">
+		                	<button type="submit" class="btn btn-default">Envoyer</button>
+		                </div>
+		            </div>
+				</form>
+			</div>
+		</div>
+	</div>
 {% endblock %}
