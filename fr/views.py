@@ -16,7 +16,6 @@ import time
 from .network import *
 from .ldap_func import *
 from .forms import AdhesionForm, AliasForm, ContactForm
-from .models import Profil
 
 def Verification(request):
     """ Vérif que le client est dans le bon subnet """
