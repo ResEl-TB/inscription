@@ -223,7 +223,7 @@ def Reactivation(request):
 
     if machine:
         machine = machine[0]
-        if 'Brest' in machine[1]['zone'] :
+        if 'User' in machine[1]['zone'] :
             messages.error(request, "Votre machine n'est pas inactive.")
             return HttpResponseRedirect(reverse('fr:erreur'))
 
