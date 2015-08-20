@@ -19,13 +19,12 @@
 		</div>
 	</div>
 
-	<h2>Actions possibles :</h2>
-
-	<h3>Modification des noms</h3>
+	<h1 class="intro-text">
+		<strong>Actions possibles</strong>
+	</h1>
+	<hr class="featurette-divider">
 	<p>Vous pouvez, si vous le souhaitez, <a href="{% url 'fr:ajout_1' %}">changer les noms</a>.</p>
-
-	<h3>Étape suivante</h3>
-	<p>Si les noms suivants vous suffisent, vous pouvez passer à la dernière étape.</p>
+	<p>Si les noms suivants vous suffisent, vous pouvez passer à la dernière étape :</p>
 	<table>
 		<tr><td>{{ request.session.alias_auto }}</td></tr>
 		{% if request.session.alias_choisis|length != 0 %}
@@ -34,5 +33,11 @@
 			{% endfor %}
 		{% endif %}
 	</table>
-	<p><a href="{% url 'fr:ajout_3' %}">Terminer l'inscription</a></p>
+	<br />
+	
+	<div class="row">
+		<div class="col-sm-2 col-sm-offset-5">
+        	<a class="btn btn-default" href="{% url 'fr:ajout_3' %}">Terminer l'inscription</a>
+        </div>
+    </div>
 {% endblock %}
