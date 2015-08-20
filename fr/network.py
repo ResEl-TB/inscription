@@ -21,7 +21,7 @@ def get_mac_from_ip(request, ip, local_net):
         messages.error(request, "Votre IP ne fait pas partie du subnet ResEl Utilisateurs.")
         return None
 
-    mac = Popen(["arping -c 1 -I eth2".format(ip)], stdout=PIPE, shell=True).communicate()[0].split('from')[1].split(' ')[0].lower()
+    mac = Popen(["arping -c 1 -I eth2".format(ip)], stdout=PIPE, shell=True).communicate()[0]
     print mac
 
     if not mac:
