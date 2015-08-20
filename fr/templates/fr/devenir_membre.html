@@ -25,7 +25,11 @@
 	<hr class="featurette-divider">
 	<p>Pour vous inscrire au ResEl, il convient d'en accepter le Règlement intérieur, dont un exemplaire se trouve ci-dessous. Nous nous permettons de souligner que cette acceptation implique des obligations, mentionnées dans le Règlement Intérieur.</p>
 
-	<iframe src="{% static 'inscription/docs/reglementinterieur.pdf' %}"></iframe>
+	<div class="row">
+		<div class="col-lg-12">
+			<iframe src="{% static 'inscription/docs/reglementinterieur.pdf' %}"></iframe>
+		</div>
+	</div>
 
 	{% if accepted %}
 		<p>Félicitations ! Vous êtes désormais un membre du ResEl.</p>
