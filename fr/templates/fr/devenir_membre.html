@@ -39,7 +39,7 @@
 
 	<form action="{% url "fr:devenir_membre" %}" method="post">
     	{% csrf_token %}
-    	{{ form.as_p }
+    	{{ form.as_p }}
     	<p>J'accepte les termes ci-dessus et m'engage à suivre cette charte</p>
     	<input type="submit" value="Adhérer" />
 	</form>
