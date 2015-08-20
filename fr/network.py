@@ -23,7 +23,6 @@ def get_mac_from_ip(request, ip, local_net):
             return None
 
         mac = Popen(["arping -c 1 -I eth2 {}".format(ip)], stdout=PIPE, shell=True).communicate()[0].split('from')[1].split(' ')[1].lower()
-        print mac
 
         if not mac:
             messages.error(request, "Aucun resultat avec l'hote {}".format(ip))
