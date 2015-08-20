@@ -14,61 +14,64 @@
 {% endblock %}
 
 {% block content %}
+    <div class="row">
+        <div class="box">
+            <div class="col-lg-12">
+                <hr>
+                <h1 class="intro-text text-center">Bienvenue au
+                    <strong>ResEl</strong>
+                    !
+                </h1>
+                <hr>
+                <a href="" class="text-center">This website in English</a>
+            </div>
+        </div>
+    </div>
 
     {% if machineInactive %}
         <!-- Machine détectée comme étant inactive -->
-        <div class="featurette" id="machine-inactive">
-            <h2 class="featurette-heading">Machine inactive</h2>
-
-            <p class="lead">Votre machine a &eacute;t&eacute; d&eacute;sactiv&eacute;e car elle n'a pas &eacute;t&eacute; vue sur le r&eacute;seau pendant trop de temps. Vous pouvez la <a href=\"{% url 'fr:reactivation' %}">r&eacute;activer</a></p>
-        </div>
-
+        <h1 class="intro-text">
+            <strong>Votre machine est inactive</strong>
+        </h1>
         <hr class="featurette-divider">
+        <p>Votre machine a &eacute;t&eacute; d&eacute;sactiv&eacute;e car elle n'a pas &eacute;t&eacute; vue sur le r&eacute;seau pendant trop de temps. Vous pouvez la <a href=\"{% url 'fr:reactivation' %}">r&eacute;activer</a></p>
+        <br>
     {% endif %}
 
     <!-- Préliminaires -->
-    <div class="featurette" id="preliminaires">
-        <h2 class="featurette-heading">Pr&eacute;liminaires</h2>
-
-        <p class="lead">Vous venez apparemment d'arriver sur le ResEl, et votre machine n'est pas encore enregistr&eacute;e. Vous n'avez donc pas acc&egrave;s &agrave; Internet.</p>
-
-        <p class="lead">Si vous voulez vous inscrire, vous devrez payer une cotisation de <strong>25 &euro;</strong> (conform&eacute;ment au <a href="{% static 'inscription/docs/reglementinterieur.pdf' %}">r&egrave;glement int&eacute;rieur</a> et aux <a href="{% static 'inscription/docs/statuts.pdf' %}">statuts</a>). Le paiement de cette cotisation se fait en g&eacute;n&eacute;ral au mois d'octobre, vous serez alors pr&eacute;venu des modalit&eacute;s de paiement.</p>
-
-        <p class="lead">Vous ne pouvez vous inscrire que si vous &ecirc;tes membre du ResEl, donc apr&egrave;s avoir accept&eacute; le <a href="{% static 'inscription/docs/reglementinterieur.pdf' %}">r&egrave;glement int&eacute;rieur</a>.</p>
-    </div>
-
+    <h1 class="intro-text">
+        <strong>Prélimaires</strong>
+    </h1>
     <hr class="featurette-divider">
+    <p>Vous venez apparemment d'arriver sur le ResEl, et votre machine n'est pas encore enregistr&eacute;e. Vous n'avez donc pas acc&egrave;s &agrave; Internet.</p>
+    <p>Si vous voulez vous inscrire, vous devrez payer une cotisation de <strong>25 &euro;</strong> (conform&eacute;ment au <a href="{% static 'inscription/docs/reglementinterieur.pdf' %}">r&egrave;glement int&eacute;rieur</a> et aux <a href="{% static 'inscription/docs/statuts.pdf' %}">statuts</a>). Le paiement de cette cotisation se fait en g&eacute;n&eacute;ral au mois d'octobre, vous serez alors pr&eacute;venu des modalit&eacute;s de paiement.</p>
+    <p>Vous ne pouvez vous inscrire que si vous &ecirc;tes membre du ResEl, donc apr&egrave;s avoir accept&eacute; le <a href="{% static 'inscription/docs/reglementinterieur.pdf' %}">r&egrave;glement int&eacute;rieur</a>.</p>
+    <br>
 
     <!-- Accès au Net -->
-    <div class="featurette" id="acces-internet">
-        <h2 class="featurette-heading">Comment acc&eacute;der &agrave; Internet ?</h2>
-
-        <p class="lead">Pour avoir acc&egrave;s &agrave; Internet, il suffit d'aller sur <a href="{% url 'fr:login' %}">le site s&eacute;curis&eacute; d'inscription</a>. Une authentification va vous &ecirc;tre demand&eacute;e, il y a alors deux cas :</p>
-
-        <ul>
-            <li>Si vous &ecirc;tes <strong>&eacute;l&egrave;ve</strong> ou si vous avez un compte informatique &agrave; l'&eacute;cole, vous pouvez vous identifier avec votre login &eacute;cole (typiquement premi&egrave;re lettre du pr&eacute;nom + nom, le tout tronqu&eacute; &agrave; 8 caract&egrave;res) et votre mot de passe ResEl. Suivez ensuite les instructions.</li>
-
-            <li>Si vous &ecirc;tes <strong>stagiaire</strong> log&eacute; &agrave; la MaisEl, et que vous n'avez pas de compte &agrave; T&eacute;l&eacute;com Bretagne, il faut alors <a href="mailto:inscription@resel.fr">nous contacter</a>.</li>
-        </ul>
-    </div>
-
+    <h1 class="intro-text">
+        <strong>Comment accéder à internet ?</strong>
+    </h1>
     <hr class="featurette-divider">
+    <p>Pour avoir acc&egrave;s &agrave; Internet, il suffit d'aller sur <a href="{% url 'fr:login' %}">le site s&eacute;curis&eacute; d'inscription</a>. Une authentification va vous &ecirc;tre demand&eacute;e, il y a alors deux cas :</p>
+    <ul>
+        <li>Si vous &ecirc;tes <strong>&eacute;l&egrave;ve</strong> ou si vous avez un compte informatique &agrave; l'&eacute;cole, vous pouvez vous identifier avec votre login &eacute;cole (typiquement premi&egrave;re lettre du pr&eacute;nom + nom, le tout tronqu&eacute; &agrave; 8 caract&egrave;res) et votre mot de passe ResEl. Suivez ensuite les instructions.</li>
+
+        <li>Si vous &ecirc;tes <strong>stagiaire</strong> log&eacute; &agrave; la MaisEl, et que vous n'avez pas de compte &agrave; T&eacute;l&eacute;com Bretagne, il faut alors <a href="mailto:inscription@resel.fr">nous contacter</a>.</li>
+    </ul>
+    <br>
 
     <!-- Une fois inscrit -->
-    <div class="featurette" id="inscrit">
-        <h2 class="featurette-heading">Une fois inscrit...</h2>
-
-        <p class="lead">Les liens propos&eacute;s ci-apr&egrave;s ne seront fonctionnels qu'une fois votre inscription effectu&eacute;e. Vous pourrez revenir sur cette page en vous rendant sur <a href="{% url 'fr:index'}">http://inscription/</a>.</p>
-
-        <p class="lead">Une fois inscrit, vous aurez alors acc&egrave;s &agrave; Internet, mais &eacute;galement &agrave; tout un ensemble de services propos&eacute;s par le <a href="http://resel.fr/">ResEl</a>. De nombreuses pages d'explications et de configurations sont disponibles sur le site du ResEl.</p>
-
-        <p class="lead">Pour toutes vos questions, vous pourrez regardez la <a href="http://resel.fr/configuration/faq/"><acronym title=\"Frequently Asked Questions\">FAQ</acronym> ResEl</a>, et en cas de probl&egrave;me, <a href="">nous contacter</a>.</p>
-
-        <p class="lead">Important</strong> : apr&egrave;s l'inscription n'oubliez pas d'aller sur la <a href="http://resel.fr/configuration/inscription">page de configuration post-inscription</a></p>
-    </div>
+    <h1 class="intro-text">
+        <strong>Une fois inscrit...</strong>
+    </h1>
+    <hr class="featurette-divider">
+    <p>Les liens propos&eacute;s ci-apr&egrave;s ne seront fonctionnels qu'une fois votre inscription effectu&eacute;e. Vous pourrez revenir sur cette page en vous rendant sur <a href="{% url 'fr:index'}">http://inscription/</a>.</p>
+    <p>Une fois inscrit, vous aurez alors acc&egrave;s &agrave; Internet, mais &eacute;galement &agrave; tout un ensemble de services propos&eacute;s par le <a href="http://resel.fr/">ResEl</a>. De nombreuses pages d'explications et de configurations sont disponibles sur le site du ResEl.</p>
+    <p>Pour toutes vos questions, vous pourrez regardez la <a href="http://resel.fr/configuration/faq/"><acronym title=\"Frequently Asked Questions\">FAQ</acronym> ResEl</a>, et en cas de probl&egrave;me, <a href="">nous contacter</a>.</p>
+    <p>Important</strong> : apr&egrave;s l'inscription n'oubliez pas d'aller sur la <a href="http://resel.fr/configuration/inscription">page de configuration post-inscription</a></p>
+    <br>
 
     <!-- Goodbye -->
-    <div class="featurette" id="goodbye">
-        <h4 class="featurette-heading">&Agrave; bient&ocirc;t sur le r&eacute;seau !</h4>
-    </div>
+    <h1 class="text-center">&Agrave; bient&ocirc;t sur le r&eacute;seau !</h1>
 {% endblock %}
