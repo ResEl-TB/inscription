@@ -281,7 +281,7 @@ def Ajout_1(request):
         form = AliasForm(request.POST)
 
         if form.is_valid:
-            for key, value in form.cleaned_data:
+            for key, value in form.cleaned_data():
                 if key == 'publiable':
                     request.session['publiable'] = value
                 else:
