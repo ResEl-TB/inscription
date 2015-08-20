@@ -1,183 +1,31 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
+{% block css %}
+	<link href="{% static 'inscription/css/contact.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-	<h1>Devenir membre du ResEl</h1>
-	<h2>Introduction</h2>
+	<div class="row">
+		<div class="box">
+			<div class="col-lg-12">
+				<hr>
+				<h1 class="intro-text text-center">Devenir membre du 
+					<strong>ResEl</strong>
+				</h1>
+				<hr>
+			</div>
+		</div>
+	</div>
+
+	<h1 class="intro-text">
+		<strong>Introduction</strong>
+	</h1>
+	<hr class="featurette-divider">
 	<p>Pour vous inscrire au ResEl, il convient d'en accepter le Règlement intérieur, dont un exemplaire se trouve ci-dessous. Nous nous permettons de souligner que cette acceptation implique des obligations, mentionnées dans le Règlement Intérieur.</p>
 
-	<h1>Règlement Intérieur</h1>
-
-	<h2>Préambule</h2>
-	<p class="RI">Le présent Règlement Intérieur a pour objet de préciser les statuts de l'Association ResEl (ci-après désignée par &laquo;&nbsp;le ResEl&nbsp;&raquo;), sise dans les locaux de l'école Nationale Supérieure des Télécomunications de Bretagne (ci-après dédignée par &laquo;&nbsp;ENST Bretagne&nbsp;&raquo;), ainsi que de définir les règles d'utilisation du réseau géré par l'Association.</p>
-
-	<p class="RI">Ce document ne prétend pas être exhaustif sur les droits et devoirs en la matière, mais il vise à informer de leur existence et des risques encourus.</p>
-
-	<p class="RI">Il s'adresse à tous les adhérents de l'Association ResEl.</p>
-
-	<p class="RI">Ce document s'appuie en particulier sur le règlement informatique de l'ENST Bretagne (auquel sont soumis les adhérents du ResEl), la charte Renater, la loi 88-19 du 5 janvier 1988 relative à la fraude informatique, la loi 85-660 du 3 juillet 1985 relative à la protection des logiciels, la loi 78-17 du 6 janvier 1978 relative à l'informatique, aux fichiers et aux libertés, la loi 92-597 du 1er juillet 1992 relative au code de la propriété intellectuelle.</p>
-
-	<p class="RI">Le terme &laquo;&nbsp;utilisateur&nbsp;&raquo; désigne ici tout utilisateur du réseau géré par le ResEl, celui-ci est désigné par le terme &laquo;&nbsp;réseau&nbsp;&raquo;. Le terme &laquo;&nbsp;administrateur&nbsp;&raquo;  désigne quant à lui les personnes en charge de l'administration technique du réseau, qu'elles fassent partie du Conseil d'Administration ou non.</p>
-
-	<h2>Utilisation du réseau</h2>
-
-	<h3>Article premier : contacter les administrateurs</h3>
-
-	<p class="RI"><span class="numeroarticle">1</span> Le réseau est géré par des administrateurs qui peuvent être contactés, en cas de problème du ressort du ResEl par les moyens suivants (par ordre de priorité) :</p>
-	<ul>
-	<li>au local du ResEl présent à l'ENST Bretagne, durant les heures de permanence indiquées sur la porte&nbsp;;</li>
-	<li>sur IRC : serveur <kbd>irc.maisel.enst-bretagne.fr</kbd> (ou <kbd>irc.rezosup.org</kbd> depuis l'extérieur), canal <i>#ResEl</i>, sur lequel sont présents les administrateurs lorsqu'ils sont disponibles&nbsp;;</li>
-	<li>par courrier électronique à l'adresse <a href="mailto:support@resel.fr">support@resel.fr</a>. Ce courrier doit contenir une description précise du problème et doit être envoyé après avoir vérifié que la solution ne se trouve pas sur <a href="http://resel.fr">http://resel.fr</a>.</li>
-	</ul>
-
-	<p class="RI"><span class="numeroarticle">2</span>Il est explicitement demandé aux utilisateurs de ne pas téléphoner directement aux administrateurs ni de venir leur rendre visite s'ils sont en mesure d'utiliser les moyens décrits dans le premier paragraphe de cet article.</p>
-
-	<h3>Article deux : vie en communauté</h3>
-
-	<p class="RI"><span class="numeroarticle">1</span> Les fichiers stockés sur toute machine distante (qu'elle soit sur le réseau local, à l'école ou à l'extérieur du campus) doivent être considérés comme privés, à moins qu'ils ne soient explicitement mis en accès public.<p>
-
-	<p class="RI"><span class="numeroarticle">2</span> L'exploitation de failles de sécurité d'un système en vue d'accéder à tout ou partie des fichiers stockés sur un ordinateur distant est donc considérée comme une effraction et est passible des sanctions prévues par la loi.</p>
-
-	<p class="RI"><span class="numeroarticle">3</span> Les utilisateurs doivent également s'abstenir de toute tentative d'intercepter des communications privées, qu'elles se composent de courrier électronique, de dialogue direct ou toute autre forme de communication électronique entre deux machines.</p>
-
-	<p class="RI"><span class="numeroarticle">4</span> Toute tentative de prise de contrôle d'une machine appartenant à autrui, qu'elle soit sur le réseau, à l'école ou à l'extérieur du campus est considérée comme une infraction et à ce titre, est punie par la loi.</p>
-
-	<p class="RI"><span class="numeroarticle">5</span> Les ressources sont partagées entre tous les utilisateurs. L'utilisation de la bande passante vers l'Internet doit donc rester raisonnable pour le confort des autres utilisateurs du réseau. Toute utilisation pénalisant sensiblement les performances du réseau sont proscrites, notamment l'utilisation abusive du traffic de diffusion (<i>broadcast</i>), comme par exemple le protocole <i>NetBIOS</i> des partages de fichiers Windows.</p>
-
-	<p class="RI"><span class="numeroarticle">6</span> En cas de téléchargement important de fichiers libres de droits, l'utilisateur doit avoir l'accord d'un membre du Conseil d'Administration.</p>
-
-	<p class="RI"><span class="numeroarticle">7</span> Les logiciels dits peer-to-peer (liste non exhaustive : EDonkey, Kazaa, Bittorrent, eMule) sont interdits.</p>
-
-	<p class="RI"><span class="numeroarticle">8</span> Toute utilisation à but commercial du réseau est interdite.</p>
-
-	<p class="RI"><span class="numeroarticle">9</span> Tout transfert de fichier dont l'utilisateur ne possède pas les droits est interdit.</p>
-
-	<h3>Article trois : sécurité</h3>
-
-	<p class="RI"><span class="numeroarticle">1</span> L'adresse IP fournie à la connexion est personnelle, incessible et liée à l'adresse physique de la machine de l'utilisateur. L'utilisateur s'engage à ne pas la modifier, même à titre temporaire, sans l'accord explicite d'un membre du Conseil d'Administration.</p>
-
-	<p class="RI"><span class="numeroarticle">2</span> Contrevenir à la règle précédente revient à tenter de masquer son identité ou de prendre celle d'une autre machine. Ce type d'agissement est donc considéré par le ResEl comme une tentative de fraude informatique.</p>
-
-	<p class="RI"><span class="numeroarticle">3</span> L'utilisateur est administrateur de sa propre machine. à ce titre, il est responsable de toute opération effectuée sur celle-ci par lui ou une tierce personne. C'est donc à lui de faire respecter les règles de sécurité et les lois informatiques aux personnes à qui il permettra l'accès à sa machine.</p>
-
-	<p class="RI"><span class="numeroarticle">4</span> Il incombe à l'utilisateur de tenir à jour sa machine contre les failles de sécurité, et il lui est fortement conseillé d'utiliser un logiciel pare-feu ainsi qu'un logiciel antivirus.</p>
-
-	<p class="RI"><span class="numeroarticle">5</span> Toute tentative d'intrusion sur la machine de l'utilisateur doit être immédiatement signalée au Conseil d'Administration du ResEl pour qu'il puisse prendre les mesures nécessaires dans les plus brefs délais.</p>
-
-	<p class="RI"><span class="numeroarticle">6</span> Il est fortement déconseillé à l'utilisateur d'essayer d'accéder à une machine s'il n'est pas certain d'y être autorisé. En effet, des tentatives d'accès infructueuses et répétées à une machine peuvent être interprétées comme une tentative d'agression par l'administrateur de la machine concernée.</p>
-
-	<h3>Article quatre : responsabilité de l'Association</h3>
-
-	<p class="RI"><span class="numeroarticle">1</span> L'Association ne saurait en aucun cas être tenue responsable de quelconques problèmes liés au réseau. Ces problèmes, pour lesquels elle n'a pas d'obligation légale, sont notamment mais pas exclusivement :
-	<ul>
-	<li>dysfonctionnement du réseau&nbsp;;
-	<li>pertes de données.
-	</ul></p>
-
-	<p class="RI"><span class="numeroarticle">2</span> L'Association décline toute responsabilité quant à l'utilisation du réseau faite par l'utilisateur. En particulier, elle ne saurait être tenue responsable des agissements malveillants des utilisateurs ainsi que de l'utilisation du réseau à de mauvaises fins.</p>
-
-	<p class="RI"><span class="numeroarticle">3</span> Le ResEl n'est pas en mesure en raison de ses moyens limités de :
-	<ul>
-	<li>surveiller le contenu véhiculé par le réseau&nbsp;;</li>
-	<li>surveiller l'utilisation du réseau faite par les utilisateurs&nbsp;;</li>
-	<li>répondre à tout heure aux demandes des utilisateurs même si celles-ci rentrent dans le cadre d'action du ResEl.</li>
-	</ul></p>
-
-	<h3>Article cinq : responsabilité de l'utilisateur</h3>
-
-	<p class="RI"><span class="numeroarticle">1</span> Dans tous les cas, l'utilisateur est entièrement responsable de l'utilisation qui est faite de sa connexion attitrée, y compris par une tierce personne.</p>
-
-	<p class="RI"><span class="numeroarticle">2</span> L'utilisateur est seul responsable des données émises depuis sa ou ses machine(s) reliée(s) au réseau, aussi bien en ce qui concerne leur contenu (y compris virus, chevaux de Troie, etc.) que leur volume.</p>
-
-	<p class="RI"><span class="numeroarticle">3</span> En cas d'utilisation de plusieurs ordinateurs sur une seule prise réseau, la responsabilité des données qui transitent par cette prise revient au(x) locataire(s) de la chambre dans laquelle se trouve la prise. En conséquence, si une déconnexion doit frapper l'un des locataires, la déconnexion affectera également toutes les machines branchées sur la prise réseau, y compris les autres locataires. Cette règle est notamment, mais pas exclusivement, valable dans les studios.</p>
-
-	<p class="RI"><span class="numeroarticle">4</span> En cas de changement de propriétaire du matériel possédant l'adresse physique enregistrée au ResEl, l'utilisateur doit prévenir le ResEl.</p>
-
-	<h3>Article six : respect de la personne humaine</h3>
-
-	<p class="RI"><span class="numeroarticle">1</span> L'adhérent s'engage à ne pas utiliser le réseau pour diffuser des informations contraires aux lois en vigueur. En particulier, il s'engage notamment à ne pas diffuser :
-	<ul>
-	<li>de message à caractère violent ou pornographique, de message susceptible par sa nature de porter atteinte au respect de la personne humaine et de sa dignité, de l'égalité entre femmes et hommes et de la protection des enfants et des adolescents;</li>
-	<li>de message incitant aux crimes ou délits, ou à la consommation de substances illicites;</li>
-	<li>de message incitant à la haine, à la violence ou à la discrimination portant notamment sur les critères suivants : origine, sexe, situation de famille, état de santé, handicap, m\oe urs, opinions politiques, activités syndicales, appartenance ou non appartenance, vraie ou supposée, à une ethnie, une nation, une race ou une religion déterminée.</li>
-	</ul></p>
-
-	<p class="RI"><span class="numeroarticle">2</span> Plus généralement, l'utilisateur s'engage à respecter les règles de bonne conduite sur Internet (Netiquette).</p>
-
-	<h3>Article sept : Informatique et Libertés</h3>
-
-	<p class="RI"><span class="numeroarticle">1</span> L'Association dispose de plusieurs bases de données nominatives, déclarées auprès de la CNIL, qui servent notamment mais non exclusivement :
-	<ul>
-	<li>à fournir un service d'information (annuaire);</li>
-	<li>à aider à la gestion de l'Association et du réseau.</li>
-	</ul></p>
-
-	<p class="RI"><span class="numeroarticle">2</span> Les informations concernant l'utilisateur contenues dans ces bases peuvent être modifiées pour une partie d'entre elles dans <a href="https://resel.fr/MyResEl/">https://resel.fr/MyResEl/</a>, pour l'autre en envoyant un courrier électronique à <a href="mailto:support@resel.fr">support@resel.fr</a></p>
-
-	<h3>Article huit : sanctions prévues</h3>
-
-	<p class="RI"><span class="numeroarticle">1</span> En cas de non-respect de ce Règlement Intérieur, l'adhérent est passible (en plus des peines prévues par la loi) des sanctions suivantes :
-	<ul>
-	<li>privation temporaire ou définitive de l'accès à un ou plusieurs service(s) du ResEl;</li>
-	<li>déconnexion temporaire ou définitive du réseau;</li>
-	<li>exclusion de l'Association.</li>
-	</ul></p>
-
-	<p class="RI"><span class="numeroarticle">2</span> La sanction est d'abord prise par les administrateurs en fonction de la gravité de l'acte mis en cause. En cas de litige, le choix de la sanction est laissé au libre arbitre du Conseil d'Administration de l'Association.</p>
-
-	<p class="RI"><span class="numeroarticle">3</span> De plus, si la gravité de l'acte commis le justifie aux yeux du Conseil d'Administration, l'administration ou la logistique informatique de l'ENST Bretagne seront mis au courant et prendront les mesures qu'ils jugeront nécessaires.</p>
-
-	<p class="RI"><span class="numeroarticle">4</span> La liste des actions passibles de sanction décrites dans ce document n'est pas exhaustive et se contente de recenser les problèmes les plus fréquemment rencontrés sur un réseau informatique. Plus généralement, toute action visant à nuire à un système informatique, à s'approprier des données sans l'accord de leur(s) propriétaire(s) ou pouvant nuire à la réputation du ResEl ou de l'ENST Bretagne sera sanctionnée selon le libre arbitre du Conseil d'Administration.</p>
-
-	<h2>Organisation de l'Association</h2>
-
-	<h3>Article neuf : adhésion et cotisation</h3>
-
-	<p class="RI"><span class="numeroarticle">1</span> Chaque année scolaire, les membres actifs de l'Association paient une cotisation de 25&nbsp;euros</p>
-
-	<p class="RI"><span class="numeroarticle">2</span> Les cotisations doivent être payées entre début septembre et fin novembre.
-	En cas d'inscription après le 15&nbsp;novembre, la cotisation doit être payée au maximum deux semaines après l'inscription.</p>
-
-	<p class="RI"><span class="numeroarticle">3</span> Le non-respect du délai de paiement de la cotisation entraîne l'arrêt des services
-	offerts par le ResEl jusqu'à la régularisation de la situation.</p>
-
-	<h3>Article dix : départ de l'Association</h3>
-
-	<p class="RI"><span class="numeroarticle">1</span> Tout membre du ResEl, qu'il soit membre actif ou membre d'honneur, peut à tout moment quitter l'Association par simple notification au Conseil d'Administration. Le départ peut entraîner l'arrêt des services proposés par le ResEl.</p>
-
-	<p class="RI"><span class="numeroarticle">2</span> Le remboursement de la cotisation ne pourra pas être exigé en cas de démission, d'exclusion ou de décès d'un membre.</p>
-
-	<h3>Article onze : le Conseil d'Administration</h3>
-
-	<p class="RI"><span class="numeroarticle">1</span> L'ensemble des membres du Conseil d'Administration doit être prévenu des réunions du Conseil d'Administration au moins 24&nbsp;heures à l'avance par courrier électronique ou communiqué écrit individuel. L'ordre du jour est inscrit sur les convocations.</p>
-
-	<p class="RI"><span class="numeroarticle">2</span> Lorsque le Conseil d'Administration procède à un vote, le vote
-	se fait soit à main levée, soit à bulletin secret (sur demande d'au moins un de ses membres).</p>
-
-	<p class="RI"><span class="numeroarticle">3</span> Lors d'un vote à bulletin secret, les bulletins sont conservés pendant 1 an.</p>
-
-	<p class="RI"><span class="numeroarticle">4</span> Lorsqu'un vote porte sur un membre du Conseil d'Administration,
-	il peut être demandé à cette personne de quitter la salle de réunion du Conseil, et cette personne n'a pas droit de vote. Cette règle ne vaut pas pour les élections des membres du Bureau.</p>
-
-	<p class="RI"><span class="numeroarticle">5</span> Les membres du Conseil d'Administration empêchés d'assister personnellement à une réunion peuvent se faire représenter par un autre membre du Conseil d'Administration au moyen d'une procuration communiquée au Conseil d'Administration par courrier électronique ou demande manuscrite avant la réunion. Nul ne peut détenir plus de deux procurations.</p>
-
-	<h3>Article douze : l'Assemblée Générale</h3>
-
-	<p class="RI"><span class="numeroarticle">1</span> Conformément aux statuts de l'Association, l'Assemblée Générale ordinaire se réunit au moins une fois par an sur convocation du Conseil d'Administration. Les membres à jour de leur cotisation sont convoqués au moins 15&nbsp;jours avant l'Assemblée Générale par courrier électronique ou communiqué écrit individuel.</p>
-
-	<p class="RI"><span class="numeroarticle">2</span> Lorsque l'Assemblée Générale procède à un vote, le vote
-	se fait soit à main levée, soit à bulletin secret (sur demande d'au moins un des membres).</p>
-
-	<p class="RI"><span class="numeroarticle">3</span> Lors d'un vote à bulletin secret, les bulletins sont conservés pendant 1 an.</p>
-
-	<p class="RI"><span class="numeroarticle">4</span> Un compte-rendu de l'Assemblée Générale est rédigé par le Secrétaire de l'Association et mis à disposition sur le site Internet de l'Association. Les membres actifs sont ensuite avertis par courrier électronique de l'emplacement du compte-rendu sur le site.</p>
-
-	<p class="RI"><span class="numeroarticle">5</span> Les votes à l'Assemblée Générale par procuration ou par correspondance sont interdits.</p>
-
-	<h3>Article treize : modification du Règlement Intérieur</h3>
-
-	<p class="RI"><span class="numeroarticle">1</span> Conformément aux statuts de l'Association, le Règlement Intérieur est établi par le Conseil d'Administration.</p>
-
-	<p class="RI"><span class="numeroarticle">2</span> Le Règlement Intérieur doit être approuvé lors d'une Assemblée Générale Ordinaire ou Extraordinaire. Le nouveau Règlement Intérieur est alors mis à disposition sur le site Internet de l'Association. Les membres actifs sont ensuite avertis par courrier électronique de son emplacement sur le site.</p>
+	<iframe src="{% static 'inscription/docs/reglementinterieur.pdf' %}" width="500" height="500"></iframe>
 
 	{% if accepted %}
 		<p>Félicitations ! Vous êtes désormais un membre du ResEl.</p>
