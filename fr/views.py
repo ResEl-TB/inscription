@@ -20,7 +20,7 @@ from .forms import AdhesionForm, AliasForm, ContactForm
 def Verification(request):
     """ Vérif que le client est dans le bon subnet """
 
-    clientIP = request.META['REMOTE_ADDR']
+    clientIP = request.META['HTTP_X_FORWARDED_FOR']
     request.session['mac_client'] = None
 
     if re.search('172.22.(20{1,3}|21{1,3}|220|221|222|223|224|225)', clientIP):
@@ -38,7 +38,7 @@ def Erreur(request):
 def Index(request):
     """ Index lorsque le client n'est pas loggé """
 
-    clientIP = request.META['REMOTE_ADDR']
+    clientIP = request.META['HTTP_X_FORWARDED_FOR']
     machineInactive = False
 
     if clientIP.split('.')[1] == '23': # On bascule vers inscription.rennes si l'user se connecte de Rennes
@@ -117,7 +117,7 @@ def Index_secure(request):
             ° si non, on le bascule vers la vue Ajout_1
     """
 
-    clientIP = request.META['REMOTE_ADDR']
+    clientIP = request.META['HTTP_X_FORWARDED_FOR']
     mac = get_mac_from_ip(request, clientIP, '22')
     uid = str(request.user.username)
     statuts = get_status(request, uid)
@@ -212,7 +212,7 @@ def Index_secure(request):
 def Reactivation(request):
     """ Vue pour réactiver la machine """
 
-    clientIP = request.META['REMOTE_ADDR']
+    clientIP = request.META['HTTP_X_FORWARDED_FOR']
     mac = get_mac_from_ip(request, clientIP, '22')
 
     if messages.get_messages(request):
