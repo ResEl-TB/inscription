@@ -6,7 +6,7 @@ from django.conf.urls import patterns, url
 from . import views
 
 urlpatterns = [
-	url(r'^$', 'django_cas_ng.views.login', name='verification'), # Vue d'accueil, qui teste si on a bien une IP ResEl...
+	url(r'^$', views.Verification, name='verification'), # Vue d'accueil, qui teste si on a bien une IP ResEl...
 	url(r'^index$', views.Index, name='index'), # Vue appelée lorsque tout est en règle
 	url(r'^erreur$', views.Erreur, name='erreur'), # Vue appelée lorsque qu'une erreur est soulevée
 	url(r'^contact$', views.Contact, name="contact"), # Vue pour afficher un formulaire d'envoi de mail pour nous contacter
