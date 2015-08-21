@@ -28,6 +28,7 @@ def Verification(request):
         
     else:
         messages.error(request, 'Votre IP ne correspond pas à une IP du type 172.22.22(4-5).Y ; Veuillez configurer votre carte réseau pour obtenir une IP via DHCP.')
+        messages.error(request, request.META)
         return HttpResponseRedirect(reverse('fr:erreur'))
 
 def Erreur(request):
@@ -81,26 +82,6 @@ def Contact(request):
 
     return render(request, 'fr/contact.html', context)
 
-def Login(request):
-    """ Affiche le formulaire de login et redirige vers la bonne page """
-
-    if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            auth_login(request, form.get_user())
-            request.session['uid_client'] = str(request.user.username)
-
-            return HttpResponseRedirect(reverse('fr:index_secure'))
-    else:
-        form = AuthenticationForm(request)
-
-    context = {
-        'form': form,
-    }
-
-    return render(request, 'fr/login.html', context)
-
-@login_required(login_url='/fr/login')
 def Index_secure(request):
     """ Index juste après un login réussi. 
         Effectue toutes les vérifs nécessaires :
@@ -208,7 +189,6 @@ def Index_secure(request):
 
     return render(request, 'fr/index_secure.html', context)
 
-@login_required(login_url='/fr/login')
 def Reactivation(request):
     """ Vue pour réactiver la machine """
 
@@ -240,7 +220,6 @@ def Reactivation(request):
         messages.error(request, "Votre machine n'est pas encore connue sur notre réseau.")
         return HttpResponseRedirect(reverse('fr:erreur'))
 
-@login_required(login_url='/fr/login')
 def Devenir_membre(request):
     """ Vue appelée pour que l'user devienne reselPerson 
         On lui affiche le réglement intérieur, et la checkbox pour dire "oui oui, j'ai rien lu file moi ma co !"
@@ -262,7 +241,6 @@ def Devenir_membre(request):
     context = {'form': form}
     return render(request, 'fr/devenir_membre.html', context)
 
-@login_required(login_url='/fr/login')
 def Ajout_1(request):
     """ 
         Vue pour ajouter une machine au DN de l'user
@@ -323,14 +301,12 @@ def Ajout_1(request):
 
     return render(request, 'fr/ajout_1.html', context)
 
-@login_required(login_url='/fr/login')
 def Ajout_2(request):
     """
         Rien de bien folichon ici, on affiche les alias de la machine, et on demande à l'user de continuer vers la vue Ajout_3
     """
     return render(request, 'fr/ajout_2.html')
 
-@login_required(login_url='/fr/login')
 def Ajout_3(request):
     """
         Ici on crée la fiche LDAP de la machine, on l'ajoute au DN de l'user, et on reboot DHCP, DNS et FW
