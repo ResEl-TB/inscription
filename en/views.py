@@ -24,7 +24,7 @@ def Verification(request):
     request.session['mac_client'] = None
 
     if re.search('172.22.(20{1,3}|21{1,3}|220|221|222|223|224|225)', clientIP):
-        return HttpResponseRedirect(reverse('fr:index'))
+        return HttpResponseRedirect(reverse('en:index'))
         
     else:
         messages.error(request, 'Your IP does not match this pattern : 172.22.22(4-5).Y ; Please use a DHCP.')
