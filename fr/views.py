@@ -28,6 +28,7 @@ def Verification(request):
         
     else:
         messages.error(request, 'Votre IP ne correspond pas à une IP du type 172.22.22(4-5).Y ; Veuillez configurer votre carte réseau pour obtenir une IP via DHCP.')
+        messages.error(request, request)
         return HttpResponseRedirect(reverse('fr:erreur'))
 
 def Erreur(request):
