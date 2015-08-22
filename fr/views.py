@@ -104,7 +104,7 @@ def Contact(request):
             sujet = form.cleaned_data['sujet']
             description = form.cleaned_data['description']
 
-            mail_admins("[Inscription Brest] {}".format(sujet), "L'user {0} {1} habitant au {2} {3} rencontre des problemes sur inscription.resel.fr \n Sujet : {4} \n Description :\n {5} \n\n Il faut le recontacter à l'adresse {6}".format(nom, prenom, batiment, chambre, sujet, description, mail), fail_silently=False, connection=None, html_message=None)
+            mail_admins("[Inscription Brest] Problèmes rencontrés sur inscription.resel.fr", "Utilisateur : {} {}\nBâtiment : {}\nChambre : {}\n\nSujet : {}\n\nDescription :\n{}\n\nContact : {}".format(prenom, nom.upper(), batiment, chambre, sujet, description, mail), fail_silently=False, connection=None, html_message=None)
 
             mail_envoye = True
     else:
