@@ -6,12 +6,41 @@ from ldap_func import search
 from django import forms
 
 class AdhesionForm(forms.Form):
-    accepted = forms.BooleanField()
+    batiments = [
+        ('I1', 'I1'),
+        ('I2', 'I2'),
+        ('I3', 'I3'),
+        ('I4', 'I4'),
+        ('I5', 'I5'),
+        ('I6', 'I6'),
+        ('I7', 'I7'),
+        ('I8', 'I8'),
+        ('I9', 'I9'),
+        ('I10', 'I10'),
+        ('I11', 'I11'),
+        ('I12', 'I12')
+    ]
+
+    formations = [
+        ('IG1A', 'IG1A'),
+        ('IG2A', 'IG2A'),
+        ('IG3A', 'IG3A')
+    ]
+
+    lastname = forms.CharField(max_length=25)
+    firstname = forms.CharField(max_length=25)
+    birthdate = forms.CharField(max_length=8)
+    formation = forms.ChoiceField(choices=formations)
+    mail = forms.EmailField(max_length=50)
+    batiment = forms.ChoiceField(choices=batiments, required=False, initial)
+    roomNumber = forms.IntegerField(min_value=0, max_value=400, required=False)
+    mobile = forms.IntegerField(required=False)
+    userPassword = forms.CharField(widget=forms.PasswordInput)
+    publiable = forms.BooleanField()
 
 class AliasForm(forms.Form):
     alias_1 = forms.CharField(initial='', max_length=8, required=False)
     alias_2 = forms.CharField(initial='', max_length=8, required=False)
-    publiable = forms.BooleanField(initial=False, required=False)
 
     # Test si les alias fourni sont valides
     def clean_alias_1(self):

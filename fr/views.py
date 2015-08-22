@@ -12,23 +12,12 @@ from django.core.mail import mail_admins
 
 import re
 import time
+from datetime import datetime
+import binascii, hashlib
 
 from .network import *
 from .ldap_func import *
 from .forms import AdhesionForm, AliasForm, ContactForm
-
-def Verification(request):
-    """ Vérif que le client est dans le bon subnet """
-
-    clientIP = request.META['HTTP_X_FORWARDED_FOR']
-    request.session['mac_client'] = None
-
-    if re.search('172.22.(20{1,3}|21{1,3}|220|221|222|223|224|225)', clientIP):
-        return HttpResponseRedirect(reverse('fr:index'))
-        
-    else:
-        messages.error(request, 'Votre IP ne correspond pas à une IP du type 172.22.22(4-5).Y ; Veuillez configurer votre carte réseau pour obtenir une IP via DHCP.')
-        return HttpResponseRedirect(reverse('fr:erreur'))
 
 def Erreur(request):
     """ Template générique servant à afficher une éventuelle erreur en cours de process """
@@ -36,19 +25,27 @@ def Erreur(request):
     return render(request, 'fr/erreur.html')
 
 def Index(request):
-    """ Index lorsque le client n'est pas loggé """
+    """ Accueil """
 
     clientIP = request.META['HTTP_X_FORWARDED_FOR']
     machineInactive = False
 
-    if clientIP.split('.')[1] == '23': # On bascule vers inscription.rennes si l'user se connecte de Rennes
+    if re.search('172.23.', clientIP): # On bascule vers inscription.rennes si l'user se connecte de Rennes
         return redirect('http://inscription.rennes.resel.fr')
+
+    if re.search('172.22.(20{1,3}|21{1,3}|220|221|222|223|224|225)', clientIP) is None:
+        messages.error(request, 'Votre IP ne correspond pas à une IP du type 172.22.22(4-5).Y ; Veuillez configurer votre carte réseau pour obtenir une IP via DHCP.')
+        return HttpResponseRedirect(reverse('fr:erreur'))
 
     if clientIP != "172.22.42.4" and inactive(get_mac_from_ip(request, clientIP, '22')): # Vérification que la machine est active
         machineInactive = True
 
     if messages.get_messages(request):
         return HttpResponseRedirect(reverse('fr:erreur'))
+
+    if search("ou=people,dc=maisel,dc=enst-bretagne,dc=fr" , "(uid={})".format(str(request.user))) is None:
+        """ La personne n'est pas encore présente dans le LDAP, donc on l'ajoute """
+        return HttpResponseRedirect(reverse('fr:devenir_membre'))
 
     return render(request, 'fr/index.html', {'machineInactive': machineInactive})
 
@@ -81,7 +78,7 @@ def Contact(request):
 
     return render(request, 'fr/contact.html', context)
 
-def Index_secure(request):
+def Inscription(request):
     """ Index juste après un login réussi. 
         Effectue toutes les vérifs nécessaires :
         - l'user est-il blacklisté ?
@@ -93,7 +90,7 @@ def Index_secure(request):
                 2) ensuite on vérifie que l'ip de l'user correspond à l'ip enregistrée dans le ldap.
                    Si c'est non, on check si il vient d'un campus différent, auquel cas on update automatiquement sa fiche ldap et on lui dit de reset sa connexion
                    Si il ne vient pas d'un campus différent, on lui dit de passer par un DHCP
-                3) enfin, si toutes les vérifs sont faites, l'user est juste en visite sur le site, du coup on display la page index_secure
+                3) enfin, si toutes les vérifs sont faites, l'user est juste en visite sur le site, du coup on renvoie vers la page d'index
             ° si non, on le bascule vers la vue Ajout_1
     """
 
@@ -179,14 +176,12 @@ def Index_secure(request):
                         if 'Inactive' in machine_user[1]['zone']:
                             return HttpResponseRedirect(reverse('fr:reactivation'))
 
-                        return render(request, 'fr/index_secure.html', context)
+                        return HttpResponseRedirect(reverse('fr:index'))
 
         return HttpResponseRedirect(reverse('fr:ajout_1'))
 
     else:
         return HttpResponseRedirect(reverse('fr:devenir_membre'))
-
-    return render(request, 'fr/index_secure.html', context)
 
 def Reactivation(request):
     """ Vue pour réactiver la machine """
@@ -220,24 +215,65 @@ def Reactivation(request):
         return HttpResponseRedirect(reverse('fr:erreur'))
 
 def Devenir_membre(request):
-    """ Vue appelée pour que l'user devienne reselPerson 
-        On lui affiche le réglement intérieur, et la checkbox pour dire "oui oui, j'ai rien lu file moi ma co !"
+    """ Vue appelée pour que l'user s'inscrive au ResEl
+        C'est cette vue qui créer la fiche LDAP de l'user
+        On lui affiche le réglement intérieur, et un formulaire pour remplir les champs LDAP
     """
+    context = {}
+
+    if search("ou=people,dc=maisel,dc=enst-bretagne,dc=fr" , "(uid={})".format(str(request.user))):
+        messages.error(request, "Vous êtes déjà membre du ResEl.")
+        return HttpResponseRedirect(reverse('fr:erreur'))
+
     if request.method == 'POST':
         form = AdhesionForm(request.POST)
 
         if form.is_valid():
-            accepted = form.cleaned_data['accepted']
+            year = datetime.now().year
+            month = datetime.now().month
 
-            if accepted:
-                uid = str(request.user.username)
-                inscrire_user(uid)
-                return HttpResponseRedirect(reverse('fr:index_secure'))
+            if month < 9:
+                year -= 1
+
+            add_record = [ 
+                ('uid', [str(request.user)]),
+                ('anneeScolaire', [str(year)]),
+                ('promo', [str(year + 3)]),
+                ('dateInscr', [time.strftime('%Y%m%d%H%M%S') + 'Z']),
+                ('objectClass', ['genericPerson','enstbPerson','reselPerson', 'maiselPerson']),
+                ('campus', ['Brest']),
+            ]
+
+            for key, value in form.cleaned_data:
+                if key == 'userPassword':
+                    # Génération du NTLM Hash pour le mdp wifi
+                    ntPassword = binascii.hexlify(hashlib.new('md4', value.encode('utf-16le')).digest()).upper()
+
+                    # Génération du hash pour le mdp user
+                    userPassword = hashPassword(value)
+
+                    add_record.append( ('userPassword', [userPassword]), ('ntPassword', [ntPassword]) )
+
+                elif key == 'lastname':
+                    add_record.append( ('lastname', [value.upper()]) )
+
+                elif key == 'birthdate':
+                    add_record.append( ('birthdate', [value + '000000Z']))
+
+                else:
+                    add_record.append( (key, [str(value)]) )
+
+            add_entry("uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr".format(str(request.user)), add_record)
+            context['ajout_fait'] = True
+
+            return render(request, 'fr/devenir_membre.html', context)
 
     else:
         form = AdhesionForm()
-        
-    context = {'form': form}
+        context['ajout_fait'] = False
+
+    context['form'] = form
+    
     return render(request, 'fr/devenir_membre.html', context)
 
 def Ajout_1(request):
@@ -272,7 +308,6 @@ def Ajout_1(request):
         if form.is_valid:
             alias_1 = form.cleaned_data['alias_1']
             alias_2 = form.cleaned_data['alias_2']
-            request.session['publiable'] = form.cleaned_data['publiable']
 
             if alias_1 != '':
                 request.session['alias_choisis'].append(alias_1)
@@ -337,17 +372,6 @@ def Ajout_3(request):
     ]
 
     add_entry("host={},ou=machines,dc=resel,dc=enst-bretagne,dc=fr".format(hostname), add_record)
-
-    # Modification du champ publiable si c'est la premiere machine
-    if request.session['nb_machines'] == 0:
-        publiable = request.session['publiable']
-
-        personne = search("ou=people,dc=maisel,dc=enst-bretagne,dc=fr","(uid={})".format(request.session['uid_client']))[0]
-        if 'maiselPerson' in personne[1]['objectClass']:
-            mod_attrs = [
-                ( ldap.MOD_REPLACE, 'publiable', publiable )
-            ]
-            mod("uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr".format(request.session['uid_client']), mod_attrs)
 
     update_dhcp_dns_firewall()
 

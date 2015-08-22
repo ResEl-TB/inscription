@@ -6,6 +6,10 @@ from constants import ldap_admin_dn, ldap_admin_passwd
 import ldap
 from datetime import datetime
 import time
+import hashlib
+import os
+from base64 import urlsafe_b64encode as encode
+from base64 import urlsafe_b64decode as decode
 
 from django_auth_ldap.config import LDAPSearch
 from django.shortcuts import render
@@ -155,6 +159,13 @@ def get_free_alias(uid):
                 if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias=0{})".format(test)) == None:
                     continuer = False
     return test
+
+def hashPassword(password):
+    salt = os.urandom(4)
+    h = hashlib.sha1(password)
+    h.update(salt)
+    return "{SSHA}" + encode(h.digest() + salt)
+
 
 
 
