@@ -476,6 +476,7 @@ def Ajout_3(request):
         ('lastdate', [lastdate])
     ]
 
+    # Dernière vérif avant d'ajouter la machine
     if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(host={})".format(hostname)) is None:
         add_entry("host={},ou=machines,dc=resel,dc=enst-bretagne,dc=fr".format(hostname), add_record)
     else
