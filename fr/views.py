@@ -337,12 +337,12 @@ def Devenir_membre(request):
             if form.cleaned_data['roomNumber']:
                 add_record.append( ('roomNumber', [str(form.cleaned_data['roomNumber'])]))
             else:
-                add_record.append( ('roomNumber', ['000']))
+                add_record.append( ('roomNumber', ['Non renseigne']))
 
             if form.cleaned_data['mobile']:
                 add_record.append( ('mobile', [str(form.cleaned_data['mobile'])]))
             else:
-                add_record.append( ('mobile', ['0']))
+                add_record.append( ('mobile', ['Non renseigne']))
 
             # Ajout de la fiche LDAP
             add_entry("uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr".format(str(request.user)), add_record)
