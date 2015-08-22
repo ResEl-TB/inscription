@@ -59,8 +59,8 @@
                             <a href="{% url 'fr:contact' %}">Nous contacter</a>
                         </li>
                         <li>
-                            {% if request.session.logout_url %}
-                                <a href="{{ request.session.logout_url }}">Se déconnecter</a>
+                            {% if request.session.LDAP %}
+                                <a href="/fr/logout_ldap">Se déconnecter</a>
                             {% else %}
                                 <a href="/fr/logout_cas">Se déconnecter</a>
                             {% endif %}

@@ -6,7 +6,7 @@ from django.conf.urls import patterns, url
 from . import views
 
 urlpatterns = [
-	url(r'^login_ldap$', views.Login_LDAP, {'LDAP': True}, name='login_ldap'),
+	url(r'^login_ldap$', views.Login_LDAP, name='login_ldap'),
 	url(r'^logout_ldap$', views.Logout_LDAP, name='logout_ldap'),
 	url(r'^login_cas$', 'django_cas_ng.views.login', {'next_page': '/fr/index'}),
     url(r'^logout_cas$', 'django_cas_ng.views.logout'),

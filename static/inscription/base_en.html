@@ -58,8 +58,8 @@
                             <a href="{% url 'en:contact' %}">Contact us</a>
                         </li>
                         <li>
-                            {% if request.session.logout_url %}
-                                <a href="{{ request.session.logout_url }}">Logout</a>
+                            {% if request.session.LDAP %}
+                                <a href="/en/logout_ldap">Logout</a>
                             {% else %}
                                 <a href="/en/logout_cas">Logout</a>
                             {% endif %}

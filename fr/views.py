@@ -20,14 +20,9 @@ from .network import *
 from .ldap_func import *
 from .forms import AdhesionForm, AliasForm, ContactForm
 
-global login_url
-login_url = '/fr/login_cas'
-
-def Login_LDAP(request, LDAP):
+def Login_LDAP(request):
     """ Affiche le formulaire de login LDAP et redirige vers la bonne page """
-    if LDAP:
-        login_url = '/fr/login_ldap'
-        request.session['logout_url'] = '/fr/logout_ldap'
+    request.session['LDAP'] = True
 
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -45,7 +40,7 @@ def Login_LDAP(request, LDAP):
 
     return render(request, 'fr/login_ldap.html', context)
 
-@login_required(login_url=login_url)
+@login_required(login_url='/')
 def Logout_LDAP(request):
     """ Déconnecte l'user et le bascule vers un message de succès """
     if request.session['logout_url']:
@@ -56,13 +51,13 @@ def Logout_LDAP(request):
         messages.error(request, "Vous n'êtes pas connecté via le LDAP ResEl.")
         return HttpResponseRedirect(reverse('fr:erreur'))
 
-@login_required(login_url=login_url)
+@login_required(login_url='/')
 def Erreur(request):
     """ Template générique servant à afficher une éventuelle erreur en cours de process """
 
     return render(request, 'fr/erreur.html')
 
-@login_required(login_url=login_url)
+@login_required(login_url='/')
 def Index(request):
     """ Accueil """
 
@@ -88,7 +83,7 @@ def Index(request):
 
     return render(request, 'fr/index.html', {'machineInactive': machineInactive})
 
-@login_required(login_url=login_url)
+@login_required(login_url='/')
 def Contact(request):
     """ Affiche un formulaire de contact """
 
@@ -118,7 +113,7 @@ def Contact(request):
 
     return render(request, 'fr/contact.html', context)
 
-@login_required(login_url=login_url)
+@login_required(login_url='/')
 def Inscription(request):
     """ Index juste après un login réussi. 
         Effectue toutes les vérifs nécessaires :
@@ -224,7 +219,7 @@ def Inscription(request):
     else:
         return HttpResponseRedirect(reverse('fr:devenir_membre'))
 
-@login_required(login_url=login_url)
+@login_required(login_url='/')
 def Reactivation(request):
     """ Vue pour réactiver la machine """
 
@@ -256,7 +251,7 @@ def Reactivation(request):
         messages.error(request, "Votre machine n'est pas encore connue sur notre réseau.")
         return HttpResponseRedirect(reverse('fr:erreur'))
 
-@login_required(login_url=login_url)
+@login_required(login_url='/')
 def Devenir_membre(request):
     """ Vue appelée pour que l'user s'inscrive au ResEl
         C'est cette vue qui créer la fiche LDAP de l'user
@@ -358,7 +353,7 @@ def Devenir_membre(request):
 
     return render(request, 'fr/devenir_membre.html', context)
 
-@login_required(login_url=login_url)
+@login_required(login_url='/')
 def Ajout_1(request):
     """ 
         Vue pour ajouter une machine au DN de l'user
@@ -414,7 +409,7 @@ def Ajout_1(request):
 
     return render(request, 'fr/ajout_1.html', context)
 
-@login_required(login_url=login_url)
+@login_required(login_url='/')
 def Ajout_2(request):
     """
         Rien de bien folichon ici, on affiche les alias de la machine, et on demande à l'user de continuer vers la vue Ajout_3
@@ -432,7 +427,7 @@ def Ajout_2(request):
 
     return render(request, 'fr/ajout_2.html')
 
-@login_required(login_url=login_url)
+@login_required(login_url='/')
 def Ajout_3(request):
     """
         Ici on crée la fiche LDAP de la machine, on l'ajoute au DN de l'user, et on reboot DHCP, DNS et FW

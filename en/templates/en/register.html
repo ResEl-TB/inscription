@@ -17,16 +17,15 @@
 				<hr>
 			</div>
 		</div>
-	</div>
-
-	{% if ajout_fait %}
-		<div class="col-lg-6 col-lg-offset-3">
-			<div class="alert alert-success">
-				<p>Congrats ! You are now a ResEl member.</p>
-				<p>Go back to the <a href="{% url 'en:index' %}">index</a> to manage your devices.</p>
+		{% if ajout_fait %}
+			<div class="col-lg-6 col-lg-offset-3">
+				<div class="alert alert-success">
+					<p>Congrats ! You are now a ResEl member.</p>
+					<p>Go back to the <a href="{% url 'en:index' %}">index</a> to manage your devices.</p>
+				</div>
 			</div>
-		</div>
-	{% endif %}
+		{% endif %}
+	</div>
 
 	<h1 class="intro-text">
 		<strong>Introduction</strong>
