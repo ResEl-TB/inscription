@@ -53,13 +53,16 @@ def blacklist(request, uid):
     if uid:
         result = search('ou=people,dc=maisel,dc=enst-bretagne,dc=fr', "(uid={})".format(uid))
         if result:
-            year = datetime.now().year
-            month = datetime.now().month
+            if result[0][1]['cotiz']:
+                year = datetime.now().year
+                month = datetime.now().month
 
-            if month < 9:
-                year -= 1
+                if month < 9:
+                    year -= 1
 
-            return ('BLACKLIST{}'.format(year) in result[0][1]['cotiz'])
+                return ('BLACKLIST{}'.format(year) in result[0][1]['cotiz'])
+            else:
+                return False
         else:
             messages.error(request, "L'user {} n'est pas présent dans l'annuaire LDAP".format(uid))
             return False
