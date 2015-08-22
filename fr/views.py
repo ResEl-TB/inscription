@@ -350,7 +350,7 @@ def Ajout_1(request):
     if request.POST:
         form = AliasForm(request.POST)
 
-        if form.is_valid:
+        if form.is_valid():
             for key, value in form.cleaned_data:
                 if value != '':
                     request.session['alias_choisis'].append(value)
