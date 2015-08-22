@@ -338,6 +338,8 @@ def Devenir_membre(request):
 
             if form.cleaned_data['mobile']:
                 add_record.append( ('mobile', [str(form.cleaned_data['mobile'])]))
+            else:
+                add_record.append( ('mobile', ['0']))
 
             # Ajout de la fiche LDAP
             add_entry("uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr".format(str(request.user)), add_record)
