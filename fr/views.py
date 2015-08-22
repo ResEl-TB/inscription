@@ -301,7 +301,8 @@ def Devenir_membre(request):
             # Génération du hash pour le mdp user
             userPassword = hashPassword(password)
 
-            add_record.append( ('userPassword', [userPassword]), ('ntPassword', [ntPassword]) )
+            add_record.append( ('userPassword', [userPassword]) )
+            add_record.append( ('ntPassword', [ntPassword]) )
 
             # Attribut formation
             formation = form.cleaned_data['formation']

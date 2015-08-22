@@ -148,7 +148,7 @@ def Inscription(request):
     request.session['mac_client'] = mac
 
     if blacklist(request, uid):
-        messages.error(request, "You did not pay your ResEl, therefore you are not allowed to pursue.<br />Please contact a ResEl administrator by using the contact section.".format(uid))
+        messages.error(request, "You did not pay your ResEl fee, therefore you are not allowed to pursue.<br />Please contact a ResEl administrator by using the contact section.".format(uid))
         return HttpResponseRedirect(reverse('en:error'))
 
     if messages.get_messages(request):
@@ -300,7 +300,8 @@ def Devenir_membre(request):
             # Génération du hash pour le mdp user
             userPassword = hashPassword(password)
 
-            add_record.append( ('userPassword', [userPassword]), ('ntPassword', [ntPassword]) )
+            add_record.append( ('userPassword', [userPassword]) )
+            add_record.append( ('ntPassword', [ntPassword]) )
 
             # Attribut formation
             formation = form.cleaned_data['formation']
