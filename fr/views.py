@@ -366,7 +366,7 @@ def Ajout_3(request):
     if machine:
         messages.error(request, "Votre machine est déjà enregistrée sur notre réseau.")
         return HttpResponseRedirect(reverse('fr:erreur'))
-        
+
     ip = get_free_ip(200, 223)
     lastdate = time.strftime('%Y%m%d%H%M%S') + 'Z'
 

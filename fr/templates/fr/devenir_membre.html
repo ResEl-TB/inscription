@@ -2,10 +2,6 @@
 
 {% load staticfiles %}
 
-{% block css %}
-	<link href="{% static 'inscription/css/devenir_membre.css' %}" rel="stylesheet">
-{% endblock %}
-
 {% block content %}
 	<div class="row">
 		<div class="box">
@@ -31,6 +27,7 @@
 			<iframe src="{% static 'inscription/docs/reglementinterieur.pdf' %}" width="100%" height="800"></iframe>
 		</div>
 	</div>
+	<br>
 
 	<div class="row">
 		<div class="col-sm-6">
@@ -118,17 +115,11 @@
 			        </div>
 
 			        <div class="form-group">
-			        	<div class="col-sm-12">
-				            <input type="checkbox" name="publiable" autocomplete="off" />
-				            <div class="btn-group">
-				                <label class="btn btn-info">
-				                    <span class="glyphicon glyphicon-ok"></span>
-				                    <span> </span>
-				                </label>
-				                <label class="btn btn-default active">
-				                    J'autorise la publication de mes infos personnelles dans l'annuaire ResEl
-				                </label>
-				            </div>
+			        	<div class="col-sm-11 col-sm-offset-1">
+			        		<span class="button-checkbox">
+						        <button type="button" class="btn" data-color="primary">J'autorise la publication de mes infos personnelles dans l'annuaire ResEl</button>
+						        <input type="checkbox" class="hidden" name="publiable" />
+						    </span>
 				        </div>
 			        </div>
 
@@ -145,4 +136,8 @@
 			</div>
 		{% endif %}
 	</div>
+{% endblock %}
+
+{% block script %}
+	<script src="{% static 'inscription/js/devenir_membre.js' %}"></script>
 {% endblock %}
