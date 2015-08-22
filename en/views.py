@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout
-from django.core.mail import mail_admins
+from django.core.mail import mail_admins, EmailMessage
 
 import re
 import time
@@ -479,6 +479,16 @@ def Ajout_3(request):
     # Dernière vérif avant d'ajouter la machine
     if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(host={})".format(hostname)) is None:
         add_entry("host={},ou=machines,dc=resel,dc=enst-bretagne,dc=fr".format(hostname), add_record)
+        mail = EmailMessage(
+                subject="[Inscription Brest] Machine {} [172.22.{} - {}] par {}".format(hostname, ip, request.session['mac_client'], request.session['uid_client']),
+                body="Inscription de la machine {} appartenant à {}\n\nIP : 172.22.{}\nMAC : {}".format(hostname, request.session['uid_client'], ip, request.session['mac_client']),
+                from_email="inscription-bot@resel.fr",
+                reply_to="inscription-bot@resel.fr",
+                to="inscription-bot@resel.fr",
+                headers={'Cc': 'botanik@resel.fr'}
+            )
+        mail.send()
+
     else:
         messages.error(request, "The host {} already exists in the ResEl LDAP, please try to perform the add procedure again.".format(hostname))
         return HttpResponseRedirect(reverse('en:error'))
