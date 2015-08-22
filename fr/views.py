@@ -245,7 +245,6 @@ def Devenir_membre(request):
                 ('lastname', [lastname]),
                 ('mail', [personne['mail'][0]]),
                 ('anneeScolaire', [str(year)]),
-                ('promo', [str(year + 3)]),
                 ('dateInscr', [time.strftime('%Y%m%d%H%M%S') + 'Z']),
                 ('objectClass', ['genericPerson','enstbPerson','reselPerson', 'maiselPerson']),
                 ('campus', ['Brest']),
@@ -263,6 +262,17 @@ def Devenir_membre(request):
 
                 elif key == 'birthdate':
                     add_record.append( ('birthdate', [value + '000000Z']))
+
+                elif key == 'formation':
+                    if value == "IG1A":
+                        promo = year + 3
+                    elif value == "IG2A":
+                        promo = year + 2
+                    elif value == "IG3A":
+                        promo = year + 1
+                    else:
+                        promo = year + 3
+                    add_record.append( (key, [str(promo)]) )
 
                 else:
                     add_record.append( (key, [str(value)]) )
