@@ -273,7 +273,7 @@ def Devenir_membre(request):
         context['ajout_fait'] = False
 
     context['form'] = form
-    
+
     return render(request, 'fr/devenir_membre.html', context)
 
 def Ajout_1(request):
@@ -339,12 +339,34 @@ def Ajout_2(request):
     """
         Rien de bien folichon ici, on affiche les alias de la machine, et on demande à l'user de continuer vers la vue Ajout_3
     """
+    if request.session['mac_client']:
+        mac = request.session['mac_client']
+    else:
+        messages.error(request, "Une erreur est survenue dans la récupération de votre adresse MAC. Veuillez réessayer.")
+        return HttpResponseRedirect(reverse('fr:erreur'))
+
+    machine = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )
+    if machine:
+        messages.error(request, "Votre machine est déjà enregistrée sur notre réseau.")
+        return HttpResponseRedirect(reverse('fr:erreur'))
+
     return render(request, 'fr/ajout_2.html')
 
 def Ajout_3(request):
     """
         Ici on crée la fiche LDAP de la machine, on l'ajoute au DN de l'user, et on reboot DHCP, DNS et FW
     """
+    if request.session['mac_client']:
+        mac = request.session['mac_client']
+    else:
+        messages.error(request, "Une erreur est survenue dans la récupération de votre adresse MAC. Veuillez réessayer.")
+        return HttpResponseRedirect(reverse('fr:erreur'))
+
+    machine = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )
+    if machine:
+        messages.error(request, "Votre machine est déjà enregistrée sur notre réseau.")
+        return HttpResponseRedirect(reverse('fr:erreur'))
+        
     ip = get_free_ip(200, 223)
     lastdate = time.strftime('%Y%m%d%H%M%S') + 'Z'
 
