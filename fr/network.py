@@ -46,7 +46,7 @@ def get_free_ip(low, high):
 
         while ((item < 254) and again):
             item +=1
-            if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(ipHostNumber={}.{})".format(rang, item)):
+            if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(ipHostNumber={}.{})".format(rang, item)) is None:
                 again = False
 
     return "{}.{}".format(rang, item)
