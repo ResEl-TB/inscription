@@ -8,8 +8,7 @@ from datetime import datetime
 import time
 import hashlib
 import os
-from base64 import urlsafe_b64encode as encode
-from base64 import urlsafe_b64decode as decode
+from base64 import encodestring as encode
 
 from django_auth_ldap.config import LDAPSearch
 from django.shortcuts import render
@@ -173,7 +172,7 @@ def hashPassword(password):
     salt = os.urandom(4)
     h = hashlib.sha1(password)
     h.update(salt)
-    return "{SSHA}" + encode(h.digest() + salt)
+    return ("{SSHA}" + encode(h.digest() + salt)).split('\n')[0]
 
 
 
