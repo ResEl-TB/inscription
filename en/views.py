@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout
 from django.core.mail import mail_admins
 
 import re
@@ -43,6 +44,17 @@ def Login_LDAP(request, LDAP):
     }
 
     return render(request, 'en/login_ldap.html', context)
+
+@login_required(login_url=login_url)
+def Logout_LDAP(request):
+    """ Déconnecte l'user et le bascule vers un message de succès """
+    if login_url == '/en/login_cas':
+        messages.error(request, "Your are not authenticated through the ResEl LDAP.")
+        return HttpResponseRedirect(reverse('en:error'))
+
+    logout(request)
+
+    return render(request, 'en/logout_ldap.html')
 
 @login_required(login_url=login_url)
 def Erreur(request):
