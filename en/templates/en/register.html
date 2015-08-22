@@ -35,29 +35,112 @@
 	<div class="row">
 		<div class="col-sm-6">
 			<div class="form-horizontal">
-				<form action="{% url "en:devenir_membre" %}" method="post">
+				<form action="{% url "en:register" %}" method="post">
 			    	{% csrf_token %}
 			    	<div class="form-group">
-		                <label class="col-sm-10 control-label">I agree to this document</label>
-		                <div class="col-sm-2">
-		                	<input name="accepted" type="checkbox" class="form-control" required data-validation-required-message="You must accept those rules">
+		                <label class="col-sm-3 control-label">Lastname</label>
+		                <div class="col-sm-9">
+		                	<input name="lastname" type="text" class="form-control" maxlength="25" required>
 		                </div>
 		            </div>
 
 		            <div class="form-group">
-		            	<div class="col-sm-2 col-sm-offset-4">
+		                <label class="col-sm-3 control-label">Firstname</label>
+		                <div class="col-sm-9">
+		                	<input name="firstname" type="text" class="form-control" maxlength="25" required>
+		                </div>
+		            </div>
+
+		            <div class="form-group">
+		                <label class="col-sm-3 control-label">Birthdate</label>
+		                <div class="col-sm-9">
+		                	<input name="birthdate" type="text" class="form-control" placeholder="YYYYMMDD ex: 19959830" maxlength="8" required>
+		                </div>
+		            </div>
+
+		            <div class="form-group">
+		                <label class="col-sm-3 control-label">Formation</label>
+		                <div class="col-sm-9">
+			                <select name="formation" class="form-control controls">
+			                	<option value="IG1A">IG 1A</option>
+								<option value="IG2A">IG 2A</option>
+								<option value="IG3A">IG 3A</option>
+							</select>
+		            	</div>
+			        </div>
+
+			        <div class="form-group">
+		                <label class="col-sm-3 control-label">Mail</label>
+		                <div class="col-sm-9">
+		                	<input name="mail" type="email" class="form-control" maxlength="50" required>
+			            </div>
+			        </div>
+
+			        <div class="form-group">
+		                <label class="col-sm-3 control-label">Building (optionnal)</label>
+		                <div class="col-sm-9">
+			                <select name="batiment" class="form-control controls">
+			                	<option value="I1">I1</option>
+								<option value="I2">I2</option>
+								<option value="I3">I3</option>
+								<option value="I4">I4</option>
+								<option value="I5">I5</option>
+								<option value="I6">I6</option>
+								<option value="I7">I7</option>
+								<option value="I8">I8</option>
+								<option value="I9">I9</option>
+								<option value="I10">I10</option>
+								<option value="I11">I11</option>
+								<option value="I12">I12</option>
+							</select>
+		            	</div>
+			        </div>
+
+			        <div class="form-group">
+			            <label class="col-sm-3 control-label">Room number (optionnal)</label>
+			            <div class="col-sm-9">
+			                <input type="number" class="form-control" max="400" min="0" name="roomNumber">
+			            </div>
+			        </div>
+
+			        <div class="form-group">
+			            <label class="col-sm-3 control-label">Phone number (optionnal)</label>
+			            <div class="col-sm-9">
+			                <input type="number" class="form-control" name="roomNumber" maxlength="10">
+			            </div>
+			        </div>
+
+			        <div class="form-group">
+			            <label class="col-sm-3 control-label">ResEl password</label>
+			            <div class="col-sm-9">
+			                <input type="password" class="form-control" placeholder="Choose your password" name="userPassword" maxlength="25" required>
+			            </div>
+			        </div>
+
+			        <div class="form-group">
+			        	<div class="col-sm-11">
+			        		<span class="button-checkbox">
+						        <button type="button" class="btn" data-color="primary">I accept my coordinates publication into the ResEl directory</button>
+						        <input type="checkbox" class="hidden" name="publiable" />
+						    </span>
+				        </div>
+			        </div>
+
+			        <div class="form-group">
+		            	<div class="col-sm-2 col-sm-offset-5">
 		                	<button type="submit" class="btn btn-default">Register</button>
 		                </div>
 		            </div>
+
 				</form>
 			</div>
 		</div>
 
-		{% if accepted %}
+		{% if ajout_fait %}
 			<div class="col-sm-6">
 				<div class="alert alert-success">
 					<p>Congrats ! You are now a ResEl member.</p>
-					<p>Go back on the <a href="{% url 'en:index_secure' %}">inscription web page</a> to manage your devices.</p>
+					<p>Go back to the <a href="{% url 'en:index' %}">index</a> to manage your devices.</p>
 				</div>
 			</div>
 		{% endif %}

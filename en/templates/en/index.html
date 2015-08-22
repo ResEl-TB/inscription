@@ -7,8 +7,8 @@
         <div class="box">
             <div class="col-lg-12">
                 <hr>
-                <h1 class="intro-text text-center">Welcome to the
-                    <strong>ResEl</strong>
+                <h1 class="intro-text text-center">Welcome
+                    <strong>{{ request.user.username }}</strong>
                     !
                 </h1>
                 <hr>
@@ -17,7 +17,7 @@
 
         <div class="col-lg-12">
             <p class="intro-text text-center">
-                <a href="{% url 'fr:verification' %}">Ce site en français</a>
+                <a href="{% url 'fr:index' %}">Ce site en français</a>
             </p>
         </div>
     </div>
@@ -47,12 +47,8 @@
         <strong>How do I get my Internet access ?</strong>
     </h1>
     <hr class="featurette-divider">
-    <p>Just go <a href="{% url 'fr:login' %}">here</a>. You will be asked to log in. Two options :</p>
-    <ul>
-        <li>If you are a <strong>student</strong> or if you have a Télécom Bretagne account, you can log in with your school account, and your <strong>ResEl password</strong>. Then just follow the instructions.</li>
-
-        <li>If you are a <strong>trainee</strong> living in the MaisEl and you do not have a Télécom Bretagne account, please <a href="{% url 'en:contact' %}">contact us</a>.</li>
-    </ul>
+    <p>Just go <a href="{% url 'en:inscription' %}">here</a>.</p>
+    <p>>If you are a <strong>trainee</strong> living in the MaisEl and you do not have a Télécom Bretagne account, please <a href="{% url 'en:contact' %}">contact us</a>.</p>
     <br>
 
     <!-- Une fois inscrit -->
@@ -62,7 +58,7 @@
     <hr class="featurette-divider">
     <p>The above links will work only if you are registered.</p>
     <p>Once registered, you will have your Internet access, but also some services offered by the <a href="http://resel.fr/">ResEl</a>. Many tutorials exist there, check them if you want.</p>
-    <p>If you have any questions, take a look at our <a href="http://resel.fr/configuration/faq/">ResEl FAQ</a>. If you have any problem, please <a href="{% url 'fr:contact' %}">contact us</a>.</p>
+    <p>If you have any questions, take a look at our <a href="http://resel.fr/configuration/faq/">ResEl FAQ</a>. If you have any problem, please <a href="{% url 'en:contact' %}">contact us</a>.</p>
     <p>Warning</strong> : once registered, please visit the <a href="http://resel.fr/configuration/inscription">post-inscription configuration page</a>.</p>
     <br>
 
