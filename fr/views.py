@@ -280,7 +280,7 @@ def Devenir_membre(request):
             year = datetime.now().year
             month = datetime.now().month
 
-            if month < 9:
+            if month < 6:
                 year -= 1
 
             add_record = [ 
