@@ -334,6 +334,8 @@ def Devenir_membre(request):
 
             if form.cleaned_data['roomNumber']:
                 add_record.append( ('roomNumber', [str(form.cleaned_data['roomNumber'])]))
+            else:
+                add_record.append( ('roomNumber', ['000']))
 
             if form.cleaned_data['mobile']:
                 add_record.append( ('mobile', [str(form.cleaned_data['mobile'])]))
