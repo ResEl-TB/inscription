@@ -476,7 +476,11 @@ def Ajout_3(request):
         ('lastdate', [lastdate])
     ]
 
-    add_entry("host={},ou=machines,dc=resel,dc=enst-bretagne,dc=fr".format(hostname), add_record)
+    if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(host={})".format(hostname)) is None:
+        add_entry("host={},ou=machines,dc=resel,dc=enst-bretagne,dc=fr".format(hostname), add_record)
+    else
+        messages.error(request, "The host {} already exists in the ResEl LDAP, please try to perform the add procedure again.".format(hostname))
+        return HttpResponseRedirect(reverse('en:error'))
 
     update_dhcp_dns_firewall()
 
