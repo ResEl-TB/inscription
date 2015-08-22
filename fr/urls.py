@@ -7,7 +7,7 @@ from . import views
 
 urlpatterns = [
 	url(r'^login_ldap$', views.Login_LDAP, {'LDAP': True}, name='login_ldap'),
-	url(r'^login_cas$', 'django_cas_ng.views.login'),
+	url(r'^login_cas$', 'django_cas_ng.views.login', {'next_page': '/fr/index'}),
     url(r'^logout_cas$', 'django_cas_ng.views.logout'),
 	url(r'^index$', views.Index, name='index'), # Vue d'accueil
 	url(r'^erreur$', views.Erreur, name='erreur'), # Vue appelée lorsque qu'une erreur est soulevée
