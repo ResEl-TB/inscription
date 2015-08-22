@@ -265,7 +265,7 @@ def Devenir_membre(request):
 
     if search("ou=people,dc=maisel,dc=enst-bretagne,dc=fr" , "(uid={})".format(str(request.user))):
         messages.error(request, "You already are a ResEl member.")
-        return HttpResponseRedirect(reverse('fr:erreur'))
+        return HttpResponseRedirect(reverse('en:error'))
 
     if request.method == 'POST':
         form = AdhesionForm(request.POST)
@@ -274,6 +274,7 @@ def Devenir_membre(request):
             personne = search_ecole(str(request.user))
             firstname = personne['gecos'][0].split(' ')[0]
             lastname = personne['gecos'][0].split(' ')[1]
+            password = form.cleaned_data['userPassword']
 
             year = datetime.now().year
             month = datetime.now().month
@@ -292,33 +293,50 @@ def Devenir_membre(request):
                 ('campus', ['Brest']),
             ]
 
-            for key, value in form.cleaned_data:
-                if key == 'userPassword':
-                    # Génération du NTLM Hash pour le mdp wifi
-                    ntPassword = binascii.hexlify(hashlib.new('md4', value.encode('utf-16le')).digest()).upper()
+            """ Mots de passe """
+            # Génération du NTLM Hash pour le mdp wifi
+            ntPassword = binascii.hexlify(hashlib.new('md4', password.encode('utf-16le')).digest()).upper()
 
-                    # Génération du hash pour le mdp user
-                    userPassword = hashPassword(value)
+            # Génération du hash pour le mdp user
+            userPassword = hashPassword(password)
 
-                    add_record.append( ('userPassword', [userPassword]), ('ntPassword', [ntPassword]) )
+            add_record.append( ('userPassword', [userPassword]), ('ntPassword', [ntPassword]) )
 
-                elif key == 'birthdate':
-                    add_record.append( ('birthdate', [value + '000000Z']))
+            # Attribut formation
+            formation = form.cleaned_data['formation']
+            add_record.append( ('formation', [formation]) )
 
-                elif key == 'formation':
-                    if value == "IG1A":
-                        promo = year + 3
-                    elif value == "IG2A":
-                        promo = year + 2
-                    elif value == "IG3A":
-                        promo = year + 1
-                    else:
-                        promo = year + 3
-                    add_record.append( (key, [str(promo)]) )
+            # Attribut promo
+            if formation == "IG1A":
+                promo = year + 3
+            elif formation == "IG2A":
+                promo = year + 2
+            elif formation == "IG3A":
+                promo = year + 1
+            else:
+                promo = year + 3
+            add_record.append( ('promo', [str(promo)]) )
 
-                else:
-                    add_record.append( (key, [str(value)]) )
+            # Attribut publiable
+            if form.cleaned_data['publiable']:
+                add_record.append( ('publiable', ['TRUE']))
+            else:
+                add_record.append( ('publiable', ['FALSE']))
 
+            # Attributs optionnels
+            if form.cleaned_data['birthdate']:
+                add_record.append( ('birthdate', [form.cleaned_data['birthdate'] + '000000Z']))
+
+            if form.cleaned_data['batiment']:
+                add_record.append( ('batiment', [form.cleaned_data['batiment']]))
+
+            if form.cleaned_data['roomNumber']:
+                add_record.append( ('roomNumber', [form.cleaned_data['roomNumber']]))
+
+            if form.cleaned_data['mobile']:
+                add_record.append( ('mobile', [form.cleaned_data['mobile']]))
+
+            # Ajout de la fiche LDAP
             add_entry("uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr".format(str(request.user)), add_record)
             context['ajout_fait'] = True
 
