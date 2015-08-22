@@ -20,16 +20,14 @@ from .ldap_func import *
 from .forms import AdhesionForm, AliasForm, ContactForm
 
 global login_url
+login_url = '/login_cas'
 
 def Login_LDAP(request, LDAP):
     """ Affiche le formulaire de login LDAP et redirige vers la bonne page """
-    global login_url
-    
     if LDAP:
         login_url = '/fr/login_ldap'
         request.session['logout_url'] = '/fr/logout_ldap'
     else:
-        login_url = '/login_cas'
         request.session['logout_url'] = '/logout_cas'
 
     if request.method == "POST":
