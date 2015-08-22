@@ -58,7 +58,7 @@
                             <a href="{% url 'en:contact' %}">Contact us</a>
                         </li>
                         <li>
-                            <a href="/logout">Logout</a>
+                            <a href="{{ request.session.logout_url }}">Logout</a>
                         </li>
                     </ul>
                 </div>

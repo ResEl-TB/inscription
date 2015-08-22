@@ -59,7 +59,7 @@
                             <a href="{% url 'fr:contact' %}">Nous contacter</a>
                         </li>
                         <li>
-                            <a href="/logout">Se déconnecter</a>
+                            <a href="{{ request.session.logout_url }}">Se déconnecter</a>
                         </li>
                     </ul>
                 </div>
