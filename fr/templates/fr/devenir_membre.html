@@ -17,16 +17,15 @@
 				<hr>
 			</div>
 		</div>
-	</div>
-
-	{% if ajout_fait %}
-		<div class="col-lg-6 col-lg-offset-3">
-			<div class="alert alert-success">
-				<p>Félicitations ! Vous êtes désormais un membre du ResEl.</p>
-				<p>Retour vers la page <a href="{% url 'fr:index' %}">d'accueil</a> pour gérer vos machines.</p>
+		{% if ajout_fait %}
+			<div class="col-lg-6 col-lg-offset-3">
+				<div class="alert alert-success">
+					<p>Félicitations ! Vous êtes désormais un membre du ResEl.</p>
+					<p>Retour vers la page <a href="{% url 'fr:index' %}">d'accueil</a> pour gérer vos machines.</p>
+				</div>
 			</div>
-		</div>
-	{% endif %}
+		{% endif %}
+	</div>
 
 	<h1 class="intro-text">
 		<strong>Introduction</strong>
