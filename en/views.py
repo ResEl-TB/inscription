@@ -483,7 +483,7 @@ def Ajout_3(request):
                 body="Inscription de la machine {} appartenant à {}\n\nIP : 172.22.{}\nMAC : {}".format(hostname, request.session['uid_client'], ip, request.session['mac_client']),
                 from_email="inscription-bot@resel.fr",
                 reply_to="inscription-bot@resel.fr",
-                to="inscription-bot@resel.fr",
+                to=["inscription-bot@resel.fr"],
                 headers={'Cc': 'botanik@resel.fr'}
             )
         mail.send()
