@@ -19,6 +19,15 @@
 		</div>
 	</div>
 
+	{% if ajout_fait %}
+		<div class="col-lg-6 col-lg-offset-3">
+			<div class="alert alert-success">
+				<p>Congrats ! You are now a ResEl member.</p>
+				<p>Go back to the <a href="{% url 'en:index' %}">index</a> to manage your devices.</p>
+			</div>
+		</div>
+	{% endif %}
+
 	<h1 class="intro-text">
 		<strong>Introduction</strong>
 	</h1>
@@ -98,11 +107,9 @@
 			        </div>
 
 			        <div class="form-group">
-			        	<div class="col-sm-11">
-			        		<span class="button-checkbox">
-						        <button type="button" class="btn" data-color="primary">I accept the publication of my coordinates into the ResEl directory</button>
-						        <input type="checkbox" class="hidden" name="publiable" />
-						    </span>
+			        	<label class="col-sm-10 control-label">I accept the publication of my coordinates into the ResEl directory</label>
+			        	<div class="col-sm-2">
+					        <input type="checkbox" name="publiable">
 				        </div>
 			        </div>
 
@@ -115,14 +122,5 @@
 				</form>
 			</div>
 		</div>
-
-		{% if ajout_fait %}
-			<div class="col-sm-4">
-				<div class="alert alert-success">
-					<p>Congrats ! You are now a ResEl member.</p>
-					<p>Go back to the <a href="{% url 'en:index' %}">index</a> to manage your devices.</p>
-				</div>
-			</div>
-		{% endif %}
 	</div>
 {% endblock %}
