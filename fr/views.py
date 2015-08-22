@@ -27,8 +27,6 @@ def Login_LDAP(request, LDAP):
     if LDAP:
         login_url = '/fr/login_ldap'
         request.session['logout_url'] = '/fr/logout_ldap'
-    else:
-        request.session['logout_url'] = '/fr/logout_cas'
 
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
