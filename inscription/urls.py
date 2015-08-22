@@ -21,6 +21,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^$', 'django_cas_ng.views.login'),
+    url(r'^logout$', 'django_cas_ng.views.logout'),
     url(r'^fr/', include('fr.urls', namespace='fr')),
     url(r'^en/', include('en.urls', namespace='en')),
 ]
