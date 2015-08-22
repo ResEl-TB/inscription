@@ -36,40 +36,44 @@ class AdhesionForm(forms.Form):
     publiable = forms.BooleanField()
 
 class AliasForm(forms.Form):
-    alias_1 = forms.CharField(initial='', max_length=8, required=False)
-    alias_2 = forms.CharField(initial='', max_length=8, required=False)
+    alias1 = forms.CharField(initial='', max_length=25, required=False)
+    alias2 = forms.CharField(initial='', max_length=25, required=False)
 
     # Test si les alias fourni sont valides
-    def clean_alias_1(self):
-        alias = self.cleaned_data['alias_1']
+    def clean_alias1(self):
+        alias = self.cleaned_data['alias1'].lower()
         
-        if alias:
+        if alias != '':
             if re.search(r'^[a-z][a-z0-9-]{0,23}[a-z0-9]', alias) is None:
-                raise forms.ValidationError("The chosen alias {} does not match the expected patern.".format(alias))
+                raise forms.ValidationError("The chosen alias {} does not match with the expected pattern.".format(alias))
             else:
                 if re.search(r'enst-bretagne', alias):
-                    raise forms.ValidationError("The alias can not contain the school's name.")
+                    raise forms.ValidationError("The alias can't contain enst-bretagne.")
                 if re.search(r'resel', alias):
-                    raise forms.ValidationError("The alias can not contain the word resel.")
-                if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={}".format(alias)) is None:
-                    raise forms.ValidationError("The chosen alias {} already exists.".format(alias))
+                    raise forms.ValidationError("The alias can't contain resel.")
+                if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(alias)) is not None:
+                    raise forms.ValidationError("The chosen alias {} already exists".format(alias))
+        else:
+            alias = None
         
         return alias
 
-    def clean_alias_2(self):
-        alias = self.cleaned_data['alias_2']
+    def clean_alias2(self):
+        alias = self.cleaned_data['alias2'].lower()
 
-        if alias:
+        if alias != '':
             if re.search(r'^[a-z][a-z0-9-]{0,23}[a-z0-9]', alias) is None:
-                raise forms.ValidationError("The chosen alias {} does not match the expected patern.".format(alias))
+                raise forms.ValidationError("The chosen alias {} does not match with the expected pattern.".format(alias))
             else:
                 if re.search(r'enst-bretagne', alias):
-                    raise forms.ValidationError("The alias can not contain the school's name.")
+                    raise forms.ValidationError("The alias can't contain enst-bretagne.")
                 if re.search(r'resel', alias):
-                    raise forms.ValidationError("The alias can not contain the word resel.")
-                if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={}".format(alias)) is None:
-                    raise forms.ValidationError("The chosen alias {} already exists.".format(alias))
-        
+                    raise forms.ValidationError("The alias can't contain resel.")
+                if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(alias)) is not None:
+                    raise forms.ValidationError("The chosen alias {} already exists".format(alias))
+        else:
+            alias = None
+
         return alias
 
 class ContactForm(forms.Form):

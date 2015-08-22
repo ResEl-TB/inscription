@@ -350,14 +350,14 @@ def Ajout_1(request):
         print form
 
         if form.is_valid:
-            alias_1 = form.cleaned_data['alias_1']
-            alias_2 = form.cleaned_data['alias_2']
+            form = AliasForm(request.POST)
 
-            if alias_1 != '':
-                request.session['alias_choisis'].append(alias_1)
+        if form.is_valid():
+            if form.cleaned_data['alias1']:
+                request.session['alias_choisis'].append(form.cleaned_data['alias1'])
 
-            if alias_2 != '':
-                request.session['alias_choisis'].append(alias_2)
+            if form.cleaned_data['alias2']:
+                request.session['alias_choisis'].append(form.cleaned_data['alias2'])
 
             return HttpResponseRedirect(reverse('en:add_2'))
 

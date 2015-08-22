@@ -18,7 +18,13 @@
 	</h1>
 	<hr class="featurette-divider">
 	<p>Your device will be identified on our network under the name {{ request.session.alias_auto }}.</p>
-	<p>In addition to that, you can add two more aliases.</p>
+	<p>In addition to that, you can add two more aliases. Aliases must respect those rules :</p>
+	<ul>
+		<li>start with a letter</li>
+		<li>can only contain letters and figures</li>
+		<li>can not be longer than 25 letters</li>
+		<li>can not contain accents</li>
+	</ul>
 	<p>If you don't want to, just click on Proceed</p>
 	<br />
 	<div class="row">
@@ -29,15 +35,25 @@
 			    	<div class="form-group">
 		                <label class="col-sm-2 control-label">Alias #1</label>
 		                <div class="col-sm-2">
-		                	<input name="alias_1" type="text" class="form-control" maxlength="8">
+		                	<input name="alias1" type="text" class="form-control" maxlength="8">
 		                </div>
+		                {% if form.alias1.errors %}
+			                <div class="col-sm-8">
+			                	<p>{{ form.alias1.errors }}</p>
+			                </div>
+		                {% endif %}
 		            </div>
 
 		            <div class="form-group">
 		                <label class="col-sm-2 control-label">Alias #2</label>
 		                <div class="col-sm-2">
-		                	<input name="alias_2" type="text" class="form-control" maxlength="8">
+		                	<input name="alias2" type="text" class="form-control" maxlength="8">
 		                </div>
+		                {% if form.alias1.errors %}
+			                <div class="col-sm-8">
+			                	<p>{{ form.alias1.errors }}</p>
+			                </div>
+		                {% endif %}
 		            </div>
 
 			    	<div class="form-group">
