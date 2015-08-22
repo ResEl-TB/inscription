@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout
-from django.core.mail import mail_admins
+from django.core.mail import mail_admins, EmailMessage
 
 import re
 import time
