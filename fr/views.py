@@ -331,6 +331,8 @@ def Devenir_membre(request):
 
             if form.cleaned_data['batiment']:
                 add_record.append( ('batiment', [str(form.cleaned_data['batiment'])]))
+            else:
+                add_record.append( ('batiment', ['Non renseigne']))
 
             if form.cleaned_data['roomNumber']:
                 add_record.append( ('roomNumber', [str(form.cleaned_data['roomNumber'])]))
