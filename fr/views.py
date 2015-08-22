@@ -306,7 +306,7 @@ def Devenir_membre(request):
 
             # Attribut formation
             formation = form.cleaned_data['formation']
-            add_record.append( ('formation', [formation]) )
+            add_record.append( ('formation', [str(formation)]) )
 
             # Attribut promo
             if formation == "IG1A":
@@ -327,16 +327,16 @@ def Devenir_membre(request):
 
             # Attributs optionnels
             if form.cleaned_data['birthdate']:
-                add_record.append( ('birthdate', [form.cleaned_data['birthdate'] + '000000Z']))
+                add_record.append( ('birthdate', [str(form.cleaned_data['birthdate'] + '000000Z')]))
 
             if form.cleaned_data['batiment']:
-                add_record.append( ('batiment', [form.cleaned_data['batiment']]))
+                add_record.append( ('batiment', [str(form.cleaned_data['batiment'])]))
 
             if form.cleaned_data['roomNumber']:
-                add_record.append( ('roomNumber', [form.cleaned_data['roomNumber']]))
+                add_record.append( ('roomNumber', [str(form.cleaned_data['roomNumber'])]))
 
             if form.cleaned_data['mobile']:
-                add_record.append( ('mobile', [form.cleaned_data['mobile']]))
+                add_record.append( ('mobile', [str(form.cleaned_data['mobile'])]))
 
             # Ajout de la fiche LDAP
             add_entry("uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr".format(str(request.user)), add_record)
