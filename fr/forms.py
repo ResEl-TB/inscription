@@ -36,12 +36,12 @@ class AdhesionForm(forms.Form):
     publiable = forms.BooleanField()
 
 class AliasForm(forms.Form):
-    alias_1 = forms.CharField(initial='', max_length=25, required=False)
-    alias_2 = forms.CharField(initial='', max_length=25, required=False)
+    alias1 = forms.CharField(initial='', max_length=25, required=False)
+    alias12 = forms.CharField(initial='', max_length=25, required=False)
 
     # Test si les alias fourni sont valides
-    def clean_alias_1(self):
-        alias = str(self.cleaned_data['alias_1']).lower()
+    def clean_alias11(self):
+        alias = str(self.cleaned_data['alias1']).lower()
         
         if alias:
             if re.search(r'^[a-z][a-z0-9-]{0,23}[a-z0-9]', alias) is None:
@@ -56,8 +56,8 @@ class AliasForm(forms.Form):
         
         return alias
 
-    def clean_alias_2(self):
-        alias = str(self.cleaned_data['alias_2']).lower()
+    def clean_alias12(self):
+        alias = str(self.cleaned_data['alias2']).lower()
 
         if alias:
             if re.search(r'^[a-z][a-z0-9-]{0,23}[a-z0-9]', alias) is None:
