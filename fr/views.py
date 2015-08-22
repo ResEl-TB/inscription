@@ -23,6 +23,8 @@ global login_url
 
 def Login_LDAP(request, LDAP):
     """ Affiche le formulaire de login LDAP et redirige vers la bonne page """
+    global login_url
+    
     if LDAP:
         login_url = '/fr/login_ldap'
         request.session['logout_url'] = '/fr/logout_ldap'
