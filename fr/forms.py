@@ -33,7 +33,7 @@ class AdhesionForm(forms.Form):
     roomNumber = forms.IntegerField(min_value=0, max_value=400, required=False)
     mobile = forms.IntegerField(required=False)
     userPassword = forms.CharField(widget=forms.PasswordInput)
-    publiable = forms.BooleanField()
+    publiable = forms.BooleanField(required=False)
 
 class AliasForm(forms.Form):
     alias1 = forms.CharField(initial='', max_length=25, required=False)
