@@ -45,12 +45,6 @@
                     </button>
                     <a class="navbar-brand" href="{% url 'fr:index' %}"><img src="{% static 'inscription/images/logo_resel.png' %}" /></a>
                 </div>
-
-                <!-- Affiche l'uid de l'user, et un bouton de déconnexion -->
-                <div class="navbar-right">
-                    <p class="navbar-text">Connecté en tant que {{ request.user.username }}</p>
-                    <a class="navbar-text" href="/logout">Se déconnecter</a>
-                </div>
                 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="liens">
@@ -63,6 +57,9 @@
                         </li>
                         <li>
                             <a href="{% url 'fr:contact' %}">Nous contacter</a>
+                        </li>
+                        <li class="navbar-right">
+                            <a href="/logout">Se déconnecter</a>
                         </li>
                     </ul>
                 </div>
