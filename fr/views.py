@@ -472,7 +472,6 @@ def Ajout_3(request):
     # Dernières vérif avant d'ajouter la machine
     if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(iphostnumber={})".format(ip)) is not None:
         messages.error(request, "L'adresse IP censée vous être attribuée n'est plus disponible. Recommencez la procédure pour régler ce problème.")
-        messages.error(request, ip)
         return HttpResponseRedirect(reverse('fr:erreur'))
 
     if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(host={})".format(hostname)) is None:
