@@ -1,7 +1,7 @@
 #!/usr/local/bin/python
 # -*- coding: utf-8 -*-
 
-from constants import ldap_admin_dn, ldap_admin_passwd
+from constants import ldap_admin_dn, ldap_admin_passwd, dn_ecole
 
 import ldap
 from datetime import datetime
@@ -39,6 +39,12 @@ def search(base_dn, filters):
     if len(results) == 0:
     	return None
     return results
+
+def search_ecole(uid):
+    """ Cherche dans le LDAP école avec l'uid fournie """
+    l = ldap.open('10.29.90.34')
+    l.simple_bind()
+    return l.search_s(dn_ecole, ldap.SCOPE_SUBTREE, "(uid=%s)" % uid)[0][1]
 
 def blacklist(request, uid):
     """ 

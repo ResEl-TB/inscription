@@ -27,11 +27,8 @@ class AdhesionForm(forms.Form):
         ('IG3A', 'IG3A')
     ]
 
-    lastname = forms.CharField(max_length=25)
-    firstname = forms.CharField(max_length=25)
-    birthdate = forms.CharField(max_length=8)
-    formation = forms.ChoiceField(choices=formations)
-    mail = forms.EmailField(max_length=50)
+    birthdate = forms.CharField(max_length=8, required=False)
+    formation = forms.ChoiceField(choices=formations, required=False)
     batiment = forms.ChoiceField(choices=batiments, required=False)
     roomNumber = forms.IntegerField(min_value=0, max_value=400, required=False)
     mobile = forms.IntegerField(required=False)

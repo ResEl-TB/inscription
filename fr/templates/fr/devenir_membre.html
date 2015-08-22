@@ -34,33 +34,19 @@
 	<br>
 
 	<div class="row">
-		<div class="col-sm-6">
+		<div class="col-sm-8">
 			<div class="form-horizontal">
 				<form action="{% url "fr:devenir_membre" %}" method="post">
 			    	{% csrf_token %}
 			    	<div class="form-group">
-		                <label class="col-sm-3 control-label">Nom</label>
+		                <label class="col-sm-3 control-label">Date de naissance (optionnel)</label>
 		                <div class="col-sm-9">
-		                	<input name="lastname" type="text" class="form-control" maxlength="25" required data-validation-required-message="Merci d'entrer votre nom">
+		                	<input name="birthdate" type="text" class="form-control" placeholder="Au format AAAAMMJJ ex: 19959830" maxlength="8">
 		                </div>
 		            </div>
 
 		            <div class="form-group">
-		                <label class="col-sm-3 control-label">Pr&eacute;nom</label>
-		                <div class="col-sm-9">
-		                	<input name="firstname" type="text" class="form-control" maxlength="25" required data-validation-required-message="Merci d'entrer votre pr&eacute;nom">
-		                </div>
-		            </div>
-
-		            <div class="form-group">
-		                <label class="col-sm-3 control-label">Date de naissance</label>
-		                <div class="col-sm-9">
-		                	<input name="birthdate" type="text" class="form-control" placeholder="Au format AAAAMMJJ ex: 19959830" maxlength="8" required data-validation-required-message="Merci d'entrer votre date de naissance">
-		                </div>
-		            </div>
-
-		            <div class="form-group">
-		                <label class="col-sm-3 control-label">Formation</label>
+		                <label class="col-sm-3 control-label">Formation (optionnel)</label>
 		                <div class="col-sm-9">
 			                <select name="formation" class="form-control controls">
 			                	<option value="IG1A">IG 1A</option>
@@ -68,13 +54,6 @@
 								<option value="IG3A">IG 3A</option>
 							</select>
 		            	</div>
-			        </div>
-
-			        <div class="form-group">
-		                <label class="col-sm-3 control-label">Mail</label>
-		                <div class="col-sm-9">
-		                	<input name="mail" type="email" class="form-control" maxlength="50" required data-validation-required-message="Merci d'entrer votre adresse e-mail">
-			            </div>
 			        </div>
 
 			        <div class="form-group">
@@ -138,7 +117,7 @@
 		</div>
 
 		{% if ajout_fait %}
-			<div class="col-sm-6">
+			<div class="col-sm-4">
 				<div class="alert alert-success">
 					<p>Félicitations ! Vous êtes désormais un membre du ResEl.</p>
 					<p>Retour vers la page <a href="{% url 'fr:index' %}">d'accueil</a> pour gérer vos machines.</p>

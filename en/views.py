@@ -228,6 +228,10 @@ def Devenir_membre(request):
         form = AdhesionForm(request.POST)
 
         if form.is_valid():
+            personne = search_ecole(str(request.user))
+            firstname = personne['gecos'][0].split(' ')[0]
+            lastname = personne['gecos'][0].split(' ')[1]
+
             year = datetime.now().year
             month = datetime.now().month
 
@@ -236,6 +240,9 @@ def Devenir_membre(request):
 
             add_record = [ 
                 ('uid', [str(request.user)]),
+                ('firstname', [firstname]),
+                ('lastname', [lastname]),
+                ('mail', [personne['mail'][0]]),
                 ('anneeScolaire', [str(year)]),
                 ('promo', [str(year + 3)]),
                 ('dateInscr', [time.strftime('%Y%m%d%H%M%S') + 'Z']),
@@ -252,9 +259,6 @@ def Devenir_membre(request):
                     userPassword = hashPassword(value)
 
                     add_record.append( ('userPassword', [userPassword]), ('ntPassword', [ntPassword]) )
-
-                elif key == 'lastname':
-                    add_record.append( ('lastname', [value.upper()]) )
 
                 elif key == 'birthdate':
                     add_record.append( ('birthdate', [value + '000000Z']))

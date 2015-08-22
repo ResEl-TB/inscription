@@ -23,7 +23,7 @@
 		<strong>Introduction</strong>
 	</h1>
 	<hr class="featurette-divider">
-	<p>In order to be a ResEl member, you have to accept the above document. Be aware that this document contains vital information, please read it.</p>
+	<p>In order to become a ResEl member, you have to accept the above document. Be aware that this document contains vital information, please read it.</p>
 	<br>
 
 	<div class="row">
@@ -33,33 +33,19 @@
 	</div>
 
 	<div class="row">
-		<div class="col-sm-6">
+		<div class="col-sm-8">
 			<div class="form-horizontal">
 				<form action="{% url "en:register" %}" method="post">
 			    	{% csrf_token %}
 			    	<div class="form-group">
-		                <label class="col-sm-3 control-label">Lastname</label>
+		                <label class="col-sm-3 control-label">Birthdate (optionnal)</label>
 		                <div class="col-sm-9">
-		                	<input name="lastname" type="text" class="form-control" maxlength="25" required>
+		                	<input name="birthdate" type="text" class="form-control" placeholder="YYYYMMDD ex: 19959830" maxlength="8">
 		                </div>
 		            </div>
 
 		            <div class="form-group">
-		                <label class="col-sm-3 control-label">Firstname</label>
-		                <div class="col-sm-9">
-		                	<input name="firstname" type="text" class="form-control" maxlength="25" required>
-		                </div>
-		            </div>
-
-		            <div class="form-group">
-		                <label class="col-sm-3 control-label">Birthdate</label>
-		                <div class="col-sm-9">
-		                	<input name="birthdate" type="text" class="form-control" placeholder="YYYYMMDD ex: 19959830" maxlength="8" required>
-		                </div>
-		            </div>
-
-		            <div class="form-group">
-		                <label class="col-sm-3 control-label">Formation</label>
+		                <label class="col-sm-3 control-label">Formation (optionnal)</label>
 		                <div class="col-sm-9">
 			                <select name="formation" class="form-control controls">
 			                	<option value="IG1A">IG 1A</option>
@@ -67,13 +53,6 @@
 								<option value="IG3A">IG 3A</option>
 							</select>
 		            	</div>
-			        </div>
-
-			        <div class="form-group">
-		                <label class="col-sm-3 control-label">Mail</label>
-		                <div class="col-sm-9">
-		                	<input name="mail" type="email" class="form-control" maxlength="50" required>
-			            </div>
 			        </div>
 
 			        <div class="form-group">
@@ -120,7 +99,7 @@
 			        <div class="form-group">
 			        	<div class="col-sm-11">
 			        		<span class="button-checkbox">
-						        <button type="button" class="btn" data-color="primary">I accept my coordinates publication into the ResEl directory</button>
+						        <button type="button" class="btn" data-color="primary">I accept the publication of my coordinates into the ResEl directory</button>
 						        <input type="checkbox" class="hidden" name="publiable" />
 						    </span>
 				        </div>
@@ -137,7 +116,7 @@
 		</div>
 
 		{% if ajout_fait %}
-			<div class="col-sm-6">
+			<div class="col-sm-4">
 				<div class="alert alert-success">
 					<p>Congrats ! You are now a ResEl member.</p>
 					<p>Go back to the <a href="{% url 'en:index' %}">index</a> to manage your devices.</p>
