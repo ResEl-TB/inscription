@@ -40,7 +40,7 @@ class AliasForm(forms.Form):
     alias2 = forms.CharField(initial='', max_length=25, required=False)
 
     # Test si les alias fourni sont valides
-    def clean_alias11(self):
+    def clean_alias1(self):
         alias = str(self.cleaned_data['alias1']).lower()
         
         if alias:
@@ -56,7 +56,7 @@ class AliasForm(forms.Form):
         
         return alias
 
-    def clean_alias12(self):
+    def clean_alias2(self):
         alias = str(self.cleaned_data['alias2']).lower()
 
         if alias:
