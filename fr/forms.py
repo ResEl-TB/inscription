@@ -53,6 +53,8 @@ class AliasForm(forms.Form):
                     raise forms.ValidationError("L'alias ne doit pas contenir le nom resel.")
                 if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(alias)) is not None:
                     raise forms.ValidationError("L'alias choisi est déjà utilisé pour une machine de notre réseau.")
+        else:
+            alias = None
         
         return alias
 
@@ -69,6 +71,8 @@ class AliasForm(forms.Form):
                     raise forms.ValidationError("L'alias ne doit pas contenir le nom resel.")
                 if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(alias)) is not None:
                     raise forms.ValidationError("L'alias choisi est déjà utilisé pour une machine de notre réseau.")
+        else:
+            alias = None
 
         return alias
 
