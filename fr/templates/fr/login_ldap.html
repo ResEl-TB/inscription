@@ -1,0 +1,42 @@
+{% extends "base_en.html" %}
+
+{% block content %}
+    <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
+        <div class="panel panel-info" >
+            <!-- Titre du formulaire : "Se connecter" -->
+            <div class="panel-heading">
+                    <div class="panel-title">Se connecter</div>
+            </div>
+
+            <!-- Formulaire -->
+            <div style="padding-top:30px" class="panel-body" >
+                {% if form.errors %}
+                    <div class="alert alert-block alert-danger">
+                        <p>Votre username et password ne correspondent pas.</p>
+                    </div>
+                {% endif %}
+                <form method="post" action="{% url 'fr:login_ldap' %}" id="loginform" class="form-horizontal" role="form">
+                    {% csrf_token %}
+                    <!-- Username -->
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="id_username" maxlength="8" name="username" type="text" class="form-control" placeholder="Username" />
+                    </div>
+                    
+                    <!-- Password -->
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="id_password" name="password" type="password" class="form-control" placeholder="Mdp ResEl" />
+                    </div>
+
+                    <!-- Bouton -->
+                    <div style="margin-top:10px" class="form-group">
+                        <div class="col-sm-12 controls">
+                          <input type="submit" value="Log in" class="btn btn-success" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
