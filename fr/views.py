@@ -469,7 +469,11 @@ def Ajout_3(request):
         ('lastdate', [lastdate])
     ]
 
-    # Dernière vérif avant d'ajouter la machine
+    # Dernières vérif avant d'ajouter la machine
+    if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(iphostnumber={})".format(ip)) is not None:
+        messages.error(request, "L'adresse IP censée vous être attribuée n'est plus disponible. Recommencez la procédure pour régler ce problème.")
+        return HttpResponseRedirect(reverse('fr:erreur'))
+
     if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(host={})".format(hostname)) is None:
         add_entry("host={},ou=machines,dc=resel,dc=enst-bretagne,dc=fr".format(hostname), add_record)
         mail = EmailMessage(

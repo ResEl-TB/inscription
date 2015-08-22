@@ -471,7 +471,11 @@ def Ajout_3(request):
         ('lastdate', [lastdate])
     ]
 
-    # Dernière vérif avant d'ajouter la machine
+    # Dernières vérif avant d'ajouter la machine
+    if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(iphostnumber={})".format(ip)) is not None:
+        messages.error(request, "The IP adress supposed to be used is not free anymore. Please try again.")
+        return HttpResponseRedirect(reverse('en:error'))
+
     if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(host={})".format(hostname)) is None:
         add_entry("host={},ou=machines,dc=resel,dc=enst-bretagne,dc=fr".format(hostname), add_record)
         mail = EmailMessage(
