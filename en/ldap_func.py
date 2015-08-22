@@ -53,7 +53,7 @@ def blacklist(request, uid):
     if uid:
         result = search('ou=people,dc=maisel,dc=enst-bretagne,dc=fr', "(uid={})".format(uid))
         if result:
-            if result[0][1]['cotiz']:
+            if 'cotiz' in result[0][1]:
                 year = datetime.now().year
                 month = datetime.now().month
 
