@@ -37,7 +37,7 @@ class AdhesionForm(forms.Form):
 
 class AliasForm(forms.Form):
     alias1 = forms.CharField(initial='', max_length=25, required=False)
-    alias12 = forms.CharField(initial='', max_length=25, required=False)
+    alias2 = forms.CharField(initial='', max_length=25, required=False)
 
     # Test si les alias fourni sont valides
     def clean_alias11(self):
