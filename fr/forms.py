@@ -32,7 +32,7 @@ class AdhesionForm(forms.Form):
     birthdate = forms.CharField(max_length=8)
     formation = forms.ChoiceField(choices=formations)
     mail = forms.EmailField(max_length=50)
-    batiment = forms.ChoiceField(choices=batiments, required=False, initial)
+    batiment = forms.ChoiceField(choices=batiments, required=False)
     roomNumber = forms.IntegerField(min_value=0, max_value=400, required=False)
     mobile = forms.IntegerField(required=False)
     userPassword = forms.CharField(widget=forms.PasswordInput)
