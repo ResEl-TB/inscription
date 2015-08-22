@@ -479,7 +479,7 @@ def Ajout_3(request):
     # Dernière vérif avant d'ajouter la machine
     if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(host={})".format(hostname)) is None:
         add_entry("host={},ou=machines,dc=resel,dc=enst-bretagne,dc=fr".format(hostname), add_record)
-    else
+    else:
         messages.error(request, "The host {} already exists in the ResEl LDAP, please try to perform the add procedure again.".format(hostname))
         return HttpResponseRedirect(reverse('en:error'))
 
