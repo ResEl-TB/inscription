@@ -19,13 +19,15 @@ from .network import *
 from .ldap_func import *
 from .forms import AdhesionForm, AliasForm, ContactForm
 
+global login_url
+login_url = '/login_cas'
+
 def Login_LDAP(request, LDAP):
     """ Affiche le formulaire de login LDAP et redirige vers la bonne page """
     if LDAP:
-        request.session['login_url'] = '/en/login_ldap'
+        login_url = '/en/login_ldap'
         request.session['logout_url'] = '/en/logout_ldap'
     else:
-        request.session['login_url'] = '/login_cas'
         request.session['logout_url'] = '/logout_cas'
 
     if request.method == "POST":
@@ -44,13 +46,13 @@ def Login_LDAP(request, LDAP):
 
     return render(request, 'en/login_ldap.html', context)
 
-@login_required(login_url=request.session['login_url'])
+@login_required(login_url=login_url)
 def Erreur(request):
     """ Template générique servant à afficher une éventuelle erreur en cours de process """
 
     return render(request, 'en/error.html')
 
-@login_required(login_url=request.session['login_url'])
+@login_required(login_url=login_url)
 def Index(request):
     """ Index lorsque le client n'est pas loggé """
 
@@ -76,7 +78,7 @@ def Index(request):
 
     return render(request, 'en/index.html', {'machineInactive': machineInactive})
 
-@login_required(login_url=request.session['login_url'])
+@login_required(login_url=login_url)
 def Contact(request):
     """ Affiche un formulaire de contact """
 
@@ -106,7 +108,7 @@ def Contact(request):
 
     return render(request, 'en/contact.html', context)
 
-@login_required(login_url=request.session['login_url'])
+@login_required(login_url=login_url)
 def Inscription(request):
     """ Index juste après un login réussi. 
         Effectue toutes les vérifs nécessaires :
@@ -212,7 +214,7 @@ def Inscription(request):
     else:
         return HttpResponseRedirect(reverse('en:register'))
 
-@login_required(login_url=request.session['login_url'])
+@login_required(login_url=login_url)
 def Reactivation(request):
     """ Vue pour réactiver la machine """
 
@@ -244,7 +246,7 @@ def Reactivation(request):
         messages.error(request, "Your device is unkown on the network.")
         return HttpResponseRedirect(reverse('en:error'))
 
-@login_required(login_url=request.session['login_url'])
+@login_required(login_url=login_url)
 def Devenir_membre(request):
     """ Vue appelée pour que l'user devienne reselPerson 
         On lui affiche le réglement intérieur, et la checkbox pour dire "oui oui, j'ai rien lu file moi ma co !"
@@ -319,7 +321,7 @@ def Devenir_membre(request):
     context['form'] = form
     return render(request, 'en/register.html', context)
 
-@login_required(login_url=request.session['login_url'])
+@login_required(login_url=login_url)
 def Ajout_1(request):
     """ 
         Vue pour ajouter une machine au DN de l'user
@@ -379,7 +381,7 @@ def Ajout_1(request):
 
     return render(request, 'en/add_1.html', context)
 
-@login_required(login_url=request.session['login_url'])
+@login_required(login_url=login_url)
 def Ajout_2(request):
     """
         Rien de bien folichon ici, on affiche les alias de la machine, et on demande à l'user de continuer vers la vue Ajout_3
@@ -397,7 +399,7 @@ def Ajout_2(request):
 
     return render(request, 'en/add_2.html')
 
-@login_required(login_url=request.session['login_url'])
+@login_required(login_url=login_url)
 def Ajout_3(request):
     """
         Ici on crée la fiche LDAP de la machine, on l'ajoute au DN de l'user, et on reboot DHCP, DNS et FW
