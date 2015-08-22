@@ -18,9 +18,14 @@
 	</h1>
 	<hr class="featurette-divider">
 	<p>Votre machine sera identifiée sur notre réseau avec le nom {{ request.session.alias_auto }}.</p>
-	<p>Vous pouvez, si vous le souhaitez, lui attribuer jusqu'à deux noms supplémentaires.</p>
+	<p>Vous pouvez, si vous le souhaitez, lui attribuer jusqu'à deux noms supplémentaires. Les alias ainsi choisis doivent respecter le format suivant :</p>
+	<ul>
+		<li>commencer par une lettre</li>
+		<li>peut contenir des lettres et des chiffres</li>
+		<li>ne peut dépasser 25 caractères</li>
+	</ul>
 	<p>Si vous ne voulez pas, vous pouvez directement cliquer sur suivant.</p>
-	<br />
+	<br>
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="form-horizontal">
@@ -29,7 +34,7 @@
 			    	<div class="form-group">
 		                <label class="col-sm-2 control-label">Alias n° 1</label>
 		                <div class="col-sm-2">
-		                	<input name="alias_1" type="text" class="form-control" maxlength="8">
+		                	<input name="alias_1" type="text" class="form-control" maxlength="25">
 		                </div>
 		                {% if form.alias_1.errors %}
 			                <div class="col-sm-8">
@@ -41,7 +46,7 @@
 		            <div class="form-group">
 		                <label class="col-sm-2 control-label">Alias n° 2</label>
 		                <div class="col-sm-2">
-		                	<input name="alias_2" type="text" class="form-control" maxlength="8">
+		                	<input name="alias_2" type="text" class="form-control" maxlength="25">
 		                </div>
 		                {% if form.alias_2.errors %}
 			                <div class="col-sm-8">
