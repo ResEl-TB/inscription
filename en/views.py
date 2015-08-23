@@ -99,7 +99,7 @@ def Contact(request):
             sujet = form.cleaned_data['sujet']
             description = form.cleaned_data['description']
 
-            mail_admins("[Inscription Brest] Problèmes rencontrés sur inscription.resel.fr", "Utilisateur : {} {}\nBâtiment : {}\nChambre : {}\n\nSujet : {}\n\nDescription :\n{}\n\nContact : {}".format(prenom, nom.upper(), batiment, chambre, sujet, description, mail), fail_silently=False, connection=None, html_message=None)
+            mail_admins("[Inscription Brest] Problemes rencontres sur inscription.resel.fr", "Utilisateur : {} {}\nBâtiment : {}\nChambre : {}\n\nSujet : {}\n\nDescription :\n{}\n\nContact : {}".format(prenom, nom.upper(), batiment, chambre, sujet, description, mail), fail_silently=False, connection=None, html_message=None)
 
             mail_envoye = True
     else:
