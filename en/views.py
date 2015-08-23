@@ -232,13 +232,13 @@ def Reactivation(request):
 
     if machine:
         machine = machine[0]
-        if 'User' in machine[1]['zone'] :
+        if 'Inactive' not in machine[1]['zone'] :
             messages.error(request, "Your device is not inactive.")
             return HttpResponseRedirect(reverse('en:error'))
 
         mod_attrs = [
             ( ldap.MOD_DELETE, 'zone', 'Inactive' ),
-            ( ldap.MOD_ADD, 'zone', 'User' )
+            ( ldap.MOD_ADD, 'zone', 'Brest' )
         ]
         
         mod(machine[0], mod_attrs)
