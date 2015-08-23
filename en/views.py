@@ -43,13 +43,12 @@ def Login_LDAP(request):
 @login_required(login_url='/')
 def Logout_LDAP(request):
     """ Déconnecte l'user et le bascule vers un message de succès """
-    if request.session['logout_url']:
+    if 'LDAP' in request.session:
         logout(request)
         return render(request, 'en/logout_ldap.html')
 
     else:
-        messages.error(request, "You are not authenticated through the ResEl LDAP.")
-        return HttpResponseRedirect(reverse('en:error'))
+        return HttpResponseRedirect(reverse('en:logout_cas'))
 
 @login_required(login_url='/')
 def Erreur(request):

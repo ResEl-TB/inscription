@@ -8,8 +8,8 @@ from . import views
 urlpatterns = [
 	url(r'^login_ldap$', views.Login_LDAP, name='login_ldap'),
 	url(r'^logout_ldap$', views.Logout_LDAP, name='logout_ldap'),
-	url(r'^login_cas$', 'django_cas_ng.views.login', {'next_page': '/en/index'}),
-    url(r'^logout_cas$', 'django_cas_ng.views.logout'),
+	url(r'^login_cas$', 'django_cas_ng.views.login', {'next_page': '/en/index'}, name="login_cas"),
+    url(r'^logout_cas$', 'django_cas_ng.views.logout', name="logout_cas"),
 	url(r'^index$', views.Index, name='index'), # Vue appelée lorsque tout est en règle
 	url(r'^error$', views.Erreur, name='error'), # Vue appelée lorsque qu'une erreur est soulevée
 	url(r'^contact$', views.Contact, name="contact"), # Vue pour afficher un formulaire d'envoi de mail pour nous contacter
