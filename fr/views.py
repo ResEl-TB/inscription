@@ -327,17 +327,17 @@ def Devenir_membre(request):
             if form.cleaned_data['batiment']:
                 add_record.append( ('batiment', [str(form.cleaned_data['batiment'])]))
             else:
-                add_record.append( ('batiment', ['Non renseigne']))
+                add_record.append( ('batiment', ['0']))
 
             if form.cleaned_data['roomNumber']:
                 add_record.append( ('roomNumber', [str(form.cleaned_data['roomNumber'])]))
             else:
-                add_record.append( ('roomNumber', ['Non renseigne']))
+                add_record.append( ('roomNumber', ['0']))
 
             if form.cleaned_data['mobile']:
                 add_record.append( ('mobile', [str(form.cleaned_data['mobile'])]))
             else:
-                add_record.append( ('mobile', ['Non renseigne']))
+                add_record.append( ('mobile', ['0']))
 
             # Ajout de la fiche LDAP
             add_entry("uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr".format(str(request.user)), add_record)
@@ -481,7 +481,7 @@ def Ajout_3(request):
                 body="Inscription de la machine {} appartenant à {}\n\nIP : 172.22.{}\nMAC : {}".format(hostname, request.session['uid_client'], ip, request.session['mac_client']),
                 from_email="inscription-bot@resel.fr",
                 reply_to=["inscription-bot@resel.fr"],
-                to=["inscription-bot@resel.fr"],
+                to=["inscription-bot@resel.fr", "botanik@resel.fr"],
                 headers={'Cc': 'botanik@resel.fr'}
             )
         mail.send()
