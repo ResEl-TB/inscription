@@ -17,6 +17,14 @@
 				<hr>
 			</div>
 		</div>
+
+		{% if mail_envoye %}
+			<div class="col-lg-6 col-lg-offset-3">
+				<div class="alert alert-success">
+					<p>Votre mail a &eacute;t&eacute; envoy&eacute; aux admins. Vous recevrez une r&eacute;ponse prochainement.</p>
+				</div>
+			</div>
+		{% endif %}
 	</div>
 
 	<h1 class="intro-text">
@@ -122,14 +130,6 @@
 				</form>
 			</div>
 		</div>
-
-		{% if mail_envoye %}
-			<div class="col-sm-6">
-				<div class="alert alert-success">
-					<p>Votre mail a &eacute;t&eacute; envoy&eacute; aux admins. Vous recevrez une r&eacute;ponse prochainement.</p>
-				</div>
-			</div>
-		{% endif %}
 	</div>
 {% endblock %}
 

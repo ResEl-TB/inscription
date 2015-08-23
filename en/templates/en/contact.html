@@ -17,6 +17,14 @@
 				<hr>
 			</div>
 		</div>
+
+		{% if mail_envoye %}
+			<div class="col-lg-6 col-lg-offset-3">
+				<div class="alert alert-success">
+					<p>Your email has been sent to the ResEl administrators. You will soon have an answer.</p>
+				</div>
+			</div>
+		{% endif %}
 	</div>
 
 	<h1 class="intro-text">
@@ -122,14 +130,6 @@
 				</form>
 			</div>
 		</div>
-
-		{% if mail_envoye %}
-			<div class="col-sm-6">
-				<div class="alert alert-success">
-					<p>Your email has been sent to the ResEl administrators. You will soon have an answer.</p>
-				</div>
-			</div>
-		{% endif %}
 	</div>
 {% endblock %}
 
