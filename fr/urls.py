@@ -2,8 +2,12 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import patterns, url
+from django.conf.urls import handler400, handler403, handler404, handler500
 
 from . import views
+from . import errors
+
+handler404 =  errors.page_not_found
 
 urlpatterns = [
 	url(r'^login_ldap$', views.Login_LDAP, name='login_ldap'),
