@@ -219,7 +219,7 @@ def Inscription(request):
 
     else:
         mod_attrs = [
-            ( ldap.MOD_ADD, 'objectClass', 'reselPeron' ),
+            ( ldap.MOD_ADD, 'objectClass', 'reselPerson' ),
             ( ldap.MOD_ADD, 'dateInscr', time.strftime('%Y%m%d%H%M%S') + 'Z')
         ]
         
