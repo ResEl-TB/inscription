@@ -156,16 +156,14 @@ def get_free_alias(uid):
     """
     test = 'pc{}'.format(uid)
 
-    if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(Host={})".format(test)) != None:
-        if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(Hostalias={})".format(test)) != None:
-            continuer = True
-            i = 2
-            while continuer:
-                test = 'pc{}{}'.format(uid, i)
-                i += 1
-                if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(Host={})".format(test)) == None:
-                    if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(Hostalias={})".format(test)) == None:
-                        continuer = False
+    if (search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(Host={})".format(test)) != None) or (search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(Hostalias={})".format(test)) != None):
+        continuer = True
+        i = 2
+        while continuer:
+            test = 'pc{}{}'.format(uid, i)
+            i += 1
+            if (search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(Host={})".format(test))) == None and (search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(Hostalias={})".format(test)) == None):
+                    continuer = False
                 
     return test
 
