@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+a#!/usr/local/bin/python
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render
@@ -82,7 +82,6 @@ def Index(request):
 
     return render(request, 'fr/index.html', {'machineInactive': machineInactive})
 
-@login_required(login_url='/')
 def Contact(request):
     """ Affiche un formulaire de contact """
 

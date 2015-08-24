@@ -82,7 +82,6 @@ def Index(request):
 
     return render(request, 'en/index.html', {'machineInactive': machineInactive})
 
-@login_required(login_url='/')
 def Contact(request):
     """ Affiche un formulaire de contact """
 
