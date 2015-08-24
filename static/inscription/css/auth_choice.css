@@ -17,6 +17,11 @@ ul.social-buttons li a{
     transition: all .3s;
 }
 
+ul.list-inline {
+    margin-bottom: 30px;
+    margin-top:0;
+}
+
 #facebook a:hover, #facebook a:focus, #facebook a:active {
     background-color: #3B5998;
 }
