@@ -10,6 +10,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout
 from django.core.mail import mail_admins, EmailMessage
+from django.utils.six.moves import urllib_parse
 
 import re
 import time
@@ -20,8 +21,22 @@ from .network import *
 from .ldap_func import *
 from .forms import AdhesionForm, AliasForm, ContactForm
 
-def Login_LDAP(request):
+def Login_LDAP(request, next_page=None):
     """ Affiche le formulaire de login LDAP et redirige vers la bonne page """
+
+    if not next_page:
+        next_page = request.GET.get(REDIRECT_FIELD_NAME)
+        if not next_page:
+            next_page = request.META.get('HTTP_REFERER', '/fr/index')
+            prefix = urllib_parse.urlunparse(
+                ('https', request.get_host(), '', '', '', ''),
+            )
+            if next_page.startswith(prefix):
+                next_page = next_page[len(prefix):]
+
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(next_page)
+
     request.session['LDAP'] = True
 
     if request.method == "POST":
