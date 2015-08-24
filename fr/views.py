@@ -25,9 +25,9 @@ from .forms import AdhesionForm, AliasForm, ContactForm
 def Login_LDAP(request, next_page=None):
     """ Affiche le formulaire de login LDAP et redirige vers la bonne page """
 
-    if not next_page:
+    if next_page == None:
         next_page = request.GET.get(REDIRECT_FIELD_NAME)
-        if not next_page:
+        if next_page == None:
             next_page = request.META.get('HTTP_REFERER', '/fr/index')
             prefix = urllib_parse.urlunparse(
                 ('https', request.get_host(), '', '', '', ''),
