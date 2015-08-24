@@ -50,17 +50,17 @@ ul.social-buttons{
 
 ul.social-buttons li a{
     display: block;
-    background-color: #222;
+    background-color: white;
     height: 40px;
     width: 40px;
     border-radius: 100%;
     font-size: 20px;
     line-height: 40px;
-    color: white;
+    color: #fff;
     outline: 0;
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
-    -transition: all .3s;
+    transition: all .3s;
 }
 
 #facebook a:hover, #facebook a:focus, #facebook a:active {
