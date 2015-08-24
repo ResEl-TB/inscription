@@ -218,7 +218,14 @@ def Inscription(request):
         return HttpResponseRedirect(reverse('fr:ajout_1'))
 
     else:
-        return HttpResponseRedirect(reverse('fr:devenir_membre'))
+        mod_attrs = [
+            ( ldap.MOD_ADD, 'objectClass', 'reselPeron' ),
+            ( ldap.MOD_ADD, 'dateInscr', time.strftime('%Y%m%d%H%M%S') + 'Z')
+        ]
+        
+        mod("uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr".format(str(request.user)), mod_attrs)
+
+        return HttpResponseRedirect(reverse('fr:ajout_1'))
 
 @login_required(login_url='/')
 def Reactivation(request):
