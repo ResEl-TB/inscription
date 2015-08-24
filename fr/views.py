@@ -82,7 +82,7 @@ def Index(request):
     if messages.get_messages(request):
         return HttpResponseRedirect(reverse('fr:erreur'))
 
-    if search("ou=people,dc=maisel,dc=enst-bretagne,dc=fr" , "(uid={})".format(str(request.user))) is None:
+    if search("ou=people,dc=maisel,dc=enst-bretagne,dc=fr" , "(uid={})".format(str(request.user.username))) is None:
         """ La personne n'est pas encore présente dans le LDAP, donc on l'ajoute """
         return HttpResponseRedirect(reverse('fr:devenir_membre'))
 
@@ -148,9 +148,6 @@ def Inscription(request):
 
     if blacklist(request, uid):
         messages.error(request, "Vous n'avez pas payé votre cotisation, vous n'avez donc pas l'autorisation de vous inscrire.<br />Veuillez contacter un administrateur ResEl par mail à l'adresse <a href='mailto:inscription@resel.fr'>inscription@resel.fr</a> en précisant votre uid : <strong>{}</strong>".format(uid))
-        return HttpResponseRedirect(reverse('fr:erreur'))
-
-    if messages.get_messages(request):
         return HttpResponseRedirect(reverse('fr:erreur'))
 
     if 'genericPerson' not in statuts:
