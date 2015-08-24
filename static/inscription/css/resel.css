@@ -60,7 +60,7 @@ ul.social-buttons li a{
     outline: 0;
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
-    transition: all .3s;
+    -transition: all .3s;
 }
 
 #facebook a:hover, #facebook a:focus, #facebook a:active {
