@@ -17,6 +17,9 @@
         <!-- Bootstrap Core CSS -->
         <link href="{% static 'inscription/css/bootstrap.min.css' %}" rel="stylesheet">
 
+        <!-- Font Awesome Core CSS -->
+        <link href="{% static 'inscription/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
         <!-- Custom CSS -->
         <link href="{% static 'inscription/css/resel.css' %}" rel="stylesheet">
         <link href="{% static 'inscription/css/auth_choice.css' %}" rel="stylesheet">
@@ -84,13 +87,12 @@
         <!-- /.container -->
 
         <footer>
-            <div class="container">
-                <div class="text-center center-block">
-                    <p class="txt-railway"><strong>- Copyright &copy; ResEl 2003-2015 -</strong></p>
-                    <br />
-                    <a href="https://www.facebook.com/Reselfr"><i id="social" class="fa fa-facebook-square fa-3x social-fb"></i></a>
-                    <a href="https://twitter.com/Resel_fr"><i id="social" class="fa fa-twitter-square fa-3x social-tw"></i></a>
-                </div>
+            <div class="text-center">
+                <ul class="list-inline social-buttons">
+                    <li id="facebook"><a href="https://www.facebook.com/Reselfr"><i class="fa fa-facebook"></i></a></li>
+                    <li><strong>Copyright &copy; ResEl 2003-2015</strong></li>
+                    <li id="twitter"><a href="https://twitter.com/Resel_fr"><i class="fa fa-twitter"></i></a></li>
+                </ul>
             </div>
         </footer>
 
