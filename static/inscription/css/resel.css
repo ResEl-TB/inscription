@@ -43,30 +43,3 @@ h6 {
     font-weight: 400;
     letter-spacing: 1px;
 }
-
-ul.social-buttons{
-    margin-bottom:0;
-}
-
-ul.social-buttons li a{
-    display: block;
-    background-color: white;
-    height: 40px;
-    width: 40px;
-    border-radius: 100%;
-    font-size: 20px;
-    line-height: 40px;
-    color: #fff;
-    outline: 0;
-    -webkit-transition: all .3s;
-    -moz-transition: all .3s;
-    transition: all .3s;
-}
-
-#facebook a:hover, #facebook a:focus, #facebook a:active {
-    background-color: #3B5998;
-}
-
-#twitter a:hover, #twitter a:focus, #twitter a:active {
-    background-color: #4099FF;
-}
