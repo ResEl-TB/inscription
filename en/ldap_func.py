@@ -155,17 +155,16 @@ def get_free_alias(uid):
     Récupère un alias automatiquement pour l'ajout d'une nouvelle machine
     """
     test = 'pc{}'.format(uid)
-    result = search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(Hostalias={})".format(test))
 
-    if result is not None:
+    if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(Hostalias={})".format(test)) is not None and search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(Host={})".format(test)) is not None:
         continuer = True
         i = 2
         while continuer:
             test = 'pc{}{}'.format(uid, i)
             i += 1
-            if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(test)) == None:
-                if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias=0{})".format(test)) == None:
-                    continuer = False
+            if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(test)) == None and search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(Host={})".format(test)) == None:
+                continuer = False
+
     return test
 
 def hashPassword(password):

@@ -357,7 +357,7 @@ def Ajout_1(request):
         On récupère ici les éventuels alias perso choisis par l'user, et si il souhaite que ses infos persos soit publiables dans l'annuaire ResEl ou non
         On bascule ensuite vers Ajout_2
     """
-    if request.session['mac_client']:
+    if 'mac_client' in request.session:
         mac = request.session['mac_client']
     else:
         messages.error(request, "An error occured while getting your MAC adress. Please try again.")
@@ -368,7 +368,7 @@ def Ajout_1(request):
         messages.error(request, "Your device is already known on the network.")
         return HttpResponseRedirect(reverse('en:error'))
 
-    if request.session['uid_client']:
+    if 'uid_client' in request.session:
         uid = request.session['uid_client']
     else:
         messages.error(request, "An error occured while getting your uid. Please try again.")

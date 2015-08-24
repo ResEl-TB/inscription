@@ -22,7 +22,7 @@ def get_mac_from_ip(request, ip, local_net):
             messages.error(request, "Your IP adress is not a ResEl IP.")
             return None
 
-        mac = Popen(["sudo arping -c 1 -I eth2 {}".format(ip)], stdout=PIPE, shell=True).communicate()[0].split('from')[1].split(' ')[1].lower()
+        mac = Popen(["sudo arping -c 1 -I eth2:1 {}".format(ip)], stdout=PIPE, shell=True).communicate()[0].split('from')[1].split(' ')[1].lower()
 
         if not mac:
             messages.error(request, "No match with the host {}".format(ip))
