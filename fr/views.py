@@ -11,6 +11,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout
 from django.core.mail import mail_admins, EmailMessage
 from django.utils.six.moves import urllib_parse
+from django.contrib.auth import REDIRECT_FIELD_NAME
 
 import re
 import time
