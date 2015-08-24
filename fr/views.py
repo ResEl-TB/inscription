@@ -22,21 +22,11 @@ from .network import *
 from .ldap_func import *
 from .forms import AdhesionForm, AliasForm, ContactForm
 
-def Login_LDAP(request, next_page=None):
+def Login_LDAP(request):
     """ Affiche le formulaire de login LDAP et redirige vers la bonne page """
 
-    if next_page == None:
-        next_page = request.GET.get(REDIRECT_FIELD_NAME)
-        if next_page == None:
-            next_page = request.META.get('HTTP_REFERER', '/fr/index')
-            prefix = urllib_parse.urlunparse(
-                ('https', request.get_host(), '', '', '', ''),
-            )
-            if next_page.startswith(prefix):
-                next_page = next_page[len(prefix):]
-
     if request.user.is_authenticated():
-        return HttpResponseRedirect(next_page)
+        return HttpResponseRedirect(reverse('fr:index'))
 
     request.session['LDAP'] = True
 
