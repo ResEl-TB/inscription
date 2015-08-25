@@ -385,7 +385,11 @@ def Ajout_1(request):
     if messages.get_messages(request):
         return HttpResponseRedirect(reverse('fr:erreur'))
 
-    request.session['mac_client'] = mac
+    if mac:
+        request.session['mac_client'] = mac
+    else:
+        messages.error(request, "Une erreur est survenue dans la récupération de votre adresse MAC. Veuillez réessayer.")
+        return HttpResponseRedirect(reverse('fr:erreur'))
 
     if mac == "aa:00:04:00:0a:04":
         messages.error(request, "ATTENTION ! Vous êtes visiblement victime du bug Debian <a href='http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=635604'>#635604</a>.Vous ne pourrez pas inscrire cette machine tant que l'adresse MAC ne sera pas rétablie. Veuillez contacter un administrateur ResEl.")

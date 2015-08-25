@@ -380,7 +380,11 @@ def Ajout_1(request):
     if messages.get_messages(request):
         return HttpResponseRedirect(reverse('en:erreur'))
 
-    request.session['mac_client'] = mac
+    if mac:
+        request.session['mac_client'] = mac
+    else:
+        messages.error(request, "An error occured while getting your MAC address. Please try again.")
+        return HttpResponseRedirect(reverse('en:error'))
 
     if mac == "aa:00:04:00:0a:04":
             messages.error(request, "WARNING ! You are experiencing a Debian bug : <a href='http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=635604'>#635604</a>. You won't be able to register this device unless the problem is solved. Please contact us.")
@@ -388,7 +392,7 @@ def Ajout_1(request):
 
     elif mac == "00:00:00:00:00:00":
         messages.error(request, "WARNING ! Your MAC address is 00:00:00:00:00:00. Please try again.")
-        return HttpResponseRedirect(reverse('en:erreur'))
+        return HttpResponseRedirect(reverse('en:error'))
 
     machine = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )
     if machine:
