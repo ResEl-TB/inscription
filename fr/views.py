@@ -234,6 +234,7 @@ def Resel_person(request):
             accepted = form.cleaned_data['accepted']
 
             if accepted:
+                context['accepted'] = True
                 mod_attrs = [
                     ( ldap.MOD_ADD, 'objectClass', 'reselPerson' ),
                     ( ldap.MOD_ADD, 'dateInscr', time.strftime('%Y%m%d%H%M%S') + 'Z')
@@ -247,7 +248,6 @@ def Resel_person(request):
 
     context = {
         'form': form,
-        'accepted': accepted,
     }
 
     return render(request, 'fr/resel_person.html', context)
