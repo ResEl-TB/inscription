@@ -23,7 +23,7 @@ def get_mac_from_ip(request, ip, local_net):
             return None
 
         #mac = Popen(["sudo arping -c 1 -I eth2:1 {}".format(ip)], stdout=PIPE, shell=True).communicate()[0].split('from')[1].split(' ')[1].lower()
-	mac = Popen(["ip neigh show | grep '{}\\s' | awk '{{print $5}}'".format(ip)], stdout=PIPE, shell=True).communicate()[0].split('\n')[0]
+        mac = Popen(["ip neigh show | grep '{}\\s' | awk '{{print $5}}'".format(ip)], stdout=PIPE, shell=True).communicate()[0].split('\n')[0]
 
         if not mac:
             messages.error(request, "Aucun resultat avec l'hote {}".format(ip))

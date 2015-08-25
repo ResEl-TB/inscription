@@ -5,6 +5,9 @@ import re
 from ldap_func import search
 from django import forms
 
+class resel_personForm(forms.Form):
+    accepted = forms.BooleanField(initial=False)
+
 class AdhesionForm(forms.Form):
     batiments = [
         ('I1', 'I1'),

@@ -11,7 +11,6 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout
 from django.core.mail import mail_admins, EmailMessage
 from django.utils.six.moves import urllib_parse
-from django.contrib.auth import REDIRECT_FIELD_NAME
 
 import re
 import time
@@ -20,7 +19,7 @@ import binascii, hashlib
 
 from .network import *
 from .ldap_func import *
-from .forms import AdhesionForm, AliasForm, ContactForm
+from .forms import AdhesionForm, AliasForm, ContactForm, resel_personForm
 
 def Login_LDAP(request):
     """ Affiche le formulaire de login LDAP et redirige vers la bonne page """
@@ -221,7 +220,7 @@ def Inscription(request):
         return HttpResponseRedirect(reverse('fr:resel_person'))
 
 @login_required(login_url='/')
-def Resel_person:
+def Resel_person(request):
     """ Ajout de la classe reselPerson, avec affichage du règlement intérieur """
 
     if search("ou=people,dc=maisel,dc=enst-bretagne,dc=fr", "(Uid={}".format(request.user)) is None:

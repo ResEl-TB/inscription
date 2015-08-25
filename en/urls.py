@@ -19,4 +19,5 @@ urlpatterns = [
 	url(r'^add/3$', views.Ajout_3, name='add_3'), # Vue pour ajouter une machine au LDAP, étape 3
 	url(r'^reactivation$', views.Reactivation, name='reactivation'), # Vue pour réactiver une machine
 	url(r'^register$', views.Devenir_membre, name='register'), # Vue pour devenir membre du ResEl
+	url(r'^resel_person$', views.Resel_person, name='resel_person'),
 ]

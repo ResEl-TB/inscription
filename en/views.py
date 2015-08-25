@@ -18,7 +18,7 @@ import binascii, hashlib
 
 from .network import *
 from .ldap_func import *
-from .forms import AdhesionForm, AliasForm, ContactForm
+from .forms import AdhesionForm, AliasForm, ContactForm, resel_personForm
 
 def Login_LDAP(request):
     """ Affiche le formulaire de login LDAP et redirige vers la bonne page """
@@ -215,14 +215,40 @@ def Inscription(request):
         return HttpResponseRedirect(reverse('en:add_1'))
 
     else:
-        mod_attrs = [
-            ( ldap.MOD_ADD, 'objectClass', 'reselPerson' ),
-            ( ldap.MOD_ADD, 'dateInscr', time.strftime('%Y%m%d%H%M%S') + 'Z')
-        ]
-        
-        mod("uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr".format(str(request.user)), mod_attrs)
+        return HttpResponseRedirect(reverse('en:resel_person'))
 
-        return HttpResponseRedirect(reverse('fr:ajout_1'))
+@login_required(login_url='/')
+def Resel_person(request):
+    """ Ajout de la classe reselPerson, avec affichage du règlement intérieur """
+
+    if search("ou=people,dc=maisel,dc=enst-bretagne,dc=fr", "(Uid={}".format(request.user)) is None:
+        messages.error(request, "You are not a ResEl member.")
+        return HttpResponseRedirect(reverse('en:error'))
+
+    if request.method == 'POST':
+        form = resel_personForm(request.POST)
+
+        if form.is_valid():
+            accepted = form.cleaned_data['accepted']
+
+            if accepted:
+                mod_attrs = [
+                    ( ldap.MOD_ADD, 'objectClass', 'reselPerson' ),
+                    ( ldap.MOD_ADD, 'dateInscr', time.strftime('%Y%m%d%H%M%S') + 'Z')
+                ]
+                
+                mod("uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr".format(str(request.user)), mod_attrs)
+
+    else:
+        form = resel_personForm()
+        accepted = False
+
+    context = {
+        'form': form,
+        'accepted': accepted,
+    }
+
+    return render(request, 'en/resel_person.html', context)
 
 @login_required(login_url='/')
 def Reactivation(request):
