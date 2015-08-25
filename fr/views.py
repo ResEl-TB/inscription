@@ -253,6 +253,19 @@ def Reactivation(request):
         mod(machine[0], mod_attrs)
         update_dhcp_dns_firewall()
 
+        hostname = machine[1]['host']
+        ip = machine[1]['iphostnumber']
+
+        mail = EmailMessage(
+                subject="[Inscription Brest] Reactivation machine {} [172.22.{} - {}] par {}".format(hostname, ip, request.session['mac_client'], request.session['uid_client']),
+                body="Reactivation de la machine {} appartenant à {}\n\nIP : 172.22.{}\nMAC : {}".format(hostname, request.session['uid_client'], ip, request.session['mac_client']),
+                from_email="inscription-bot@resel.fr",
+                reply_to=["inscription-bot@resel.fr"],
+                to=["inscription-bot@resel.fr", "botanik@resel.fr"],
+                headers={'Cc': 'botanik@resel.fr'}
+            )
+        mail.send()
+
         return render(request, 'fr/reactivation.html')
 
     else:
