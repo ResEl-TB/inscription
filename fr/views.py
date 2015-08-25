@@ -381,18 +381,18 @@ def Ajout_1(request):
         On récupère ici les éventuels alias perso choisis par l'user, et si il souhaite que ses infos persos soit publiables dans l'annuaire ResEl ou non
         On bascule ensuite vers Ajout_2
     """
-    if 'mac_client' in request.session:
-        mac = request.session['mac_client']
-    else:
-        messages.error(request, "Une erreur est survenue dans la récupération de votre adresse MAC. Veuillez réessayer.")
+    mac = get_mac_from_ip(request, clientIP, '22')
+    if messages.get_messages(request):
         return HttpResponseRedirect(reverse('fr:erreur'))
+
+    request.session['mac_client'] = mac
 
     if mac == "aa:00:04:00:0a:04":
         messages.error(request, "ATTENTION ! Vous êtes visiblement victime du bug Debian <a href='http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=635604'>#635604</a>.Vous ne pourrez pas inscrire cette machine tant que l'adresse MAC ne sera pas rétablie. Veuillez contacter un administrateur ResEl.")
         return HttpResponseRedirect(reverse('fr:erreur'))
 
     elif mac == "00:00:00:00:00:00":
-        messages.error(request, "ATTENTION ! Votre adresse MAC vaut 00:00:00:00:00:00. Veuillez contacter un administrateur ResEl.")
+        messages.error(request, "ATTENTION ! Votre adresse MAC vaut 00:00:00:00:00:00. Veuillez recommencer.")
         return HttpResponseRedirect(reverse('fr:erreur'))
 
     machine = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )
