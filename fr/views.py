@@ -218,14 +218,40 @@ def Inscription(request):
         return HttpResponseRedirect(reverse('fr:ajout_1'))
 
     else:
-        mod_attrs = [
-            ( ldap.MOD_ADD, 'objectClass', 'reselPerson' ),
-            ( ldap.MOD_ADD, 'dateInscr', time.strftime('%Y%m%d%H%M%S') + 'Z')
-        ]
-        
-        mod("uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr".format(str(request.user)), mod_attrs)
+        return HttpResponseRedirect(reverse('fr:resel_person'))
 
-        return HttpResponseRedirect(reverse('fr:ajout_1'))
+@login_required(login_url='/')
+def Resel_person:
+    """ Ajout de la classe reselPerson, avec affichage du règlement intérieur """
+
+    if search("ou=people,dc=maisel,dc=enst-bretagne,dc=fr", "(Uid={}".format(request.user)) is None:
+        messages.error(request, "Vous n'êtes pas membre du ResEl.")
+        return HttpResponseRedirect(reverse('fr:erreur'))
+
+    if request.method == 'POST':
+        form = resel_personForm(request.POST)
+
+        if form.is_valid():
+            accepted = form.cleaned_data['accepted']
+
+            if accepted:
+                mod_attrs = [
+                    ( ldap.MOD_ADD, 'objectClass', 'reselPerson' ),
+                    ( ldap.MOD_ADD, 'dateInscr', time.strftime('%Y%m%d%H%M%S') + 'Z')
+                ]
+                
+                mod("uid={},ou=people,dc=maisel,dc=enst-bretagne,dc=fr".format(str(request.user)), mod_attrs)
+
+    else:
+        form = resel_personForm()
+        accepted = False
+
+    context = {
+        'form': form,
+        'accepted': accepted,
+    }
+
+    return render(request, 'fr/resel_person.html', context)
 
 @login_required(login_url='/')
 def Reactivation(request):
@@ -257,7 +283,7 @@ def Reactivation(request):
         ip = machine[1]['ipHostNumber'][0]
 
         mail = EmailMessage(
-                subject="[Inscription Brest] Reactivation machine {} [172.22.{} - {}] par {}".format(hostname, ip, request.session['mac_client'], request.session['uid_client']),
+                subject="[Reactivation Brest] La machine {} [172.22.{} - {}] par {}".format(hostname, ip, request.session['mac_client'], request.session['uid_client']),
                 body="Reactivation de la machine {} appartenant à {}\n\nIP : 172.22.{}\nMAC : {}".format(hostname, request.session['uid_client'], ip, request.session['mac_client']),
                 from_email="inscription-bot@resel.fr",
                 reply_to=["inscription-bot@resel.fr"],
