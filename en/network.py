@@ -22,7 +22,7 @@ def get_mac_from_ip(request, ip, local_net):
             messages.error(request, "Your IP adress is not a ResEl IP.")
             return None
 
-        mac = Popen(["ip neigh show | grep '{}\\s' | awk '{{print $5}}'".format(ip)], stdout=PIPE, shell=True).communicate()[0].lower()
+        mac = Popen(["ip neigh show | grep '{}\\s' | awk '{{print $5}}'".format(ip)], stdout=PIPE, shell=True).communicate()[0].split('\n')[0]
 
         if not mac:
             messages.error(request, "No match with the host {}".format(ip))
