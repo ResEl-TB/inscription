@@ -387,6 +387,14 @@ def Ajout_1(request):
         messages.error(request, "Une erreur est survenue dans la récupération de votre adresse MAC. Veuillez réessayer.")
         return HttpResponseRedirect(reverse('fr:erreur'))
 
+    if mac == "aa:00:04:00:0a:04":
+        messages.error(request, "ATTENTION ! Vous êtes visiblement victime du bug Debian <a href='http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=635604'>#635604</a>.Vous ne pourrez pas inscrire cette machine tant que l'adresse MAC ne sera pas rétablie. Veuillez contacter un administrateur ResEl.")
+        return HttpResponseRedirect(reverse('fr:erreur'))
+
+    elif mac == "00:00:00:00:00:00":
+        messages.error(request, "ATTENTION ! Votre adresse MAC vaut 00:00:00:00:00:00. Veuillez contacter un administrateur ResEl.")
+        return HttpResponseRedirect(reverse('fr:erreur'))
+
     machine = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )
     if machine:
         messages.error(request, "Votre machine est déjà enregistrée sur notre réseau.")
@@ -414,15 +422,9 @@ def Ajout_1(request):
 
     else:
         form = AliasForm()
-        if mac == "aa:00:04:00:0a:04":
-            messages.error(request, "ATTENTION ! Vous êtes visiblement victime du bug Debian <a href='http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=635604'>#635604</a>.Vous ne pourrez pas inscrire cette machine tant que l'adresse MAC ne sera pas rétablie. Veuillez contacter un administrateur ResEl.")
-            return HttpResponseRedirect(reverse('fr:erreur'))
 
         alias = get_free_alias(uid)
         request.session['alias_auto'] = alias
-
-        if messages.get_messages(request):
-            return HttpResponseRedirect(reverse('fr:erreur'))
 
     context = {
         'form': form,

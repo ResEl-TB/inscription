@@ -382,6 +382,14 @@ def Ajout_1(request):
         messages.error(request, "An error occured while getting your MAC adress. Please try again.")
         return HttpResponseRedirect(reverse('en:error'))
 
+    if mac == "aa:00:04:00:0a:04":
+            messages.error(request, "WARNING ! You are experiencing a Debian bug : <a href='http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=635604'>#635604</a>. You won't be able to register this device unless the problem is solved. Please contact us.")
+            return HttpResponseRedirect(reverse('en:error'))
+
+    elif mac == "00:00:00:00:00:00":
+        messages.error(request, "WARNING ! Your MAC address is 00:00:00:00:00:00. Please contact a ResEl administrator.")
+        return HttpResponseRedirect(reverse('fr:erreur'))
+
     machine = search( "ou=machines,dc=resel,dc=enst-bretagne,dc=fr" , "(macAddress={})".format(mac) )
     if machine:
         messages.error(request, "Your device is already known on the network.")
@@ -413,15 +421,9 @@ def Ajout_1(request):
 
     else:
         form = AliasForm()
-        if mac == "aa:00:04:00:0a:04":
-            messages.error(request, "WARNING ! You are experiencing a Debian bug : <a href='http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=635604'>#635604</a>. You won't be able to register this device unless the problem is solved. Please contact us.")
-            return HttpResponseRedirect(reverse('en:error'))
 
         alias = get_free_alias(uid)
         request.session['alias_auto'] = alias
-
-        if messages.get_messages(request):
-            return HttpResponseRedirect(reverse('en:error'))
 
     context = {
         'form': form,
