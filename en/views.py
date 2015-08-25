@@ -89,13 +89,13 @@ def Contact(request):
         form = ContactForm(request.POST)
 
         if form.is_valid():
-            nom = form.cleaned_data['nom']
-            prenom = form.cleaned_data['prenom']
+            nom = form.cleaned_data['nom'].encode("utf-8")
+            prenom = form.cleaned_data['prenom'].encode("utf-8")
             mail = form.cleaned_data['mail']
             batiment = form.cleaned_data['batiment']
             chambre = form.cleaned_data['chambre']
             sujet = form.cleaned_data['sujet']
-            description = form.cleaned_data['description']
+            description = form.cleaned_data['description'].encode("utf-8")
 
             mail_admins("[Inscription Brest] Problemes rencontres sur inscription.resel.fr", "Utilisateur : {} {}\nBâtiment : {}\nChambre : {}\n\nSujet : {}\n\nDescription :\n{}\n\nContact : {}".format(prenom, nom.upper(), batiment, chambre, sujet, description, mail), fail_silently=False, connection=None, html_message=None)
 
