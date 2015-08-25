@@ -44,7 +44,7 @@ class AliasForm(forms.Form):
         alias = self.cleaned_data['alias1'].lower()
         
         if alias != '':
-            if re.search(r'^[a-z][a-z0-9-]{0,23}[a-z0-9]', alias) is None:
+            if re.search(r'^[a-z][a-z0-9-]{0,23}[a-z0-9]$', alias) is None:
                 raise forms.ValidationError("The chosen alias {} does not match with the expected pattern.".format(alias))
             else:
                 if re.search(r'enst-bretagne', alias):
@@ -62,7 +62,7 @@ class AliasForm(forms.Form):
         alias = self.cleaned_data['alias2'].lower()
 
         if alias != '':
-            if re.search(r'^[a-z][a-z0-9-]{0,23}[a-z0-9]', alias) is None:
+            if re.search(r'^[a-z][a-z0-9-]{0,23}[a-z0-9]$', alias) is None:
                 raise forms.ValidationError("The chosen alias {} does not match with the expected pattern.".format(alias))
             else:
                 if re.search(r'enst-bretagne', alias):
