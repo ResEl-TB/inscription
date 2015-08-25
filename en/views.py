@@ -221,6 +221,8 @@ def Inscription(request):
 def Resel_person(request):
     """ Ajout de la classe reselPerson, avec affichage du règlement intérieur """
 
+    context = {}
+
     if search("ou=people,dc=maisel,dc=enst-bretagne,dc=fr", "(Uid={})".format(request.user)) is None:
         messages.error(request, "You are not a ResEl member.")
         return HttpResponseRedirect(reverse('en:error'))
@@ -232,6 +234,7 @@ def Resel_person(request):
             accepted = form.cleaned_data['accepted']
 
             if accepted:
+                context['accepted'] = True
                 mod_attrs = [
                     ( ldap.MOD_ADD, 'objectClass', 'reselPerson' ),
                     ( ldap.MOD_ADD, 'dateInscr', time.strftime('%Y%m%d%H%M%S') + 'Z')
@@ -241,12 +244,8 @@ def Resel_person(request):
 
     else:
         form = resel_personForm()
-        accepted = False
 
-    context = {
-        'form': form,
-        'accepted': accepted,
-    }
+    context['form'] = form
 
     return render(request, 'en/resel_person.html', context)
 
