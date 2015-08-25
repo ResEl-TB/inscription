@@ -51,7 +51,7 @@ class AliasForm(forms.Form):
                     raise forms.ValidationError("The alias can't contain enst-bretagne.")
                 if re.search(r'resel', alias):
                     raise forms.ValidationError("The alias can't contain resel.")
-                if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(hostAlias={})".format(alias)) is not None:
+                if search("ou=machines,dc=resel,dc=enst-bretagne,dc=fr", "(|(host={})(hostAlias={}))".format(alias, alias)) is not None:
                     raise forms.ValidationError("The chosen alias {} already exists".format(alias))
         else:
             alias = None
