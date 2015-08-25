@@ -24,6 +24,12 @@
 					<p>Cliquez <a href="{% url 'fr:ajout_1' %}">ici</a> pour inscrire votre machine.</p>
 				</div>
 			</div>
+		{% else %}
+			<div class="col-lg-6 col-lg-offset-3">
+				<div class="alert alert-danger">
+					<p>Vous devez accepter le Règlement Intérieur avant de pouvoir continuer</p>
+				</div>
+			</div>
 		{% endif %}
 	</div>
 
