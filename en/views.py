@@ -250,8 +250,8 @@ def Reactivation(request):
         mod(machine[0], mod_attrs)
         update_dhcp_dns_firewall()
 
-        hostname = machine[1]['host']
-        ip = machine[1]['iphostnumber']
+        hostname = machine[0][1]['host']
+        ip = machine[0][1]['ipHostNumber']
 
         mail = EmailMessage(
                 subject="[Inscription Brest] Reactivation machine {} [172.22.{} - {}] par {}".format(hostname, ip, request.session['mac_client'], request.session['uid_client']),
