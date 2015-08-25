@@ -221,7 +221,7 @@ def Inscription(request):
 def Resel_person(request):
     """ Ajout de la classe reselPerson, avec affichage du règlement intérieur """
 
-    if search("ou=people,dc=maisel,dc=enst-bretagne,dc=fr", "(Uid={}".format(request.user)) is None:
+    if search("ou=people,dc=maisel,dc=enst-bretagne,dc=fr", "(Uid={})".format(request.user)) is None:
         messages.error(request, "You are not a ResEl member.")
         return HttpResponseRedirect(reverse('en:error'))
 
