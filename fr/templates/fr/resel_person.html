@@ -42,12 +42,12 @@
 	<br>
 
 	<div class="row">
-		<div class="col-sm-8">
+		<div class="col-sm-12">
 			<div class="form-horizontal">
 				<form action="{% url "fr:resel_person" %}" method="post">
 			    	{% csrf_token %}
 			    	<div class="form-group">
-			        	<label class="col-sm-10 control-label">J'ai lu et j'accepte le Règlement Intérieur :</label>
+			        	<label class="col-sm-5 control-label">J'ai lu et j'accepte le Règlement Intérieur :</label>
 			        	<div class="col-sm-2">
 					        <input type="checkbox" name="accepted">
 				        </div>
