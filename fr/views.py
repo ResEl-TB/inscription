@@ -381,7 +381,7 @@ def Ajout_1(request):
         On récupère ici les éventuels alias perso choisis par l'user, et si il souhaite que ses infos persos soit publiables dans l'annuaire ResEl ou non
         On bascule ensuite vers Ajout_2
     """
-    mac = get_mac_from_ip(request, clientIP, '22')
+    mac = get_mac_from_ip(request, request.META['HTTP_X_FORWARDED_FOR'], '22')
     if messages.get_messages(request):
         return HttpResponseRedirect(reverse('fr:erreur'))
 
