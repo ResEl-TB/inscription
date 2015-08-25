@@ -227,6 +227,11 @@ def Resel_person(request):
         messages.error(request, "You are not a ResEl member.")
         return HttpResponseRedirect(reverse('en:error'))
 
+    people = search("ou=people,dc=maisel,dc=enst-bretagne,dc=fr", "(Uid={})".format(request.user))[0]
+
+    if 'reselPerson' in people[1]['objectClass']:
+        return HttpResponseRedirect(reverse('en:add_1'))
+
     if request.method == 'POST':
         form = resel_personForm(request.POST)
 
