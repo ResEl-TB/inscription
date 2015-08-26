@@ -284,7 +284,7 @@ def Reactivation(request):
         ip = machine[1]['ipHostNumber'][0]
 
         mail = EmailMessage(
-                subject="[Inscription Brest] Reactivation machine {} [172.22.{} - {}] par {}".format(hostname, ip, request.session['mac_client'], request.session['uid_client']),
+                subject="[Inscription Brest] Reactivation machine {} [172.22.{} - {}] par {}".format(hostname, ip, mac, str(request.user)),
                 body="Reactivation de la machine {} appartenant à {}\n\nIP : 172.22.{}\nMAC : {}".format(hostname, request.session['uid_client'], ip, request.session['mac_client']),
                 from_email="inscription-bot@resel.fr",
                 reply_to=["inscription-bot@resel.fr"],
